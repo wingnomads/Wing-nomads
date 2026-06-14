@@ -1,11 +1,11 @@
 :root {
   --black: #0d0d0d;
-  --charcoal: #1f1f1f;
+  --charcoal: #222222;
   --cream: #f6f1e8;
   --sand: #e9ddcb;
-  --paper: #f8f4ec;
+  --paper: #fbf7ef;
   --terracotta: #c46a3c;
-  --orange-soft: #d88a4a;
+  --grey: #666666;
   --white: #ffffff;
 }
 
@@ -63,7 +63,7 @@ a {
 .hero {
   min-height: 100vh;
   background:
-    linear-gradient(90deg, rgba(0,0,0,.78), rgba(0,0,0,.22)),
+    linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.18)),
     url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80");
   background-size: cover;
   background-position: center;
@@ -81,7 +81,7 @@ a {
   font-size: 20px;
   font-weight: 800;
   margin-bottom: 18px;
-  color: var(--orange-soft);
+  color: #e7b184;
 }
 
 .hero h1 {
@@ -108,7 +108,7 @@ a {
 .btn-secondary {
   display: inline-block;
   padding: 16px 26px;
-  border-radius: 3px;
+  border-radius: 4px;
   font-weight: 900;
   font-size: 13px;
   text-transform: uppercase;
@@ -136,7 +136,7 @@ a {
 .feature {
   text-align: center;
   padding: 20px 42px;
-  border-left: 1px solid rgba(0,0,0,.16);
+  border-left: 1px solid rgba(0,0,0,.12);
 }
 
 .feature:first-child {
@@ -173,7 +173,7 @@ a {
 }
 
 .eyebrow {
-  color: var(--terracotta);
+  color: #d29568;
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 2px;
@@ -205,12 +205,11 @@ a {
 
 .pilot-card,
 .spot-card {
-  position: relative;
   background: var(--paper);
   color: var(--charcoal);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 18px 45px rgba(0,0,0,.22);
+  box-shadow: 0 18px 45px rgba(0,0,0,.18);
 }
 
 .pilot-photo {
@@ -223,17 +222,17 @@ a {
 
 .spot-image {
   width: 100%;
-  height: 220px;
+  height: 205px;
   display: block;
   background:
-    linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)),
+    linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)),
     url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80");
   background-size: cover;
   background-position: center;
 }
 
 .pilot-body {
-  padding: 22px;
+  padding: 24px;
 }
 
 .pilot-heading {
@@ -241,13 +240,13 @@ a {
   justify-content: space-between;
   align-items: flex-start;
   gap: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .pilot-heading h3,
 .spot-card h3 {
-  font-size: 22px;
-  line-height: 1;
+  font-size: 23px;
+  line-height: 1.05;
   text-transform: uppercase;
   color: var(--black);
 }
@@ -265,14 +264,12 @@ a {
   font-weight: 900;
   letter-spacing: .8px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   color: #666666;
 }
 
 .pilot-detail {
-  margin-bottom: 13px;
-  padding-left: 10px;
-  border-left: 3px solid var(--orange-soft);
+  margin-bottom: 16px;
 }
 
 .pilot-detail small {
@@ -280,19 +277,21 @@ a {
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: .6px;
   color: var(--terracotta);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
-.pilot-detail p,
-.instagram {
-  font-size: 15px;
+.pilot-detail p {
+  font-size: 16px;
   color: #333;
 }
 
 .instagram {
-  margin-top: 18px;
-  font-weight: 700;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 800;
 }
 
 /* FOOTER */
@@ -345,7 +344,7 @@ footer p {
 
   .feature {
     border-left: none;
-    border-top: 1px solid rgba(0,0,0,.16);
+    border-top: 1px solid rgba(0,0,0,.12);
   }
 
   .feature:first-child {
