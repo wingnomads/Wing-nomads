@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=21000" />
+  <link rel="stylesheet" href="style.css?v=22000" />
 </head>
 
 <body>
@@ -23,21 +23,38 @@
   <div class="hero-content">
     <p class="tagline">Travel. Connect. Fly.</p>
 
-    <h1>
-FIND YOUR NEXT<br>
-FLYING<br>
-ADVENTURE
-</h1>
+    <h1>FIND YOUR NEXT<br>FLYING<br>ADVENTURE</h1>
 
     <p class="description">
-      A global community for travelling pilots. Discover flying spots,
-      connect with local pilots and share adventures around the world.
+      Discover flying spots, connect with local pilots and share adventures around the world.
     </p>
 
     <div class="buttons">
       <a href="#pilots" class="btn-primary">Become a Founding Nomad</a>
       <a href="#spots" class="btn-secondary">Explore Spots</a>
     </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="stat">
+    <strong id="countries-count">0</strong>
+    <span>Countries</span>
+  </div>
+
+  <div class="stat">
+    <strong id="nomads-count">0</strong>
+    <span>Founding Nomads</span>
+  </div>
+
+  <div class="stat">
+    <strong id="spots-count">0</strong>
+    <span>Flying Spots</span>
+  </div>
+
+  <div class="stat">
+    <strong id="van-count">0</strong>
+    <span>Van Friendly</span>
   </div>
 </section>
 
@@ -100,7 +117,6 @@ function getFlag(country) {
     "Australia": "🇦🇺",
     "South Africa": "🇿🇦"
   };
-
   return flags[country] || "🌍";
 }
 
@@ -114,6 +130,18 @@ async function getTable(tableName) {
 
   if (!response.ok) throw new Error(await response.text());
   return response.json();
+}
+
+function updateStats(profiles, spots) {
+  const countries = new Set([
+    ...profiles.map(p => p.country).filter(Boolean),
+    ...spots.map(s => s.country).filter(Boolean)
+  ]);
+
+  document.getElementById("countries-count").textContent = countries.size;
+  document.getElementById("nomads-count").textContent = profiles.length;
+  document.getElementById("spots-count").textContent = spots.length;
+  document.getElementById("van-count").textContent = spots.filter(s => s.van_friendly).length;
 }
 
 async function loadProfiles() {
@@ -152,9 +180,12 @@ async function loadProfiles() {
         </div>
       </article>
     `).join("");
+
+    return profiles;
   } catch (error) {
     container.innerHTML = "Could not load pilots.";
     console.error(error);
+    return [];
   }
 }
 
@@ -190,14 +221,22 @@ async function loadSpots() {
         </div>
       </article>
     `).join("");
+
+    return spots;
   } catch (error) {
     container.innerHTML = "Could not load spots.";
     console.error(error);
+    return [];
   }
 }
 
-loadProfiles();
-loadSpots();
+async function init() {
+  const profiles = await loadProfiles();
+  const spots = await loadSpots();
+  updateStats(profiles, spots);
+}
+
+init();
 </script>
 
 </body>
