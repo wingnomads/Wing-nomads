@@ -1,77 +1,116 @@
-const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
+<!DOCTYPE html>
+<html lang="en">
 
-const SUPABASE_KEY = "TU_PUBLISHABLE_KEY";
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wing Nomads</title>
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  <link rel="stylesheet" href="style.css">
+</head>
 
-async function loadProfiles() {
+<body>
 
-  const container = document.getElementById("profiles-container");
+<header class="navbar">
+  <div class="logo">
+    WING NOMADS
+  </div>
 
-  if (!container) return;
+  <nav>
+    <a href="#">Spots</a>
+    <a href="#">Pilots</a>
+    <a href="#">Stories</a>
+    <a href="#">Adventures</a>
+  </nav>
+</header>
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .limit(6);
+<section class="hero">
 
-  if (error) {
-    console.error(error);
-    container.innerHTML = "Could not load pilots";
-    return;
-  }
+  <div class="hero-overlay"></div>
 
-  if (!data || data.length === 0) {
-    container.innerHTML = "No pilots found";
-    return;
-  }
+  <div class="hero-content">
 
-  container.innerHTML = data.map(profile => `
-    <div class="card">
-      <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-      <p>${profile.country || ""}</p>
-      <p>${profile.flying_type || ""}</p>
-      <p>${profile.level || ""}</p>
+    <p class="tagline">
+      Travel. Connect. Fly.
+    </p>
+
+    <h1>
+      NEVER<br>
+      FLY<br>
+      ALONE
+    </h1>
+
+    <p class="description">
+      A global community for travelling pilots.
+      Discover flying spots, connect with local pilots
+      and share adventures around the world.
+    </p>
+
+    <div class="buttons">
+      <a href="#" class="btn-primary">
+        Become a Founding Nomad
+      </a>
+
+      <a href="#" class="btn-secondary">
+        Explore Spots
+      </a>
     </div>
-  `).join("");
 
-}
+  </div>
 
-async function loadSpots() {
+</section>
 
-  const container = document.getElementById("spots-container");
+<section class="features">
 
-  if (!container) return;
+  <div class="feature">
+    <h3>Find Local Pilots</h3>
+    <p>Meet pilots wherever you travel.</p>
+  </div>
 
-  const { data, error } = await supabase
-    .from("spots")
-    .select("*")
-    .limit(6);
+  <div class="feature">
+    <h3>Discover Flying Spots</h3>
+    <p>Explore takeoffs, landings and local knowledge.</p>
+  </div>
 
-  if (error) {
-    console.error(error);
-    container.innerHTML = "Could not load spots";
-    return;
-  }
+  <div class="feature">
+    <h3>Share Adventures</h3>
+    <p>Connect through travel, vanlife and flying.</p>
+  </div>
 
-  if (!data || data.length === 0) {
-    container.innerHTML = "No spots found";
-    return;
-  }
+</section>
 
-  container.innerHTML = data.map(spot => `
-    <div class="card">
-      <h3>${spot.name || "Unnamed Spot"}</h3>
-      <p>${spot.country || ""}</p>
-      <p>${spot.region || ""}</p>
-      <p>${spot.difficulty || ""}</p>
-    </div>
-  `).join("");
+<section class="founders">
 
-}
+  <h2>Founding Nomads</h2>
 
-loadProfiles();
-loadSpots();
+  <div id="profiles-container">
+    Loading pilots...
+  </div>
+
+</section>
+
+<section class="spots">
+
+  <h2>Featured Spots</h2>
+
+  <div id="spots-container">
+    Loading spots...
+  </div>
+
+</section>
+
+<footer>
+
+  <h2>Ready for your next adventure?</h2>
+
+  <p>
+    Join Wing Nomads and never fly alone.
+  </p>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
