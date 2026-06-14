@@ -237,6 +237,14 @@ a {
   gap: 28px;
 }
 
+/* LINKS */
+
+.pilot-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
 /* CARDS */
 
 .pilot-card,
@@ -246,6 +254,15 @@ a {
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 18px 45px rgba(0,0,0,.16);
+  transition: .25s ease;
+}
+
+.pilot-card {
+  cursor: pointer;
+}
+
+.pilot-card:hover {
+  transform: translateY(-6px);
 }
 
 .pilot-photo {
