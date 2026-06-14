@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-<link rel="stylesheet" href="style.css?v=15000" />
+  <link rel="stylesheet" href="style.css?v=15000" />
 </head>
 
 <body>
@@ -22,14 +22,11 @@
 <section class="hero">
   <div class="hero-content">
     <p class="tagline">Travel. Connect. Fly.</p>
-
     <h1>NEVER<br>FLY<br>ALONE</h1>
-
     <p class="description">
       A global community for travelling pilots. Discover flying spots,
       connect with local pilots and share adventures around the world.
     </p>
-
     <div class="buttons">
       <a href="#pilots" class="btn-primary">Become a Founding Nomad</a>
       <a href="#spots" class="btn-secondary">Explore Spots</a>
@@ -42,12 +39,10 @@
     <h3>Find Local Pilots</h3>
     <p>Meet pilots wherever you travel.</p>
   </div>
-
   <div class="feature">
     <h3>Discover Flying Spots</h3>
     <p>Explore takeoffs, landings and local knowledge.</p>
   </div>
-
   <div class="feature">
     <h3>Share Adventures</h3>
     <p>Connect through travel, vanlife and flying.</p>
@@ -60,7 +55,6 @@
     <h2>Founding Nomads</h2>
     <p>The first pilots building this community together.</p>
   </div>
-
   <div id="profiles-container" class="pilot-grid">Loading pilots...</div>
 </section>
 
@@ -70,7 +64,6 @@
     <h2>Featured Spots</h2>
     <p>Epic places to fly, shared by the community.</p>
   </div>
-
   <div id="spots-container" class="spot-grid">Loading spots...</div>
 </section>
 
@@ -161,37 +154,33 @@ async function loadSpots() {
     const spots = await getTable("spots");
 
     container.innerHTML = spots.map(spot => `
-<div class="spot-card">
+      <article class="spot-card">
+        <div class="spot-image"></div>
 
-  <div class="spot-image"></div>
+        <div class="pilot-body">
+          <h3>${spot.name || "Unnamed Spot"}</h3>
 
-  <div class="pilot-body">
+          <div class="pilot-detail">
+            <small>Location</small>
+            <p>${spot.region || ""}, ${spot.country || ""}</p>
+          </div>
 
-    <h3>${spot.name}</h3>
+          <div class="pilot-detail">
+            <small>Flying Type</small>
+            <p>${spot.flying_type || "Paragliding"}</p>
+          </div>
 
-    <div class="pilot-detail">
-      <small>Location</small>
-      <p>${spot.region}, ${spot.country}</p>
-    </div>
+          <div class="pilot-detail">
+            <small>Difficulty</small>
+            <p>${spot.difficulty || "Not specified"}</p>
+          </div>
 
-    <div class="pilot-detail">
-      <small>Flying Type</small>
-      <p>${spot.flying_type}</p>
-    </div>
-
-    <div class="pilot-detail">
-      <small>Difficulty</small>
-      <p>${spot.difficulty}</p>
-    </div>
-
-    <div class="pilot-detail">
-      <small>Van Friendly</small>
-      <p>${spot.van_friendly ? "✅ Yes" : "❌ No"}</p>
-    </div>
-
-  </div>
-</div>
-`).join("");
+          <div class="pilot-detail">
+            <small>Van Friendly</small>
+            <p>${spot.van_friendly ? "✅ Yes" : "❌ No"}</p>
+          </div>
+        </div>
+      </article>
     `).join("");
   } catch (error) {
     container.innerHTML = "Could not load spots.";
