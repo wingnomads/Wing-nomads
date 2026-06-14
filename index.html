@@ -161,24 +161,37 @@ async function loadSpots() {
     const spots = await getTable("spots");
 
     container.innerHTML = spots.map(spot => `
-      <article class="spot-card">
-        <div class="spot-image"></div>
+<div class="spot-card">
 
-        <div class="pilot-body">
-          <h3>${spot.name || "Unnamed Spot"}</h3>
-          <p class="pilot-meta">${spot.region || ""}, ${spot.country || ""}</p>
+  <div class="spot-image"></div>
 
-          <div class="pilot-detail">
-            <small>Flying type</small>
-            <p>${spot.flying_type || "Paragliding"}</p>
-          </div>
+  <div class="pilot-body">
 
-          <div class="pilot-detail">
-            <small>Difficulty</small>
-            <p>${spot.difficulty || "Not specified"}</p>
-          </div>
-        </div>
-      </article>
+    <h3>${spot.name}</h3>
+
+    <div class="pilot-detail">
+      <small>Location</small>
+      <p>${spot.region}, ${spot.country}</p>
+    </div>
+
+    <div class="pilot-detail">
+      <small>Flying Type</small>
+      <p>${spot.flying_type}</p>
+    </div>
+
+    <div class="pilot-detail">
+      <small>Difficulty</small>
+      <p>${spot.difficulty}</p>
+    </div>
+
+    <div class="pilot-detail">
+      <small>Van Friendly</small>
+      <p>${spot.van_friendly ? "✅ Yes" : "❌ No"}</p>
+    </div>
+
+  </div>
+</div>
+`).join("");
     `).join("");
   } catch (error) {
     container.innerHTML = "Could not load spots.";
