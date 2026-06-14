@@ -5,7 +5,7 @@
   --sand: #e9ddcb;
   --paper: #fbf7ef;
   --terracotta: #c46a3c;
-  --grey: #666666;
+  --soft-grey: #6f6f6f;
   --white: #ffffff;
 }
 
@@ -168,7 +168,7 @@ a {
 }
 
 .section-intro {
-  max-width: 520px;
+  max-width: 620px;
   margin-bottom: 42px;
 }
 
@@ -197,8 +197,8 @@ a {
 .pilot-grid,
 .spot-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 310px));
-  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
+  gap: 28px;
 }
 
 /* CARDS */
@@ -207,25 +207,33 @@ a {
 .spot-card {
   background: var(--paper);
   color: var(--charcoal);
-  border-radius: 8px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 18px 45px rgba(0,0,0,.18);
+  box-shadow: 0 18px 45px rgba(0,0,0,.16);
 }
+
+/* PILOT */
 
 .pilot-photo {
   width: 100%;
-  height: 205px;
+  height: 215px;
   display: block;
   object-fit: cover;
   object-position: center 25%;
 }
 
+/* SPOT */
+
+.spot-card {
+  max-width: 340px;
+}
+
 .spot-image {
   width: 100%;
-  height: 205px;
+  height: 190px;
   display: block;
   background:
-    linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)),
+    linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.06)),
     url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80");
   background-size: cover;
   background-position: center;
@@ -249,6 +257,7 @@ a {
   line-height: 1.05;
   text-transform: uppercase;
   color: var(--black);
+  margin-bottom: 14px;
 }
 
 .pilot-heading span {
@@ -265,7 +274,7 @@ a {
   letter-spacing: .8px;
   text-transform: uppercase;
   margin-bottom: 22px;
-  color: #666666;
+  color: var(--soft-grey);
 }
 
 .pilot-detail {
@@ -277,14 +286,29 @@ a {
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: .6px;
-  color: var(--terracotta);
-  margin-bottom: 4px;
+  letter-spacing: .7px;
+  color: var(--soft-grey);
+  margin-bottom: 5px;
 }
 
 .pilot-detail p {
   font-size: 16px;
-  color: #333;
+  color: #222;
+}
+
+.spot-card .pilot-detail {
+  padding: 13px 0;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+.spot-card .pilot-detail:first-of-type {
+  border-top: none;
+}
+
+.spot-card .pilot-detail p {
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .instagram {
@@ -359,5 +383,9 @@ footer p {
   .pilot-grid,
   .spot-grid {
     grid-template-columns: 1fr;
+  }
+
+  .spot-card {
+    max-width: none;
   }
 }
