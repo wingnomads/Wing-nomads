@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=11000" />
+  <link rel="stylesheet" href="style.css?v=12000" />
 </head>
 
 <body>
@@ -81,7 +81,24 @@
 
 <script>
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
-const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
+const SUPABASE_KEY = "PEGA_AQUI_TU_PUBLISHABLE_KEY";
+
+function getFlag(country) {
+  const flags = {
+    "Spain": "🇪🇸",
+    "France": "🇫🇷",
+    "Italy": "🇮🇹",
+    "Germany": "🇩🇪",
+    "Portugal": "🇵🇹",
+    "United Kingdom": "🇬🇧",
+    "United States": "🇺🇸",
+    "Canada": "🇨🇦",
+    "Australia": "🇦🇺",
+    "South Africa": "🇿🇦"
+  };
+
+  return flags[country] || "🌍";
+}
 
 async function getTable(tableName) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}?select=*`, {
@@ -101,10 +118,8 @@ async function loadProfiles() {
   try {
     const profiles = await getTable("profiles");
 
-    container.innerHTML = profiles.map((profile, index) => `
+    container.innerHTML = profiles.map(profile => `
       <article class="pilot-card">
-        <div class="card-number">#${String(index + 1).padStart(3, "0")}</div>
-
         <img 
           class="pilot-photo"
           src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
@@ -114,7 +129,7 @@ async function loadProfiles() {
         <div class="pilot-body">
           <div class="pilot-heading">
             <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-            <span>${profile.country || ""}</span>
+            <span>${getFlag(profile.country)} ${profile.country || ""}</span>
           </div>
 
           <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
