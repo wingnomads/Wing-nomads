@@ -161,8 +161,10 @@ a {
 #profiles-container,
 #spots-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
   gap: 28px;
+  justify-content: start;
+
 }
 
 .card {
