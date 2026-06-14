@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=22000" />
+  <link rel="stylesheet" href="style.css?v=23000" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
   <nav>
     <a href="#spots">Spots</a>
     <a href="#pilots">Pilots</a>
-    <a href="#">Stories</a>
+    <a href="#join">Join</a>
     <a href="#">Adventures</a>
   </nav>
 </header>
@@ -26,11 +26,11 @@
     <h1>FIND YOUR NEXT<br>FLYING<br>ADVENTURE</h1>
 
     <p class="description">
-      Discover epic flying spots, meet local pilots and turn every trip into an adventure.
+      Discover flying spots, connect with local pilots and share adventures around the world.
     </p>
 
     <div class="buttons">
-      <a href="#pilots" class="btn-primary">Become a Founding Nomad</a>
+      <a href="#join" class="btn-primary">Become a Founding Nomad</a>
       <a href="#spots" class="btn-secondary">Explore Spots</a>
     </div>
   </div>
@@ -95,6 +95,28 @@
   <div id="spots-container" class="spot-grid">Loading spots...</div>
 </section>
 
+<section id="join" class="join-section">
+  <div class="join-content">
+    <p class="eyebrow">Join the crew</p>
+    <h2>Become a Founding Nomad</h2>
+    <p>Add your pilot profile and become part of the first Wing Nomads community.</p>
+  </div>
+
+  <form id="founding-form" class="founding-form">
+    <input type="text" id="full_name" placeholder="Full name" required />
+    <input type="text" id="country" placeholder="Country, e.g. Spain" required />
+    <input type="text" id="flying_type" placeholder="Flying type, e.g. Paragliding" required />
+    <input type="text" id="level" placeholder="Level, e.g. Intermediate" required />
+    <input type="text" id="home_spot" placeholder="Favourite spot" />
+    <input type="text" id="next_destination" placeholder="Next destination" />
+    <input type="text" id="instagram" placeholder="Instagram, e.g. @nadia.fly" />
+    <input type="url" id="profile_image" placeholder="Profile image URL" />
+
+    <button type="submit">Join Wing Nomads</button>
+    <p id="form-message"></p>
+  </form>
+</section>
+
 <footer>
   <h2>Ready for your next adventure?</h2>
   <p>Join Wing Nomads and never fly alone.</p>
@@ -117,7 +139,16 @@ function getFlag(country) {
     "Australia": "🇦🇺",
     "South Africa": "🇿🇦"
   };
+
   return flags[country] || "🌍";
+}
+
+function makeUsername(name) {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "")
+    .slice(0, 20);
 }
 
 async function getTable(tableName) {
@@ -126,6 +157,22 @@ async function getTable(tableName) {
       "apikey": SUPABASE_KEY,
       "Authorization": `Bearer ${SUPABASE_KEY}`
     }
+  });
+
+  if (!response.ok) throw new Error(await response.text());
+  return response.json();
+}
+
+async function insertProfile(profile) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
+    method: "POST",
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Content-Type": "application/json",
+      "Prefer": "return=representation"
+    },
+    body: JSON.stringify(profile)
   });
 
   if (!response.ok) throw new Error(await response.text());
@@ -235,6 +282,38 @@ async function init() {
   const spots = await loadSpots();
   updateStats(profiles, spots);
 }
+
+document.getElementById("founding-form").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const message = document.getElementById("form-message");
+  message.textContent = "Adding your profile...";
+
+  const fullName = document.getElementById("full_name").value.trim();
+
+  const profile = {
+    id: crypto.randomUUID(),
+    full_name: fullName,
+    username: makeUsername(fullName),
+    country: document.getElementById("country").value.trim(),
+    flying_type: document.getElementById("flying_type").value.trim(),
+    level: document.getElementById("level").value.trim(),
+    home_spot: document.getElementById("home_spot").value.trim(),
+    next_destination: document.getElementById("next_destination").value.trim(),
+    instagram: document.getElementById("instagram").value.trim(),
+    profile_image: document.getElementById("profile_image").value.trim()
+  };
+
+  try {
+    await insertProfile(profile);
+    message.textContent = "Profile added! Welcome to Wing Nomads.";
+    this.reset();
+    await init();
+  } catch (error) {
+    console.error(error);
+    message.textContent = "Could not add profile. Check Supabase settings.";
+  }
+});
 
 init();
 </script>
