@@ -191,7 +191,7 @@ function updateStats(profiles, spots) {
   ]);
 
   document.getElementById("countries-count").textContent = countries.size;
-  document.getElementById("nomads-count").textContent = profiles.length;
+  document.getElementById("pilots-count").textContent = profiles.length;
   document.getElementById("spots-count").textContent = spots.length;
   document.getElementById("van-count").textContent = spots.filter(s => s.van_friendly).length;
 }
