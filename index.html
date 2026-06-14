@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=25000" />
+  <link rel="stylesheet" href="style.css?v=26000" />
 </head>
 
 <body>
@@ -22,13 +22,10 @@
 <section class="hero">
   <div class="hero-content">
     <p class="tagline">Travel. Connect. Fly.</p>
-
     <h1>FIND YOUR NEXT<br>FLYING<br>ADVENTURE</h1>
-
     <p class="description">
       Discover flying spots, connect with local pilots and share adventures around the world.
     </p>
-
     <div class="buttons">
       <a href="#join" class="btn-primary">Become a Founding Nomad</a>
       <a href="#spots" class="btn-secondary">Explore Spots</a>
@@ -37,25 +34,10 @@
 </section>
 
 <section class="stats-section">
-  <div class="stat">
-    <strong id="countries-count">0</strong>
-    <span>Countries</span>
-  </div>
-
-  <div class="stat">
-    <strong id="nomads-count">0</strong>
-    <span>Founding Nomads</span>
-  </div>
-
-  <div class="stat">
-    <strong id="spots-count">0</strong>
-    <span>Flying Spots</span>
-  </div>
-
-  <div class="stat">
-    <strong id="van-count">0</strong>
-    <span>Van Friendly</span>
-  </div>
+  <div class="stat"><strong id="countries-count">0</strong><span>Countries</span></div>
+  <div class="stat"><strong id="nomads-count">0</strong><span>Founding Nomads</span></div>
+  <div class="stat"><strong id="spots-count">0</strong><span>Flying Spots</span></div>
+  <div class="stat"><strong id="van-count">0</strong><span>Van Friendly</span></div>
 </section>
 
 <section class="features">
@@ -63,12 +45,10 @@
     <h3>Find Local Pilots</h3>
     <p>Meet pilots wherever you travel.</p>
   </div>
-
   <div class="feature">
     <h3>Discover Flying Spots</h3>
     <p>Explore takeoffs, landings and local knowledge.</p>
   </div>
-
   <div class="feature">
     <h3>Share Adventures</h3>
     <p>Connect through travel, vanlife and flying.</p>
@@ -81,7 +61,6 @@
     <h2>Founding Nomads</h2>
     <p>The first pilots building this community together.</p>
   </div>
-
   <div id="profiles-container" class="pilot-grid">Loading pilots...</div>
 </section>
 
@@ -91,31 +70,45 @@
     <h2>Featured Spots</h2>
     <p>Epic places to fly, shared by the community.</p>
   </div>
-
   <div id="spots-container" class="spot-grid">Loading spots...</div>
 </section>
 
-<section id="join" class="join-section">
-  <div class="join-content">
+<section id="join" class="join-cta">
+  <div class="join-cta-inner">
     <p class="eyebrow">Join the crew</p>
-    <h2>Become a Founding Nomad</h2>
-    <p>Add your pilot profile and become part of the first Wing Nomads community.</p>
+    <h2>Be part of something bigger.</h2>
+    <p>
+      Add your pilot profile and become one of the first Wing Nomads building this global flying community.
+    </p>
+    <button id="open-form-btn" class="join-btn">Become a Founding Nomad</button>
   </div>
-
-  <form id="founding-form" class="founding-form">
-    <input type="text" id="full_name" placeholder="Full name" required />
-    <input type="text" id="country" placeholder="Country, e.g. Spain" required />
-    <input type="text" id="flying_type" placeholder="Flying type, e.g. Paragliding" required />
-    <input type="text" id="level" placeholder="Level, e.g. Intermediate" required />
-    <input type="text" id="home_spot" placeholder="Favourite spot" />
-    <input type="text" id="next_destination" placeholder="Next destination" />
-    <input type="text" id="instagram" placeholder="Instagram, e.g. @nadia.fly" />
-    <input type="url" id="profile_image" placeholder="Profile image URL" />
-
-    <button type="submit">Join Wing Nomads</button>
-    <p id="form-message"></p>
-  </form>
 </section>
+
+<div id="form-modal" class="modal">
+  <div class="modal-card">
+    <button id="close-form-btn" class="modal-close">×</button>
+
+    <div class="modal-intro">
+      <p class="eyebrow">Founding Nomad</p>
+      <h2>Join Wing Nomads</h2>
+      <p>Create your pilot card. You can update the design and details later.</p>
+    </div>
+
+    <form id="founding-form" class="founding-form">
+      <input type="text" id="full_name" placeholder="Full name" required />
+      <input type="text" id="country" placeholder="Country, e.g. Spain" required />
+      <input type="text" id="flying_type" placeholder="Flying type, e.g. Paragliding" required />
+      <input type="text" id="level" placeholder="Level, e.g. Intermediate" required />
+      <input type="text" id="home_spot" placeholder="Favourite spot" />
+      <input type="text" id="next_destination" placeholder="Next destination" />
+      <input type="text" id="instagram" placeholder="Instagram, e.g. @nadia.fly" />
+      <input type="url" id="profile_image" placeholder="Profile image URL" />
+
+      <button type="submit">Create my profile</button>
+      <p id="form-message"></p>
+    </form>
+  </div>
+</div>
 
 <footer>
   <h2>Ready for your next adventure?</h2>
@@ -139,16 +132,11 @@ function getFlag(country) {
     "Australia": "🇦🇺",
     "South Africa": "🇿🇦"
   };
-
   return flags[country] || "🌍";
 }
 
 function makeUsername(name) {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "")
-    .slice(0, 20);
+  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "").slice(0, 20);
 }
 
 async function getTable(tableName) {
@@ -283,11 +271,29 @@ async function init() {
   updateStats(profiles, spots);
 }
 
+const modal = document.getElementById("form-modal");
+const openBtn = document.getElementById("open-form-btn");
+const closeBtn = document.getElementById("close-form-btn");
+
+openBtn.addEventListener("click", () => {
+  modal.classList.add("open");
+});
+
+closeBtn.addEventListener("click", () => {
+  modal.classList.remove("open");
+});
+
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    modal.classList.remove("open");
+  }
+});
+
 document.getElementById("founding-form").addEventListener("submit", async function(event) {
   event.preventDefault();
 
   const message = document.getElementById("form-message");
-  message.textContent = "Adding your profile...";
+  message.textContent = "Creating your profile...";
 
   const fullName = document.getElementById("full_name").value.trim();
 
@@ -306,12 +312,18 @@ document.getElementById("founding-form").addEventListener("submit", async functi
 
   try {
     await insertProfile(profile);
-    message.textContent = "Profile added! Welcome to Wing Nomads.";
+    message.textContent = "Profile created. Welcome to Wing Nomads.";
     this.reset();
     await init();
+
+    setTimeout(() => {
+      modal.classList.remove("open");
+      message.textContent = "";
+      window.location.href = "#pilots";
+    }, 1200);
   } catch (error) {
     console.error(error);
-    message.textContent = "Could not add profile. Check Supabase settings.";
+    message.textContent = "Could not create profile. Check Supabase settings.";
   }
 });
 
