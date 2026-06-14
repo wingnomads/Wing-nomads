@@ -27,6 +27,8 @@ a {
   text-decoration: none;
 }
 
+/* NAVBAR */
+
 .navbar {
   position: absolute;
   top: 0;
@@ -55,6 +57,8 @@ a {
   font-size: 13px;
   text-transform: uppercase;
 }
+
+/* HERO */
 
 .hero {
   min-height: 100vh;
@@ -358,35 +362,121 @@ a {
   line-height: 1.2;
 }
 
-/* JOIN FORM */
+/* JOIN CTA */
 
-.join-section {
+.join-cta {
   background: var(--paper);
-  padding: 90px 7%;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
-  align-items: start;
+  padding: 110px 7%;
+  position: relative;
+  overflow: hidden;
 }
 
-.join-content h2 {
-  font-size: clamp(42px, 6vw, 72px);
+.join-cta::before {
+  content: "";
+  position: absolute;
+  right: -160px;
+  top: -160px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: rgba(196,106,60,.09);
+}
+
+.join-cta-inner {
+  max-width: 760px;
+  position: relative;
+  z-index: 2;
+}
+
+.join-cta h2 {
+  font-size: clamp(44px, 7vw, 82px);
   line-height: .95;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
-.join-content p {
-  font-size: 18px;
+.join-cta p {
+  font-size: 20px;
   color: #555;
-  max-width: 480px;
+  max-width: 620px;
+  margin-bottom: 34px;
+}
+
+.join-btn {
+  display: inline-block;
+  padding: 18px 28px;
+  background: var(--black);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 900;
+  font-size: 13px;
+  text-transform: uppercase;
+  cursor: pointer;
+  letter-spacing: .4px;
+}
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,.72);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-card {
+  width: min(920px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border-radius: 18px;
+  padding: 42px;
+  position: relative;
+  box-shadow: 0 30px 90px rgba(0,0,0,.38);
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: var(--black);
+  color: white;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-intro {
+  max-width: 620px;
+  margin-bottom: 30px;
+}
+
+.modal-intro h2 {
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: .95;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.modal-intro p {
+  color: #555;
+  font-size: 17px;
 }
 
 .founding-form {
-  background: white;
-  padding: 32px;
-  border-radius: 14px;
-  box-shadow: 0 18px 45px rgba(0,0,0,.12);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
@@ -394,20 +484,26 @@ a {
 
 .founding-form input {
   width: 100%;
-  padding: 15px 16px;
-  border: 1px solid rgba(0,0,0,.15);
-  border-radius: 6px;
+  padding: 16px 18px;
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 8px;
   font-size: 16px;
+  background: white;
+}
+
+.founding-form input:focus {
+  outline: none;
+  border-color: var(--terracotta);
 }
 
 .founding-form button {
   grid-column: 1 / -1;
   margin-top: 8px;
-  padding: 16px 22px;
+  padding: 18px 24px;
   background: var(--black);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 900;
   text-transform: uppercase;
   cursor: pointer;
@@ -416,7 +512,7 @@ a {
 #form-message {
   grid-column: 1 / -1;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--terracotta);
 }
 
@@ -488,7 +584,7 @@ footer p {
 
   .nomads-section,
   .spots-section,
-  .join-section {
+  .join-cta {
     padding: 60px 28px;
   }
 
@@ -501,8 +597,8 @@ footer p {
     max-width: none;
   }
 
-  .join-section {
-    grid-template-columns: 1fr;
+  .modal-card {
+    padding: 32px 22px;
   }
 
   .founding-form {
