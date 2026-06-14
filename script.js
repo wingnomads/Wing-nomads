@@ -1,31 +1,17 @@
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 async function loadProfiles() {
-
   const container = document.getElementById("profiles-container");
-
   if (!container) return;
 
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .limit(6);
+  const { data, error } = await supabase.from("profiles").select("*").limit(6);
 
   if (error) {
     console.error(error);
     container.innerHTML = "Could not load pilots";
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    container.innerHTML = "No pilots found";
     return;
   }
 
@@ -37,28 +23,17 @@ async function loadProfiles() {
       <p>${profile.level || ""}</p>
     </div>
   `).join("");
-
 }
 
 async function loadSpots() {
-
   const container = document.getElementById("spots-container");
-
   if (!container) return;
 
-  const { data, error } = await supabase
-    .from("spots")
-    .select("*")
-    .limit(6);
+  const { data, error } = await supabase.from("spots").select("*").limit(6);
 
   if (error) {
     console.error(error);
     container.innerHTML = "Could not load spots";
-    return;
-  }
-
-  if (!data || data.length === 0) {
-    container.innerHTML = "No spots found";
     return;
   }
 
@@ -70,7 +45,6 @@ async function loadSpots() {
       <p>${spot.difficulty || ""}</p>
     </div>
   `).join("");
-
 }
 
 loadProfiles();
