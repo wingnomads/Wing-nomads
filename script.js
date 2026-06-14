@@ -1,10 +1,16 @@
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
-const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_KEY = "TU_PUBLISHABLE_KEY";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 async function loadProfiles() {
-  const container = document.getElementById("pilots-list");
+
+  const container = document.getElementById("profiles-container");
+
   if (!container) return;
 
   const { data, error } = await supabase
@@ -13,26 +19,31 @@ async function loadProfiles() {
     .limit(6);
 
   if (error) {
-    container.innerHTML = "Could not load pilots.";
     console.error(error);
+    container.innerHTML = "Could not load pilots";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "No pilots found";
     return;
   }
 
   container.innerHTML = data.map(profile => `
     <div class="card">
-      <div class="card-content">
-        <h3>${profile.full_name || "Unnamed pilot"}</h3>
-        <p>${profile.country || ""}</p>
-        <p>${profile.flying_type || ""} · ${profile.level || ""}</p>
-        <p>${profile.bio || ""}</p>
-        <p>${profile.instagram || ""}</p>
-      </div>
+      <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+      <p>${profile.country || ""}</p>
+      <p>${profile.flying_type || ""}</p>
+      <p>${profile.level || ""}</p>
     </div>
   `).join("");
+
 }
 
 async function loadSpots() {
-  const container = document.getElementById("spots-list");
+
+  const container = document.getElementById("spots-container");
+
   if (!container) return;
 
   const { data, error } = await supabase
@@ -41,22 +52,25 @@ async function loadSpots() {
     .limit(6);
 
   if (error) {
-    container.innerHTML = "Could not load spots.";
     console.error(error);
+    container.innerHTML = "Could not load spots";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    container.innerHTML = "No spots found";
     return;
   }
 
   container.innerHTML = data.map(spot => `
     <div class="card">
-      <div class="card-content">
-        <h3>${spot.name || "Unnamed spot"}</h3>
-        <p>${spot.country || ""} · ${spot.region || ""}</p>
-        <p>${spot.flying_type || ""}</p>
-        <p>${spot.best_season || ""}</p>
-        <p>${spot.difficulty || ""}</p>
-      </div>
+      <h3>${spot.name || "Unnamed Spot"}</h3>
+      <p>${spot.country || ""}</p>
+      <p>${spot.region || ""}</p>
+      <p>${spot.difficulty || ""}</p>
     </div>
   `).join("");
+
 }
 
 loadProfiles();
