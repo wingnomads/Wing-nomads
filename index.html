@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wing Nomads</title>
+  <title>Wing Nomads | Never Fly Alone</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -12,8 +12,8 @@
 <header class="navbar">
   <div class="logo">WING NOMADS</div>
   <nav>
-    <a href="#">Spots</a>
-    <a href="#">Pilots</a>
+    <a href="#spots">Spots</a>
+    <a href="#pilots">Pilots</a>
     <a href="#">Stories</a>
     <a href="#">Adventures</a>
   </nav>
@@ -21,7 +21,7 @@
 
 <section class="hero">
   <div class="hero-content">
-    <p class="tagline">Travel. Connect. Fly.</p>
+    <p class="kicker">Travel. Connect. Fly.</p>
 
     <h1>
       NEVER<br>
@@ -36,8 +36,8 @@
     </p>
 
     <div class="buttons">
-      <a href="#" class="btn-primary">Become a Founding Nomad</a>
-      <a href="#" class="btn-secondary">Explore Spots</a>
+      <a href="#pilots" class="btn">Become a Founding Nomad</a>
+      <a href="#spots" class="btn secondary">Explore Spots</a>
     </div>
   </div>
 </section>
@@ -59,14 +59,14 @@
   </div>
 </section>
 
-<section class="founders">
+<section id="pilots" class="founders">
   <h2>Founding Nomads</h2>
-  <div id="profiles-container">Loading pilots...</div>
+  <div id="profiles-container" class="cards">Loading pilots...</div>
 </section>
 
-<section class="spots">
+<section id="spots" class="spots">
   <h2>Featured Spots</h2>
-  <div id="spots-container">Loading spots...</div>
+  <div id="spots-container" class="cards">Loading spots...</div>
 </section>
 
 <footer>
@@ -80,19 +80,13 @@ const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
 async function getTable(tableName) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}?select=*`, {
-    method: "GET",
     headers: {
       "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
-      "Content-Type": "application/json"
+      "Authorization": `Bearer ${SUPABASE_KEY}`
     }
   });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`${tableName} error: ${response.status} ${errorText}`);
-  }
-
+  if (!response.ok) throw new Error(await response.text());
   return response.json();
 }
 
@@ -102,17 +96,15 @@ async function loadProfiles() {
   try {
     const profiles = await getTable("profiles");
 
-    if (!profiles.length) {
-      container.innerHTML = "No pilots found.";
-      return;
-    }
-
     container.innerHTML = profiles.map(profile => `
       <div class="card">
-        <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-        <p>${profile.country || ""}</p>
-        <p>${profile.flying_type || ""}</p>
-        <p>${profile.level || ""}</p>
+        <div class="card-content">
+          <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+          <p>${profile.country || ""}</p>
+          <p>${profile.flying_type || ""}</p>
+          <p>${profile.level || ""}</p>
+          <p>${profile.instagram || ""}</p>
+        </div>
       </div>
     `).join("");
   } catch (error) {
@@ -127,17 +119,15 @@ async function loadSpots() {
   try {
     const spots = await getTable("spots");
 
-    if (!spots.length) {
-      container.innerHTML = "No spots found.";
-      return;
-    }
-
     container.innerHTML = spots.map(spot => `
       <div class="card">
-        <h3>${spot.name || "Unnamed Spot"}</h3>
-        <p>${spot.country || ""}</p>
-        <p>${spot.region || ""}</p>
-        <p>${spot.difficulty || ""}</p>
+        <div class="card-content">
+          <h3>${spot.name || "Unnamed Spot"}</h3>
+          <p>${spot.country || ""}</p>
+          <p>${spot.region || ""}</p>
+          <p>${spot.flying_type || ""}</p>
+          <p>${spot.difficulty || ""}</p>
+        </div>
       </div>
     `).join("");
   } catch (error) {
