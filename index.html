@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Never Fly Alone</title>
-  <link rel="stylesheet" href="style.css?v=9000" />
+  <link rel="stylesheet" href="style.css?v=10000" />
 </head>
 
 <body>
@@ -86,7 +86,10 @@ async function getTable(tableName) {
     }
   });
 
-  if (!response.ok) throw new Error(await response.text());
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
   return response.json();
 }
 
@@ -97,20 +100,22 @@ async function loadProfiles() {
     const profiles = await getTable("profiles");
 
     container.innerHTML = profiles.map(profile => `
-      <div class="card pilot-card">
-        <img 
-          class="profile-image" 
-          src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"}" 
+      <div class="pilot-card">
+
+        <img
+          class="avatar"
+          src="${profile.profile_image || "https://i.pravatar.cc/300"}"
           alt="${profile.full_name || "Pilot"}"
         >
 
-        <div class="card-content">
+        <div class="pilot-info">
           <h3>${profile.full_name || "Unnamed Pilot"}</h3>
           <p>🌍 ${profile.country || ""}</p>
           <p>🪂 ${profile.flying_type || ""}</p>
           <p>⭐ ${profile.level || ""}</p>
           <p>📸 ${profile.instagram || ""}</p>
         </div>
+
       </div>
     `).join("");
   } catch (error) {
@@ -127,8 +132,6 @@ async function loadSpots() {
 
     container.innerHTML = spots.map(spot => `
       <div class="card spot-card">
-        <div class="spot-image"></div>
-
         <div class="card-content">
           <h3>${spot.name || "Unnamed Spot"}</h3>
           <p>📍 ${spot.region || ""}</p>
