@@ -247,11 +247,12 @@ a {
 }
 
 .pilot-meta {
-  font-size: 13px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  margin-bottom: 18px;
-  color: var(--terracotta);
+  margin-bottom: 22px;
+  color: #666;
 }
 
 .pilot-detail {
