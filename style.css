@@ -208,6 +208,7 @@ a {
   height: 220px;
   display: block;
   object-fit: cover;
+  object-position: center center;
 }
 
 .spot-image {
