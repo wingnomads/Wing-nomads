@@ -49,3 +49,4 @@ async function loadSpots() {
 
 loadProfiles();
 loadSpots();
+alert("SCRIPT CARGADO");
