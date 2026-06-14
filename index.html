@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=18000" />
+  <link rel="stylesheet" href="style.css?v=19000" />
 </head>
 
 <body>
@@ -165,26 +165,23 @@ async function loadSpots() {
         <div class="spot-image"></div>
 
         <div class="pilot-body">
-          <h3>${spot.name || "Unnamed Spot"}</h3>
-
-          <div class="pilot-detail">
-            <small>Location</small>
-            <p>${spot.region || ""}, ${spot.country || ""}</p>
+          <div class="pilot-heading">
+            <h3>${spot.name || "Unnamed Spot"}</h3>
+            <span>${getFlag(spot.country)} ${spot.country || ""}</span>
           </div>
 
-          <div class="pilot-detail">
-            <small>Flying Type</small>
-            <p>${spot.flying_type || "Paragliding"}</p>
-          </div>
+          <p class="pilot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
 
-          <div class="pilot-detail">
-            <small>Difficulty</small>
-            <p>${spot.difficulty || "Not specified"}</p>
-          </div>
+          <div class="spot-info-row">
+            <div>
+              <small>Difficulty</small>
+              <p>${spot.difficulty || "Not specified"}</p>
+            </div>
 
-          <div class="pilot-detail">
-            <small>Van Friendly</small>
-            <p>${spot.van_friendly ? "✅ Yes" : "❌ No"}</p>
+            <div>
+              <small>Van friendly</small>
+              <p>${spot.van_friendly ? "Yes 🚐" : "No"}</p>
+            </div>
           </div>
         </div>
       </article>
