@@ -211,6 +211,10 @@ a {
   object-position: center center;
 }
 
+.pilot-photo {
+  object-position: center top;
+}
+
 .spot-image {
   background:
     linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)),
