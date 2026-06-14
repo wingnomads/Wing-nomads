@@ -222,48 +222,55 @@ a {
   object-position: center 25%;
 }
 
-/* SPOT */
+/* SPOT CARD FINAL POLISH */
 
-.spot-card {
-  max-width: 340px;
+.spot-card .pilot-body {
+  padding: 26px;
 }
 
-.spot-image {
-  width: 100%;
-  height: 190px;
-  display: block;
-  background:
-    linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.06)),
-    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80");
-  background-size: cover;
-  background-position: center;
+.spot-card .pilot-heading {
+  margin-bottom: 18px;
+}
+
+.spot-card .pilot-heading h3 {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.spot-card .pilot-meta {
+  color: #666;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
 }
 
 .spot-info-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
-  margin-top: 22px;
   padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,.08);
+  border-top: 1px solid rgba(0,0,0,.1);
 }
 
 .spot-info-row small {
   display: block;
   font-size: 11px;
   font-weight: 900;
+  letter-spacing: .8px;
   text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--soft-grey);
-  margin-bottom: 5px;
+  color: #666;
+  margin-bottom: 6px;
 }
 
 .spot-info-row p {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 800;
   color: #222;
+  line-height: 1.2;
 }
-
 .pilot-body {
   padding: 24px;
 }
