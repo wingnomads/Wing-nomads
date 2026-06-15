@@ -5,26 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wing Nomads Pilot</title>
 
-<link rel="stylesheet" href="style.css?v=27000">
+<link rel="stylesheet" href="style.css?v=27001">
 
 <style>
 .pilot-page{
   min-height:100vh;
   background:#f6f1e8;
-  padding:120px 7%;
+  padding:120px 7% 80px;
 }
 
 .pilot-profile{
-  max-width:1000px;
+  max-width:1100px;
   margin:auto;
-  background:white;
-  border-radius:20px;
+  background:#fff;
+  border-radius:24px;
   overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.12);
+  box-shadow:0 24px 70px rgba(0,0,0,.12);
 }
 
 .pilot-cover{
-  height:350px;
+  position:relative;
+  height:380px;
   background:#ddd;
 }
 
@@ -32,125 +33,290 @@
   width:100%;
   height:100%;
   object-fit:cover;
+  display:block;
+}
+
+.pilot-cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0));
+}
+
+.back-link{
+  display:inline-block;
+  margin-bottom:24px;
+  color:#222;
+  text-decoration:none;
+  font-weight:800;
 }
 
 .pilot-content{
-  padding:40px;
+  padding:44px;
+}
+
+.pilot-top{
+  display:flex;
+  justify-content:space-between;
+  gap:32px;
+  align-items:flex-start;
+  margin-bottom:36px;
 }
 
 .pilot-country{
   color:#c46a3c;
-  font-weight:800;
+  font-weight:900;
   text-transform:uppercase;
-  margin-bottom:10px;
+  letter-spacing:.08em;
+  margin-bottom:12px;
+  font-size:14px;
 }
 
 .pilot-name{
-  font-size:56px;
-  font-weight:900;
-  line-height:1;
-  margin-bottom:20px;
+  font-size:58px;
+  font-weight:950;
+  line-height:.95;
+  margin:0 0 18px;
+  color:#181818;
 }
 
 .pilot-meta{
-  font-size:18px;
-  color:#666;
-  margin-bottom:40px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.pilot-chip{
+  background:#f3eee6;
+  border:1px solid #e6ded2;
+  padding:9px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:800;
+  color:#333;
+}
+
+.pilot-contact{
+  min-width:220px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.instagram-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 22px;
+  border-radius:999px;
+  background:#111;
+  color:white;
+  text-decoration:none;
+  font-weight:900;
+  transition:.2s ease;
+}
+
+.instagram-button:hover{
+  transform:translateY(-2px);
+  background:#c46a3c;
+}
+
+.pilot-bio{
+  background:#faf7f2;
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:30px;
+}
+
+.pilot-bio small{
+  display:block;
+  text-transform:uppercase;
+  font-weight:900;
+  color:#888;
+  margin-bottom:10px;
+  letter-spacing:.06em;
+}
+
+.pilot-bio p{
+  font-size:19px;
+  line-height:1.6;
+  color:#333;
+  margin:0;
 }
 
 .info-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:24px;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
 }
 
 .info-card{
   background:#faf7f2;
   padding:24px;
-  border-radius:12px;
+  border-radius:16px;
+  border:1px solid #eee5da;
 }
 
 .info-card small{
   display:block;
   text-transform:uppercase;
-  font-weight:800;
+  font-weight:900;
   color:#888;
-  margin-bottom:8px;
+  margin-bottom:10px;
+  letter-spacing:.06em;
+  font-size:12px;
 }
 
 .info-card p{
   font-size:20px;
-  font-weight:700;
+  font-weight:850;
+  color:#222;
+  margin:0;
 }
 
-@media(max-width:768px){
+.empty-state{
+  max-width:700px;
+  margin:120px auto;
+  text-align:center;
+  background:white;
+  padding:50px;
+  border-radius:24px;
+  box-shadow:0 20px 60px rgba(0,0,0,.1);
+}
+
+.empty-state h1{
+  margin-bottom:12px;
+  font-size:42px;
+}
+
+.empty-state p{
+  color:#666;
+  font-size:18px;
+}
+
+@media(max-width:900px){
+  .pilot-page{
+    padding:100px 5% 60px;
+  }
+
+  .pilot-content{
+    padding:32px;
+  }
+
+  .pilot-top{
+    flex-direction:column;
+  }
+
+  .pilot-contact{
+    justify-content:flex-start;
+  }
 
   .pilot-name{
-    font-size:42px;
+    font-size:48px;
   }
 
   .info-grid{
     grid-template-columns:1fr;
   }
 }
-</style>
 
+@media(max-width:560px){
+  .pilot-page{
+    padding:90px 18px 50px;
+  }
+
+  .pilot-cover{
+    height:280px;
+  }
+
+  .pilot-content{
+    padding:26px 22px;
+  }
+
+  .pilot-name{
+    font-size:40px;
+  }
+
+  .pilot-bio p,
+  .info-card p{
+    font-size:17px;
+  }
+
+  .instagram-button{
+    width:100%;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <section class="pilot-page">
 
-  <div class="pilot-profile">
+  <a href="profiles.html" class="back-link">← Back to pilots</a>
 
-    <div class="pilot-cover">
-      <img id="pilot-image">
-    </div>
-
-    <div class="pilot-content">
-
-      <div id="pilot-country" class="pilot-country"></div>
-
-      <h1 id="pilot-name" class="pilot-name"></h1>
-
-      <p id="pilot-meta" class="pilot-meta"></p>
-
-      <div class="info-grid">
-
-        <div class="info-card">
-          <small>Favourite Spot</small>
-          <p id="pilot-spot"></p>
-        </div>
-
-        <div class="info-card">
-          <small>Next Destination</small>
-          <p id="pilot-destination"></p>
-        </div>
-
-        <div class="info-card">
-          <small>Instagram</small>
-          <p id="pilot-instagram"></p>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+  <div id="pilot-wrapper"></div>
 
 </section>
 
 <script>
-
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
-  
+
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user");
 
+const wrapper = document.getElementById("pilot-wrapper");
+
+function cleanText(value, fallback = "Not added"){
+  return value && String(value).trim() !== "" ? value : fallback;
+}
+
+function instagramUrl(value){
+  if(!value) return null;
+
+  let handle = value.trim();
+
+  if(handle.startsWith("http")) return handle;
+
+  handle = handle.replace("@", "");
+  return `https://instagram.com/${handle}`;
+}
+
+function instagramLabel(value){
+  if(!value) return "Instagram not added";
+
+  let handle = value.trim();
+
+  if(handle.startsWith("http")){
+    handle = handle.split("instagram.com/")[1] || handle;
+    handle = handle.replace("/", "");
+  }
+
+  if(!handle.startsWith("@")) handle = "@" + handle;
+
+  return handle;
+}
+
+function showEmptyState(title, text){
+  wrapper.innerHTML = `
+    <div class="empty-state">
+      <h1>${title}</h1>
+      <p>${text}</p>
+      <br>
+      <a href="profiles.html" class="instagram-button">Back to pilots</a>
+    </div>
+  `;
+}
+
 async function loadPilot(){
 
+  if(!username){
+    showEmptyState("Pilot not found", "No pilot username was provided.");
+    return;
+  }
+
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/profiles?username=eq.${username}&select=*`,
+    `${SUPABASE_URL}/rest/v1/profiles?username=eq.${encodeURIComponent(username)}&select=*`,
     {
       headers:{
         apikey:SUPABASE_KEY,
@@ -160,36 +326,90 @@ async function loadPilot(){
   );
 
   const data = await response.json();
-
   const pilot = data[0];
 
-  if(!pilot) return;
+  if(!pilot){
+    showEmptyState("Pilot not found", "This pilot profile does not exist yet.");
+    return;
+  }
 
-  document.getElementById("pilot-image").src =
-    pilot.profile_image ||
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee";
+  const image = pilot.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee";
+  const country = cleanText(pilot.country, "Unknown location");
+  const name = cleanText(pilot.full_name, "Unnamed Pilot");
+  const level = cleanText(pilot.level, "Level not added");
+  const flyingType = cleanText(pilot.flying_type, "Flying type not added");
+  const homeSpot = cleanText(pilot.home_spot);
+  const nextDestination = cleanText(pilot.next_destination, "Open to adventure");
+  const bio = cleanText(
+    pilot.bio,
+    "This pilot has not added a bio yet."
+  );
 
-  document.getElementById("pilot-country").textContent =
-    pilot.country;
+  const instaUrl = instagramUrl(pilot.instagram);
+  const instaLabel = instagramLabel(pilot.instagram);
 
-  document.getElementById("pilot-name").textContent =
-    pilot.full_name;
+  wrapper.innerHTML = `
+    <div class="pilot-profile">
 
-  document.getElementById("pilot-meta").textContent =
-    `${pilot.level} · ${pilot.flying_type}`;
+      <div class="pilot-cover">
+        <img src="${image}" alt="${name}">
+      </div>
 
-  document.getElementById("pilot-spot").textContent =
-    pilot.home_spot || "Not added";
+      <div class="pilot-content">
 
-  document.getElementById("pilot-destination").textContent =
-    pilot.next_destination || "Open";
+        <div class="pilot-top">
 
-  document.getElementById("pilot-instagram").textContent =
-    pilot.instagram || "-";
+          <div>
+            <div class="pilot-country">${country}</div>
+            <h1 class="pilot-name">${name}</h1>
+
+            <div class="pilot-meta">
+              <span class="pilot-chip">${level}</span>
+              <span class="pilot-chip">${flyingType}</span>
+            </div>
+          </div>
+
+          <div class="pilot-contact">
+            ${
+              instaUrl
+              ? `<a href="${instaUrl}" target="_blank" class="instagram-button">${instaLabel}</a>`
+              : `<span class="instagram-button">${instaLabel}</span>`
+            }
+          </div>
+
+        </div>
+
+        <div class="pilot-bio">
+          <small>About</small>
+          <p>${bio}</p>
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-card">
+            <small>Home Spot</small>
+            <p>${homeSpot}</p>
+          </div>
+
+          <div class="info-card">
+            <small>Next Destination</small>
+            <p>${nextDestination}</p>
+          </div>
+
+          <div class="info-card">
+            <small>Connect</small>
+            <p>${instaLabel}</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
 }
 
 loadPilot();
-
 </script>
 
 </body>
