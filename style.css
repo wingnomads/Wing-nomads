@@ -1,4 +1,4 @@
-:root {
+f:root {
   --black: #0d0d0d;
   --charcoal: #222222;
   --cream: #f6f1e8;
@@ -189,7 +189,31 @@ a {
   font-size: 17px;
   color: #555;
 }
+@media (max-width: 768px) {
+  .features-list {
+    gap: 0;
+  }
 
+  .feature-row {
+    padding: 42px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.14);
+  }
+
+  .feature-row:last-child {
+    border-bottom: none;
+  }
+
+  .feature-row h3 {
+    margin-bottom: 18px;
+    line-height: 1.05;
+  }
+
+  .feature-row p {
+    max-width: 320px;
+    margin: 0 auto;
+    line-height: 1.45;
+  }
+}
 /* SECTIONS */
 
 .nomads-section {
