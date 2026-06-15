@@ -4,57 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
-  <link rel="stylesheet" href="style.css?v=28000" />
+  <link rel="stylesheet" href="style.css?v=30000" />
 </head>
 
 <body>
 
-<section class="pilot-page">
-  <div class="pilot-profile">
+<section class="spot-page">
 
-    <div class="pilot-cover">
-      <img id="spot-image">
+  <a href="index.html#spots" class="back-link">← Back to spots</a>
+
+  <section class="spot-hero-detail">
+    <img id="spot-image" alt="Flying spot image">
+
+    <div class="spot-hero-overlay">
+      <p id="spot-country" class="eyebrow"></p>
+      <h1 id="spot-name"></h1>
+      <p id="spot-meta"></p>
+    </div>
+  </section>
+
+  <section class="spot-detail-content">
+
+    <div class="spot-main-info">
+      <p id="spot-description" class="spot-description-detail"></p>
     </div>
 
-    <div class="pilot-content">
-      <div id="spot-country" class="pilot-country"></div>
-      <h1 id="spot-name" class="pilot-name"></h1>
-      <p id="spot-meta" class="pilot-meta"></p>
+    <div class="spot-detail-grid">
 
-      <div class="info-grid">
-        <div class="info-card">
-          <small>Difficulty</small>
-          <p id="spot-difficulty"></p>
-        </div>
-
-        <div class="info-card">
-          <small>Best Season</small>
-          <p id="spot-season"></p>
-        </div>
-
-        <div class="info-card">
-          <small>Wind Directions</small>
-          <p id="spot-wind"></p>
-        </div>
-
-        <div class="info-card">
-          <small>Van Friendly</small>
-          <p id="spot-van"></p>
-        </div>
+      <div class="spot-detail-card">
+        <small>Difficulty</small>
+        <p id="spot-difficulty"></p>
       </div>
 
-      <div class="info-card" style="margin-top:24px;">
-        <small>Description</small>
-        <p id="spot-description"></p>
+      <div class="spot-detail-card">
+        <small>Best Season</small>
+        <p id="spot-season"></p>
       </div>
 
-      <div class="info-card" style="margin-top:24px;">
-        <small>Local Community</small>
-        <p id="spot-community"></p>
+      <div class="spot-detail-card">
+        <small>Wind Directions</small>
+        <p id="spot-wind"></p>
       </div>
+
+      <div class="spot-detail-card">
+        <small>Van Friendly</small>
+        <p id="spot-van"></p>
+      </div>
+
     </div>
 
-  </div>
+    <section class="local-community-box">
+      <div>
+        <p class="eyebrow">Local Community</p>
+        <h2>Connect with local pilots</h2>
+        <p>
+          Find the local flying community, ask about conditions and connect with pilots already flying here.
+        </p>
+      </div>
+
+      <div id="spot-community" class="community-actions"></div>
+    </section>
+
+  </section>
+
 </section>
 
 <script>
@@ -76,11 +88,7 @@ async function loadSpot() {
   );
 
   const data = await response.json();
-
-console.log("slug:", slug);
-console.log("data:", data);
-
-const spot = data[0];
+  const spot = data[0];
 
   if (!spot) {
     document.body.innerHTML = "<h1 style='padding:40px;'>Spot not found</h1>";
@@ -119,15 +127,15 @@ const spot = data[0];
   const community = [];
 
   if (spot.whatsapp_group_url) {
-    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank">Join local WhatsApp group</a>`);
+    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank">Join WhatsApp Group</a>`);
   }
 
   if (spot.local_club_url) {
-    community.push(`<a href="${spot.local_club_url}" target="_blank">Visit local club</a>`);
+    community.push(`<a href="${spot.local_club_url}" target="_blank">Visit Local Club</a>`);
   }
 
   document.getElementById("spot-community").innerHTML =
-    community.length ? community.join("<br>") : "No local community links added yet.";
+    community.length ? community.join("") : "<p>No local community links added yet.</p>";
 }
 
 loadSpot();
