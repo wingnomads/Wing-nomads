@@ -558,16 +558,15 @@ a {
   box-shadow: 0 14px 36px rgba(0,0,0,.08);
 }
 
-.circle-icon {
-  width: 58px;
-  height: 58px;
-  background: #f1e8dc;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
-  color: #111;
+.circle-icon svg,
+.spot-type-line svg,
+.side-item svg,
+.community-btn svg,
+.safety-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  stroke-width: 2.2;
 }
 
 .spot-mini-card small,
