@@ -76,7 +76,11 @@ async function loadSpot() {
   );
 
   const data = await response.json();
-  const spot = data[0];
+
+console.log("slug:", slug);
+console.log("data:", data);
+
+const spot = data[0];
 
   if (!spot) {
     document.body.innerHTML = "<h1 style='padding:40px;'>Spot not found</h1>";
