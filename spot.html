@@ -4,56 +4,99 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
-  <link rel="stylesheet" href="style.css?v=30000" />
+  <link rel="stylesheet" href="style.css?v=31000" />
 </head>
 
 <body>
 
 <section class="spot-page">
 
-  <a href="index.html#spots" class="back-link">← Back to spots</a>
+  <section class="spot-detail-hero">
+    <a href="index.html#spots" class="spot-back">← Back to spots</a>
 
-  <section class="spot-hero-detail">
     <img id="spot-image" alt="Flying spot image">
 
-    <div class="spot-hero-overlay">
-      <p id="spot-country" class="eyebrow"></p>
+    <div class="spot-hero-shade"></div>
+
+    <div class="spot-hero-content">
       <h1 id="spot-name"></h1>
-      <p id="spot-meta"></p>
+
+      <div class="spot-location-line">
+        <span id="spot-flag" class="spot-flag"></span>
+        <span id="spot-country"></span>
+        <span class="divider">|</span>
+        <span id="spot-region" class="region-highlight"></span>
+      </div>
+
+      <div class="spot-type-line">
+        <span class="type-icon">🪂</span>
+        <span id="spot-type"></span>
+      </div>
     </div>
   </section>
 
-  <section class="spot-detail-content">
+  <main class="spot-detail-main">
 
-    <div class="spot-main-info">
-      <p id="spot-description" class="spot-description-detail"></p>
-    </div>
+    <section class="spot-layout">
 
-    <div class="spot-detail-grid">
+      <div class="spot-left">
 
-      <div class="spot-detail-card">
-        <small>Difficulty</small>
-        <p id="spot-difficulty"></p>
+        <p id="spot-description" class="spot-description-large"></p>
+
+        <div class="spot-info-cards">
+
+          <div class="spot-mini-card">
+            <span class="circle-icon">▮▮▮</span>
+            <small>Difficulty</small>
+            <p id="spot-difficulty"></p>
+          </div>
+
+          <div class="spot-mini-card">
+            <span class="circle-icon">☷</span>
+            <small>Best Season</small>
+            <p id="spot-season"></p>
+          </div>
+
+          <div class="spot-mini-card">
+            <span class="circle-icon">≋</span>
+            <small>Wind Directions</small>
+            <p id="spot-wind"></p>
+          </div>
+
+          <div class="spot-mini-card">
+            <span class="circle-icon">🚐</span>
+            <small>Van Friendly</small>
+            <p id="spot-van"></p>
+          </div>
+
+        </div>
       </div>
 
-      <div class="spot-detail-card">
-        <small>Best Season</small>
-        <p id="spot-season"></p>
-      </div>
+      <aside class="spot-side-card">
+        <div class="side-item">
+          <small>Country</small>
+          <p><span id="side-flag"></span> <span id="side-country"></span></p>
+        </div>
 
-      <div class="spot-detail-card">
-        <small>Wind Directions</small>
-        <p id="spot-wind"></p>
-      </div>
+        <div class="side-item">
+          <small>Region</small>
+          <p id="side-region"></p>
+        </div>
 
-      <div class="spot-detail-card">
-        <small>Van Friendly</small>
-        <p id="spot-van"></p>
-      </div>
+        <div class="side-item">
+          <small>Flying Type</small>
+          <p>🪂 <span id="side-type"></span></p>
+        </div>
 
-    </div>
+        <div class="side-item">
+          <small>Other Disciplines</small>
+          <p>Coming soon</p>
+        </div>
+      </aside>
 
-    <section class="local-community-box">
+    </section>
+
+    <section class="spot-community-panel">
       <div>
         <p class="eyebrow">Local Community</p>
         <h2>Connect with local pilots</h2>
@@ -62,10 +105,18 @@
         </p>
       </div>
 
-      <div id="spot-community" class="community-actions"></div>
+      <div id="spot-community" class="spot-community-buttons"></div>
     </section>
 
-  </section>
+    <section class="spot-safety-note">
+      <div class="safety-icon">💡</div>
+      <p>
+        Always check local conditions and regulations before flying.<br>
+        Fly safe, respect nature and enjoy the adventure.
+      </p>
+    </section>
+
+  </main>
 
 </section>
 
@@ -75,6 +126,23 @@ const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("id");
+
+function getFlag(country) {
+  const flags = {
+    "Spain": "🇪🇸",
+    "France": "🇫🇷",
+    "Italy": "🇮🇹",
+    "Germany": "🇩🇪",
+    "Portugal": "🇵🇹",
+    "United Kingdom": "🇬🇧",
+    "United States": "🇺🇸",
+    "Canada": "🇨🇦",
+    "Australia": "🇦🇺",
+    "South Africa": "🇿🇦"
+  };
+
+  return flags[country] || "🌍";
+}
 
 async function loadSpot() {
   const response = await fetch(
@@ -95,19 +163,22 @@ async function loadSpot() {
     return;
   }
 
+  const flag = getFlag(spot.country);
+
   document.getElementById("spot-image").src =
     spot.image_url ||
     spot.image ||
     "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
 
-  document.getElementById("spot-country").textContent =
-    spot.country || "";
+  document.getElementById("spot-name").textContent = spot.name || "Unnamed Spot";
 
-  document.getElementById("spot-name").textContent =
-    spot.name || "Unnamed Spot";
+  document.getElementById("spot-flag").textContent = flag;
+  document.getElementById("spot-country").textContent = spot.country || "";
+  document.getElementById("spot-region").textContent = spot.region || "";
+  document.getElementById("spot-type").textContent = spot.flying_type || "Paragliding";
 
-  document.getElementById("spot-meta").textContent =
-    `${spot.region || ""} · ${spot.flying_type || "Paragliding"}`;
+  document.getElementById("spot-description").textContent =
+    spot.description || "No description added yet.";
 
   document.getElementById("spot-difficulty").textContent =
     spot.difficulty || "Not specified";
@@ -121,17 +192,19 @@ async function loadSpot() {
   document.getElementById("spot-van").textContent =
     spot.van_friendly ? "Yes 🚐" : "No";
 
-  document.getElementById("spot-description").textContent =
-    spot.description || "No description added yet.";
+  document.getElementById("side-flag").textContent = flag;
+  document.getElementById("side-country").textContent = spot.country || "";
+  document.getElementById("side-region").textContent = spot.region || "";
+  document.getElementById("side-type").textContent = spot.flying_type || "Paragliding";
 
   const community = [];
 
   if (spot.whatsapp_group_url) {
-    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank">Join WhatsApp Group</a>`);
+    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank" class="community-btn primary">💬 Join WhatsApp Group</a>`);
   }
 
   if (spot.local_club_url) {
-    community.push(`<a href="${spot.local_club_url}" target="_blank">Visit Local Club</a>`);
+    community.push(`<a href="${spot.local_club_url}" target="_blank" class="community-btn secondary">👥 Visit Local Club</a>`);
   }
 
   document.getElementById("spot-community").innerHTML =
