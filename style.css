@@ -1,4 +1,4 @@
-f:root {
+:root {
   --black: #0d0d0d;
   --charcoal: #222222;
   --cream: #f6f1e8;
@@ -15,11 +15,21 @@ f:root {
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: var(--cream);
   color: var(--charcoal);
   line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
 }
 
 a {
@@ -189,31 +199,7 @@ a {
   font-size: 17px;
   color: #555;
 }
-@media (max-width: 768px) {
-  .features-list {
-    gap: 0;
-  }
 
-  .feature-row {
-    padding: 42px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.14);
-  }
-
-  .feature-row:last-child {
-    border-bottom: none;
-  }
-
-  .feature-row h3 {
-    margin-bottom: 18px;
-    line-height: 1.05;
-  }
-
-  .feature-row p {
-    max-width: 320px;
-    margin: 0 auto;
-    line-height: 1.45;
-  }
-}
 /* SECTIONS */
 
 .nomads-section {
@@ -261,9 +247,8 @@ a {
   gap: 28px;
 }
 
-/* LINKS */
-
-.pilot-link {
+.pilot-link,
+.spot-link {
   display: block;
   color: inherit;
   text-decoration: none;
@@ -285,24 +270,9 @@ a {
   cursor: pointer;
 }
 
-.pilot-card:hover {
-  transform: translateY(-6px);
-}
-.pilot-card-body .pilot-meta {
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
-  margin-bottom: 24px;
-}
-
-.pilot-card-body .pilot-next {
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(0,0,0,0.12);
-  margin-bottom: 24px;
-}
-
-.pilot-card-body .pilot-contact,
-.pilot-card-body .pilot-instagram {
-  padding-top: 4px;
+.pilot-card:hover,
+.spot-link:hover .spot-card {
+  transform: translateY(-4px);
 }
 
 .pilot-photo {
@@ -347,12 +317,16 @@ a {
   font-weight: 900;
   letter-spacing: .9px;
   text-transform: uppercase;
-  margin-bottom: 22px;
   color: var(--soft-grey);
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  margin-bottom: 22px;
 }
 
 .pilot-detail {
-  margin-bottom: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  margin-bottom: 18px;
 }
 
 .pilot-detail small {
@@ -371,7 +345,7 @@ a {
 }
 
 .instagram {
-  margin-top: 20px;
+  margin-top: 22px;
   font-size: 16px;
   color: #333;
   font-weight: 800;
@@ -417,19 +391,6 @@ a {
   font-weight: 800;
   color: #222;
   line-height: 1.2;
-}
-.spot-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.spot-card {
-  transition: all 0.25s ease;
-}
-
-.spot-link:hover .spot-card {
-  transform: translateY(-4px);
 }
 
 /* JOIN CTA */
@@ -485,9 +446,8 @@ a {
   cursor: pointer;
   letter-spacing: .4px;
 }
-/* =========================
-   SPOT DETAIL PAGE
-========================= */
+
+/* SPOT DETAIL PAGE */
 
 .spot-page {
   min-height: 100vh;
@@ -560,10 +520,6 @@ a {
 
 .region-highlight {
   color: #e29a68;
-}
-
-.type-icon {
-  font-size: 28px;
 }
 
 .spot-detail-main {
@@ -730,40 +686,6 @@ a {
   opacity: .9;
 }
 
-@media (max-width: 900px) {
-  .spot-layout,
-  .spot-community-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .spot-detail-hero {
-    min-height: 480px;
-  }
-
-  .spot-location-line,
-  .spot-type-line {
-    font-size: 21px;
-    gap: 12px;
-  }
-
-  .spot-detail-main {
-    padding: 50px 28px 70px;
-  }
-
-  .spot-back,
-  .spot-hero-content {
-    left: 28px;
-  }
-
-  .spot-info-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .spot-description-large {
-    font-size: 21px;
-  }
-}
-
 /* MODAL */
 
 .modal {
@@ -884,95 +806,9 @@ footer p {
   font-size: 18px;
 }
 
-/* MOBILE */
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 24px;
-  }
-
-  .navbar nav {
-    display: none;
-  }
-
-  .hero-content {
-    padding: 130px 28px 80px;
-  }
-
-  .hero h1 {
-    font-size: 56px;
-  }
-
-  .description {
-    font-size: 18px;
-  }
-
-  .stats-section {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
-
-  .stat {
-    border-left: none;
-  }
-
-  .features {
-    grid-template-columns: 1fr;
-    padding: 50px 28px;
-  }
-
-  .feature {
-    border-left: none;
-    border-top: 1px solid rgba(0,0,0,.12);
-  }
-
-  .feature:first-child {
-    border-top: none;
-  }
-
-  .nomads-section,
-  .spots-section,
-  .join-cta {
-    padding: 60px 28px;
-  }
-
-  .pilot-grid,
-  .spot-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .spot-card {
-    max-width: none;
-  }
-
-  .modal-card {
-    padding: 32px 22px;
-  }
-
-  .founding-form {
-    grid-template-columns: 1fr;
-  }
-  /* =========================
-   RESPONSIVE FINAL FIX
-========================= */
-
-img {
-  max-width: 100%;
-}
-
-html,
-body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
 /* TABLET */
 
 @media (max-width: 1024px) {
-  .hero-content {
-    max-width: 680px;
-  }
-
   .pilot-grid,
   .spot-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -982,15 +818,7 @@ body {
     max-width: none;
   }
 
-  .spot-layout {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-
-  .spot-side-card {
-    width: 100%;
-  }
-
+  .spot-layout,
   .spot-community-panel {
     grid-template-columns: 1fr;
   }
@@ -1000,8 +828,11 @@ body {
 
 @media (max-width: 768px) {
   .navbar {
-    position: absolute;
     padding: 22px 24px;
+  }
+
+  .navbar nav {
+    display: none;
   }
 
   .logo {
@@ -1043,16 +874,43 @@ body {
   }
 
   .stats-section {
-    grid-template-columns: 1fr 1fr;
-    padding: 30px 24px;
+    grid-template-columns: 1fr;
+    padding: 34px 24px;
+    gap: 0;
+  }
+
+  .stat {
+    border-left: none;
+    padding: 28px 0;
   }
 
   .features {
-    padding: 54px 24px;
+    grid-template-columns: 1fr;
+    padding: 38px 24px;
   }
 
   .feature {
-    padding: 26px 0;
+    border-left: none;
+    border-top: 1px solid rgba(0,0,0,.12);
+    padding: 42px 0;
+  }
+
+  .feature:first-child {
+    border-top: none;
+    padding-top: 8px;
+  }
+
+  .feature h3 {
+    font-size: 30px;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .feature p {
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .nomads-section,
@@ -1080,8 +938,6 @@ body {
   .pilot-body {
     padding: 24px;
   }
-
-  /* SPOT DETAIL MOBILE */
 
   .spot-detail-hero {
     height: 72vh;
@@ -1161,6 +1017,14 @@ body {
     padding: 24px;
     align-items: flex-start;
   }
+
+  .modal-card {
+    padding: 32px 22px;
+  }
+
+  .founding-form {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* SMALL PHONES */
@@ -1173,14 +1037,6 @@ body {
   .section-intro h2,
   .join-cta h2 {
     font-size: 36px;
-  }
-
-  .stats-section {
-    grid-template-columns: 1fr;
-  }
-
-  .stat {
-    padding: 12px 0;
   }
 
   .pilot-heading {
@@ -1212,5 +1068,4 @@ body {
   .modal {
     padding: 18px;
   }
-}
 }
