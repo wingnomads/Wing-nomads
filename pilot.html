@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wing Nomads Pilot</title>
 
-<link rel="stylesheet" href="style.css?v=27002" />
+<link rel="stylesheet" href="style.css?v=27003" />
 
 <style>
 .pilot-page{
@@ -196,6 +196,12 @@
   padding:24px;
   min-height:150px;
   box-shadow:0 10px 30px rgba(0,0,0,.045);
+  transition:.2s ease;
+}
+
+.detail-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 36px rgba(0,0,0,.07);
 }
 
 .detail-icon{
@@ -216,6 +222,15 @@
   font-size:20px;
   font-weight:900;
   line-height:1.25;
+}
+
+.spot-card-link{
+  color:inherit;
+  text-decoration:none;
+}
+
+.spot-card-link:hover{
+  color:#c46a3c;
 }
 
 .pilot-extra{
@@ -399,6 +414,14 @@ function instagramLabel(value){
   return `@${handle}`;
 }
 
+function spotLink(label, spotId){
+  if(!spotId){
+    return label;
+  }
+
+  return `<a href="spot.html?id=${encodeURIComponent(spotId)}" class="spot-card-link">${label} →</a>`;
+}
+
 function showEmptyState(title, text){
   wrapper.innerHTML = `
     <div class="empty-state">
@@ -443,8 +466,13 @@ async function loadPilot(){
   const country = safe(pilot.country, "Unknown location");
   const level = safe(pilot.level, "Level not added");
   const flyingType = safe(pilot.flying_type, "Flying type not added");
+
   const homeSpot = safe(pilot.home_spot);
+  const homeSpotId = pilot.home_spot_id;
+
   const nextDestination = safe(pilot.next_destination, "Open to adventure");
+  const nextDestinationId = pilot.next_destination_id;
+
   const bio = safe(pilot.bio, "This pilot has not added a bio yet.");
   const instagram = pilot.instagram;
   const instaUrl = instagramUrl(instagram);
@@ -497,13 +525,13 @@ async function loadPilot(){
           <div class="detail-card">
             <div class="detail-icon">🏔️</div>
             <span class="section-label">Home Spot</span>
-            <p>${homeSpot}</p>
+            <p>${spotLink(homeSpot, homeSpotId)}</p>
           </div>
 
           <div class="detail-card">
             <div class="detail-icon">🧭</div>
             <span class="section-label">Next Destination</span>
-            <p>${nextDestination}</p>
+            <p>${spotLink(nextDestination, nextDestinationId)}</p>
           </div>
 
           <div class="detail-card">
