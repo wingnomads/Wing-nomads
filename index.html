@@ -251,8 +251,9 @@ async function loadSpots() {
   try {
     const spots = await getTable("spots");
 
-    container.innerHTML = spots.map(spot => `
-      <article class="spot-card">
+    container.innerHTML = spots.map(spot =>
+      <a href="spot.html?id=${spot.slug}" class="spot-link">
+        <article class="spot-card">
         <div class="spot-image"></div>
 
         <div class="pilot-body">
