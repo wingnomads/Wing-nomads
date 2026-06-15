@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Wing Nomads Pilot</title>
 
-<link rel="stylesheet" href="style.css?v=27001">
+<link rel="stylesheet" href="style.css?v=27002" />
 
 <style>
 .pilot-page{
@@ -14,235 +14,337 @@
   padding:120px 7% 80px;
 }
 
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:26px;
+  color:#222;
+  text-decoration:none;
+  font-weight:850;
+  font-size:14px;
+  letter-spacing:.02em;
+}
+
+.pilot-shell{
+  max-width:1180px;
+  margin:0 auto;
+}
+
 .pilot-profile{
-  max-width:1100px;
-  margin:auto;
-  background:#fff;
-  border-radius:24px;
+  background:#fffdf9;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:30px;
   overflow:hidden;
-  box-shadow:0 24px 70px rgba(0,0,0,.12);
+  box-shadow:0 28px 80px rgba(0,0,0,.12);
 }
 
-.pilot-cover{
+.pilot-hero{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  min-height:520px;
+}
+
+.pilot-photo{
   position:relative;
-  height:380px;
+  min-height:520px;
   background:#ddd;
+  overflow:hidden;
 }
 
-.pilot-cover img{
+.pilot-photo img{
   width:100%;
   height:100%;
   object-fit:cover;
   display:block;
 }
 
-.pilot-cover::after{
+.pilot-photo::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,0));
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.38),
+    rgba(0,0,0,.04) 55%,
+    rgba(0,0,0,0)
+  );
 }
 
-.back-link{
-  display:inline-block;
-  margin-bottom:24px;
-  color:#222;
-  text-decoration:none;
-  font-weight:800;
-}
-
-.pilot-content{
-  padding:44px;
-}
-
-.pilot-top{
+.pilot-hero-content{
+  padding:52px;
   display:flex;
+  flex-direction:column;
   justify-content:space-between;
-  gap:32px;
-  align-items:flex-start;
-  margin-bottom:36px;
 }
 
-.pilot-country{
+.pilot-kicker{
   color:#c46a3c;
-  font-weight:900;
+  font-size:13px;
+  font-weight:950;
+  letter-spacing:.12em;
   text-transform:uppercase;
-  letter-spacing:.08em;
-  margin-bottom:12px;
-  font-size:14px;
+  margin-bottom:16px;
 }
 
 .pilot-name{
-  font-size:58px;
+  font-size:64px;
+  line-height:.92;
+  letter-spacing:-.05em;
+  margin:0 0 24px;
+  color:#171717;
   font-weight:950;
-  line-height:.95;
-  margin:0 0 18px;
-  color:#181818;
 }
 
-.pilot-meta{
+.pilot-tags{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
+  margin-bottom:34px;
 }
 
-.pilot-chip{
-  background:#f3eee6;
-  border:1px solid #e6ded2;
-  padding:9px 14px;
-  border-radius:999px;
-  font-size:14px;
-  font-weight:800;
-  color:#333;
-}
-
-.pilot-contact{
-  min-width:220px;
-  display:flex;
-  justify-content:flex-end;
-}
-
-.instagram-button{
+.pilot-tag{
   display:inline-flex;
   align-items:center;
-  justify-content:center;
-  padding:14px 22px;
+  gap:8px;
+  background:#f4efe7;
+  border:1px solid #e6ded2;
+  color:#292929;
+  padding:10px 14px;
   border-radius:999px;
-  background:#111;
-  color:white;
-  text-decoration:none;
+  font-size:13px;
   font-weight:900;
-  transition:.2s ease;
-}
-
-.instagram-button:hover{
-  transform:translateY(-2px);
-  background:#c46a3c;
+  text-transform:uppercase;
+  letter-spacing:.04em;
 }
 
 .pilot-bio{
-  background:#faf7f2;
-  border-radius:18px;
+  background:#f8f3eb;
+  border:1px solid #eee4d8;
+  border-radius:22px;
   padding:26px;
-  margin-bottom:30px;
+  margin-top:12px;
 }
 
-.pilot-bio small{
+.section-label{
   display:block;
+  color:#8c887f;
+  font-size:12px;
+  font-weight:950;
   text-transform:uppercase;
-  font-weight:900;
-  color:#888;
-  margin-bottom:10px;
-  letter-spacing:.06em;
+  letter-spacing:.12em;
+  margin-bottom:12px;
 }
 
 .pilot-bio p{
-  font-size:19px;
-  line-height:1.6;
+  margin:0;
   color:#333;
-  margin:0;
+  font-size:18px;
+  line-height:1.6;
 }
 
-.info-grid{
+.pilot-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:36px;
+}
+
+.pilot-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:48px;
+  padding:13px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:950;
+  color:#191919;
+  background:#fff;
+  border:1px solid #ded5c9;
+  transition:.2s ease;
+}
+
+.pilot-link:hover{
+  transform:translateY(-2px);
+  background:#111;
+  color:white;
+  border-color:#111;
+}
+
+.pilot-link.disabled{
+  opacity:.55;
+  pointer-events:none;
+}
+
+.pilot-details{
+  padding:0 52px 52px;
+}
+
+.pilot-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:20px;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
-.info-card{
-  background:#faf7f2;
+.detail-card{
+  background:#fff;
+  border:1px solid #eadfd2;
+  border-radius:22px;
   padding:24px;
-  border-radius:16px;
-  border:1px solid #eee5da;
+  min-height:150px;
+  box-shadow:0 10px 30px rgba(0,0,0,.045);
 }
 
-.info-card small{
-  display:block;
-  text-transform:uppercase;
-  font-weight:900;
-  color:#888;
-  margin-bottom:10px;
-  letter-spacing:.06em;
-  font-size:12px;
-}
-
-.info-card p{
+.detail-icon{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:#f4efe7;
+  margin-bottom:18px;
   font-size:20px;
-  font-weight:850;
-  color:#222;
+}
+
+.detail-card p{
   margin:0;
+  color:#1f1f1f;
+  font-size:20px;
+  font-weight:900;
+  line-height:1.25;
+}
+
+.pilot-extra{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+  margin-top:18px;
+}
+
+.extra-card{
+  background:#171717;
+  color:#fff;
+  border-radius:24px;
+  padding:28px;
+  min-height:170px;
+}
+
+.extra-card.light{
+  background:#f8f3eb;
+  color:#171717;
+  border:1px solid #eadfd2;
+}
+
+.extra-card p{
+  margin:0;
+  font-size:18px;
+  line-height:1.55;
+  color:inherit;
 }
 
 .empty-state{
-  max-width:700px;
+  max-width:720px;
   margin:120px auto;
   text-align:center;
-  background:white;
-  padding:50px;
-  border-radius:24px;
-  box-shadow:0 20px 60px rgba(0,0,0,.1);
+  background:#fffdf9;
+  padding:54px;
+  border-radius:28px;
+  box-shadow:0 22px 70px rgba(0,0,0,.1);
 }
 
 .empty-state h1{
-  margin-bottom:12px;
-  font-size:42px;
+  margin:0 0 14px;
+  font-size:44px;
+  letter-spacing:-.04em;
 }
 
 .empty-state p{
   color:#666;
   font-size:18px;
+  margin:0 0 24px;
 }
 
-@media(max-width:900px){
-  .pilot-page{
-    padding:100px 5% 60px;
+@media(max-width:980px){
+  .pilot-hero{
+    grid-template-columns:1fr;
   }
 
-  .pilot-content{
-    padding:32px;
+  .pilot-photo{
+    min-height:430px;
   }
 
-  .pilot-top{
-    flex-direction:column;
+  .pilot-hero-content{
+    padding:42px;
   }
 
-  .pilot-contact{
-    justify-content:flex-start;
+  .pilot-details{
+    padding:0 42px 42px;
   }
 
   .pilot-name{
-    font-size:48px;
+    font-size:56px;
   }
 
-  .info-grid{
+  .pilot-grid{
+    grid-template-columns:1fr;
+  }
+
+  .pilot-extra{
     grid-template-columns:1fr;
   }
 }
 
-@media(max-width:560px){
+@media(max-width:640px){
   .pilot-page{
-    padding:90px 18px 50px;
+    padding:92px 18px 54px;
   }
 
-  .pilot-cover{
-    height:280px;
+  .pilot-profile{
+    border-radius:24px;
   }
 
-  .pilot-content{
-    padding:26px 22px;
+  .pilot-photo{
+    min-height:310px;
+  }
+
+  .pilot-hero-content{
+    padding:30px 22px;
+  }
+
+  .pilot-details{
+    padding:0 22px 28px;
   }
 
   .pilot-name{
-    font-size:40px;
+    font-size:42px;
   }
 
-  .pilot-bio p,
-  .info-card p{
-    font-size:17px;
+  .pilot-bio{
+    padding:22px;
   }
 
-  .instagram-button{
+  .pilot-bio p{
+    font-size:16px;
+  }
+
+  .pilot-actions{
+    flex-direction:column;
+  }
+
+  .pilot-link{
     width:100%;
+  }
+
+  .detail-card{
+    min-height:auto;
+  }
+
+  .detail-card p{
+    font-size:18px;
   }
 }
 </style>
@@ -251,11 +353,13 @@
 <body>
 
 <section class="pilot-page">
+  <div class="pilot-shell">
 
-  <a href="profiles.html" class="back-link">← Back to pilots</a>
+    <a href="profiles.html" class="back-link">← Back to pilots</a>
 
-  <div id="pilot-wrapper"></div>
+    <div id="pilot-wrapper"></div>
 
+  </div>
 </section>
 
 <script>
@@ -264,17 +368,16 @@ const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user");
-
 const wrapper = document.getElementById("pilot-wrapper");
 
-function cleanText(value, fallback = "Not added"){
-  return value && String(value).trim() !== "" ? value : fallback;
+function safe(value, fallback = "Not added"){
+  return value && String(value).trim() !== "" ? String(value).trim() : fallback;
 }
 
 function instagramUrl(value){
   if(!value) return null;
 
-  let handle = value.trim();
+  let handle = String(value).trim();
 
   if(handle.startsWith("http")) return handle;
 
@@ -285,16 +388,15 @@ function instagramUrl(value){
 function instagramLabel(value){
   if(!value) return "Instagram not added";
 
-  let handle = value.trim();
+  let handle = String(value).trim();
 
   if(handle.startsWith("http")){
     handle = handle.split("instagram.com/")[1] || handle;
-    handle = handle.replace("/", "");
+    handle = handle.replaceAll("/", "");
   }
 
-  if(!handle.startsWith("@")) handle = "@" + handle;
-
-  return handle;
+  handle = handle.replace("@", "");
+  return `@${handle}`;
 }
 
 function showEmptyState(title, text){
@@ -302,8 +404,7 @@ function showEmptyState(title, text){
     <div class="empty-state">
       <h1>${title}</h1>
       <p>${text}</p>
-      <br>
-      <a href="profiles.html" class="instagram-button">Back to pilots</a>
+      <a href="profiles.html" class="pilot-link">← Back to pilots</a>
     </div>
   `;
 }
@@ -333,79 +434,103 @@ async function loadPilot(){
     return;
   }
 
-  const image = pilot.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee";
-  const country = cleanText(pilot.country, "Unknown location");
-  const name = cleanText(pilot.full_name, "Unnamed Pilot");
-  const level = cleanText(pilot.level, "Level not added");
-  const flyingType = cleanText(pilot.flying_type, "Flying type not added");
-  const homeSpot = cleanText(pilot.home_spot);
-  const nextDestination = cleanText(pilot.next_destination, "Open to adventure");
-  const bio = cleanText(
-    pilot.bio,
-    "This pilot has not added a bio yet."
+  const image = safe(
+    pilot.profile_image,
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
   );
 
-  const instaUrl = instagramUrl(pilot.instagram);
-  const instaLabel = instagramLabel(pilot.instagram);
+  const name = safe(pilot.full_name, "Unnamed Pilot");
+  const country = safe(pilot.country, "Unknown location");
+  const level = safe(pilot.level, "Level not added");
+  const flyingType = safe(pilot.flying_type, "Flying type not added");
+  const homeSpot = safe(pilot.home_spot);
+  const nextDestination = safe(pilot.next_destination, "Open to adventure");
+  const bio = safe(pilot.bio, "This pilot has not added a bio yet.");
+  const instagram = pilot.instagram;
+  const instaUrl = instagramUrl(instagram);
+  const instaLabel = instagramLabel(instagram);
 
   wrapper.innerHTML = `
-    <div class="pilot-profile">
+    <article class="pilot-profile">
 
-      <div class="pilot-cover">
-        <img src="${image}" alt="${name}">
-      </div>
+      <div class="pilot-hero">
 
-      <div class="pilot-content">
+        <div class="pilot-photo">
+          <img src="${image}" alt="${name}">
+        </div>
 
-        <div class="pilot-top">
+        <div class="pilot-hero-content">
 
           <div>
-            <div class="pilot-country">${country}</div>
+            <div class="pilot-kicker">📍 ${country}</div>
+
             <h1 class="pilot-name">${name}</h1>
 
-            <div class="pilot-meta">
-              <span class="pilot-chip">${level}</span>
-              <span class="pilot-chip">${flyingType}</span>
+            <div class="pilot-tags">
+              <span class="pilot-tag">🪂 ${level}</span>
+              <span class="pilot-tag">🌬️ ${flyingType}</span>
+            </div>
+
+            <div class="pilot-bio">
+              <span class="section-label">About</span>
+              <p>${bio}</p>
             </div>
           </div>
 
-          <div class="pilot-contact">
+          <div class="pilot-actions">
             ${
               instaUrl
-              ? `<a href="${instaUrl}" target="_blank" class="instagram-button">${instaLabel}</a>`
-              : `<span class="instagram-button">${instaLabel}</span>`
+              ? `<a href="${instaUrl}" target="_blank" rel="noopener" class="pilot-link">◎ ${instaLabel}</a>`
+              : `<span class="pilot-link disabled">◎ Instagram not added</span>`
             }
+            <a href="profiles.html" class="pilot-link">Explore pilots</a>
           </div>
 
         </div>
 
-        <div class="pilot-bio">
-          <small>About</small>
-          <p>${bio}</p>
-        </div>
+      </div>
 
-        <div class="info-grid">
+      <div class="pilot-details">
 
-          <div class="info-card">
-            <small>Home Spot</small>
+        <div class="pilot-grid">
+
+          <div class="detail-card">
+            <div class="detail-icon">🏔️</div>
+            <span class="section-label">Home Spot</span>
             <p>${homeSpot}</p>
           </div>
 
-          <div class="info-card">
-            <small>Next Destination</small>
+          <div class="detail-card">
+            <div class="detail-icon">🧭</div>
+            <span class="section-label">Next Destination</span>
             <p>${nextDestination}</p>
           </div>
 
-          <div class="info-card">
-            <small>Connect</small>
+          <div class="detail-card">
+            <div class="detail-icon">◎</div>
+            <span class="section-label">Connect</span>
             <p>${instaLabel}</p>
           </div>
 
         </div>
 
+        <div class="pilot-extra">
+
+          <div class="extra-card">
+            <span class="section-label">Wing Nomads</span>
+            <p>Find pilots nearby, discover flying places and connect before your next adventure.</p>
+          </div>
+
+          <div class="extra-card light">
+            <span class="section-label">Pilot Status</span>
+            <p>Available for future flying plans, shared adventures and local spot recommendations.</p>
+          </div>
+
+        </div>
+
       </div>
 
-    </div>
+    </article>
   `;
 }
 
