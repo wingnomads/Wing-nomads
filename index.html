@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=28000" />
+  <link rel="stylesheet" href="style.css?v=29000" />
 </head>
 
 <body>
@@ -34,7 +34,6 @@
 </section>
 
 <section class="stats-section">
-
   <div class="stat">
     <strong id="countries-count">0</strong>
     <span>Countries</span>
@@ -54,7 +53,6 @@
     <strong id="van-count">0</strong>
     <span>Van Friendly</span>
   </div>
-
 </section>
 
 <section class="features">
@@ -62,10 +60,12 @@
     <h3>Find Local Pilots</h3>
     <p>Meet pilots wherever you travel.</p>
   </div>
+
   <div class="feature">
     <h3>Discover Flying Spots</h3>
     <p>Explore takeoffs, landings and local knowledge.</p>
   </div>
+
   <div class="feature">
     <h3>Share Adventures</h3>
     <p>Connect through travel, vanlife and flying.</p>
@@ -78,6 +78,7 @@
     <h2>Founding Nomads</h2>
     <p>The first pilots building this community together.</p>
   </div>
+
   <div id="profiles-container" class="pilot-grid">Loading pilots...</div>
 </section>
 
@@ -87,6 +88,7 @@
     <h2>Featured Spots</h2>
     <p>Epic places to fly, shared by the community.</p>
   </div>
+
   <div id="spots-container" class="spot-grid">Loading spots...</div>
 </section>
 
@@ -149,11 +151,16 @@ function getFlag(country) {
     "Australia": "🇦🇺",
     "South Africa": "🇿🇦"
   };
+
   return flags[country] || "🌍";
 }
 
 function makeUsername(name) {
-  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, "").slice(0, 20);
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "")
+    .slice(0, 20);
 }
 
 async function getTable(tableName) {
@@ -164,7 +171,10 @@ async function getTable(tableName) {
     }
   });
 
-  if (!response.ok) throw new Error(await response.text());
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
   return response.json();
 }
 
@@ -180,20 +190,23 @@ async function insertProfile(profile) {
     body: JSON.stringify(profile)
   });
 
-  if (!response.ok) throw new Error(await response.text());
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
   return response.json();
 }
 
 function updateStats(profiles, spots) {
   const countries = new Set([
-    ...profiles.map(p => p.country).filter(Boolean),
-    ...spots.map(s => s.country).filter(Boolean)
+    ...profiles.map(profile => profile.country).filter(Boolean),
+    ...spots.map(spot => spot.country).filter(Boolean)
   ]);
 
   document.getElementById("countries-count").textContent = countries.size;
   document.getElementById("pilots-count").textContent = profiles.length;
   document.getElementById("spots-count").textContent = spots.length;
-  document.getElementById("van-count").textContent = spots.filter(s => s.van_friendly).length;
+  document.getElementById("van-count").textContent = spots.filter(spot => spot.van_friendly).length;
 }
 
 async function loadProfiles() {
@@ -202,39 +215,37 @@ async function loadProfiles() {
   try {
     const profiles = await getTable("profiles");
 
-   container.innerHTML = profiles.map(profile => `
-  <a
-    href="pilot.html?user=${profile.username}"
-    class="pilot-link"
-  >
-    <article class="pilot-card">
-        <img 
-          class="pilot-photo"
-          src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
-          alt="${profile.full_name || "Wing Nomads pilot"}"
-        >
+    container.innerHTML = profiles.map(profile => `
+      <a href="pilot.html?user=${profile.username}" class="pilot-link">
+        <article class="pilot-card">
+          <img 
+            class="pilot-photo"
+            src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
+            alt="${profile.full_name || "Wing Nomads pilot"}"
+          >
 
-        <div class="pilot-body">
-          <div class="pilot-heading">
-            <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-            <span>${getFlag(profile.country)} ${profile.country || ""}</span>
+          <div class="pilot-body">
+            <div class="pilot-heading">
+              <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+              <span>${getFlag(profile.country)} ${profile.country || ""}</span>
+            </div>
+
+            <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
+
+            <div class="pilot-detail">
+              <small>Favourite spot</small>
+              <p>${profile.home_spot || "Not added yet"}</p>
+            </div>
+
+            <div class="pilot-detail">
+              <small>Next destination</small>
+              <p>${profile.next_destination || "Open to adventure"}</p>
+            </div>
+
+            <p class="instagram">📸 ${profile.instagram || ""}</p>
           </div>
-
-          <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
-
-          <div class="pilot-detail">
-            <small>Favourite spot</small>
-            <p>${profile.home_spot || "Not added yet"}</p>
-          </div>
-
-          <div class="pilot-detail">
-            <small>Next destination</small>
-            <p>${profile.next_destination || "Open to adventure"}</p>
-          </div>
-
-          <p class="instagram">📸 ${profile.instagram || ""}</p>
-        </div>
-      </article>
+        </article>
+      </a>
     `).join("");
 
     return profiles;
@@ -251,35 +262,34 @@ async function loadSpots() {
   try {
     const spots = await getTable("spots");
 
-    container.innerHTML = spots.map(spot =>
+    container.innerHTML = spots.map(spot => `
       <a href="spot.html?id=${spot.slug}" class="spot-link">
         <article class="spot-card">
-        <div class="spot-image"></div>
+          <div class="spot-image"></div>
 
-        <div class="pilot-body">
-          <div class="pilot-heading">
-            <h3>${spot.name || "Unnamed Spot"}</h3>
-            <span>${getFlag(spot.country)} ${spot.country || ""}</span>
-          </div>
-
-          <p class="pilot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
-
-          <div class="spot-info-row">
-            <div>
-              <small>Difficulty</small>
-              <p>${spot.difficulty || "Not specified"}</p>
+          <div class="pilot-body">
+            <div class="pilot-heading">
+              <h3>${spot.name || "Unnamed Spot"}</h3>
+              <span>${getFlag(spot.country)} ${spot.country || ""}</span>
             </div>
 
-            <div>
-              <small>Van friendly</small>
-              <p>${spot.van_friendly ? "Yes 🚐" : "No"}</p>
+            <p class="pilot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
+
+            <div class="spot-info-row">
+              <div>
+                <small>Difficulty</small>
+                <p>${spot.difficulty || "Not specified"}</p>
+              </div>
+
+              <div>
+                <small>Van friendly</small>
+                <p>${spot.van_friendly ? "Yes 🚐" : "No"}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </article>
-          </article>
-  </a>
-`).join("");
+        </article>
+      </a>
+    `).join("");
 
     return spots;
   } catch (error) {
