@@ -378,6 +378,19 @@ a {
   color: #222;
   line-height: 1.2;
 }
+.spot-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.spot-card {
+  transition: all 0.25s ease;
+}
+
+.spot-link:hover .spot-card {
+  transform: translateY(-4px);
+}
 
 /* JOIN CTA */
 
