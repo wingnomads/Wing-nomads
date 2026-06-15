@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
-  <link rel="stylesheet" href="style.css?v=33000" />
+
+  <link rel="stylesheet" href="style.css?v=33001" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -30,7 +31,7 @@
       </div>
 
       <div class="spot-type-line">
-        <i data-lucide="umbrella"></i>
+        <i data-lucide="send"></i>
         <span id="spot-type"></span>
       </div>
     </div>
@@ -82,6 +83,7 @@
       </div>
 
       <aside class="spot-side-card">
+
         <div class="side-item">
           <small>Country</small>
           <p><span id="side-flag"></span> <span id="side-country"></span></p>
@@ -94,13 +96,17 @@
 
         <div class="side-item">
           <small>Flying Type</small>
-          <p><i data-lucide="umbrella"></i> <span id="side-type"></span></p>
+          <p>
+            <i data-lucide="send"></i>
+            <span id="side-type"></span>
+          </p>
         </div>
 
         <div class="side-item">
           <small>Other Disciplines</small>
-          <p>Coming soon</p>
+          <p id="side-disciplines">Coming soon</p>
         </div>
+
       </aside>
 
     </section>
@@ -138,6 +144,10 @@ const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("id");
 
+function safe(value, fallback = "Not specified") {
+  return value && String(value).trim() !== "" ? String(value).trim() : fallback;
+}
+
 function getFlag(country) {
   const flags = {
     "Spain": "🇪🇸",
@@ -155,9 +165,63 @@ function getFlag(country) {
   return flags[country] || "🌍";
 }
 
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value;
+}
+
+function setImage(id, src, alt) {
+  const element = document.getElementById(id);
+  if (!element) return;
+
+  element.src = src;
+  element.alt = alt;
+}
+
+function renderCommunityLinks(spot) {
+  const community = [];
+
+  if (spot.whatsapp_group_url) {
+    community.push(`
+      <a href="${spot.whatsapp_group_url}" target="_blank" rel="noopener" class="community-btn primary">
+        <i data-lucide="message-circle"></i>
+        Join WhatsApp Group
+      </a>
+    `);
+  }
+
+  if (spot.local_club_url) {
+    community.push(`
+      <a href="${spot.local_club_url}" target="_blank" rel="noopener" class="community-btn secondary">
+        <i data-lucide="users"></i>
+        Visit Local Club
+      </a>
+    `);
+  }
+
+  return community.length
+    ? community.join("")
+    : "<p>No local community links added yet.</p>";
+}
+
+function showNotFound() {
+  document.body.innerHTML = `
+    <section style="min-height:100vh;background:#f6f1e8;padding:120px 7%;font-family:inherit;">
+      <h1 style="font-size:48px;margin-bottom:16px;">Spot not found</h1>
+      <p style="font-size:18px;color:#666;margin-bottom:24px;">This flying spot does not exist yet.</p>
+      <a href="index.html#spots" style="color:#111;font-weight:800;text-decoration:none;">← Back to spots</a>
+    </section>
+  `;
+}
+
 async function loadSpot() {
+  if (!slug) {
+    showNotFound();
+    return;
+  }
+
   const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/spots?slug=eq.${slug}&select=*`,
+    `${SUPABASE_URL}/rest/v1/spots?slug=eq.${encodeURIComponent(slug)}&select=*`,
     {
       headers: {
         apikey: SUPABASE_KEY,
@@ -170,56 +234,42 @@ async function loadSpot() {
   const spot = data[0];
 
   if (!spot) {
-    document.body.innerHTML = "<h1 style='padding:40px;'>Spot not found</h1>";
+    showNotFound();
     return;
   }
 
   const flag = getFlag(spot.country);
+  const name = safe(spot.name, "Unnamed Spot");
+  const country = safe(spot.country, "");
+  const region = safe(spot.region, "");
+  const flyingType = safe(spot.flying_type, "Paragliding");
 
-  document.getElementById("spot-image").src =
+  const image =
     spot.image_url ||
     spot.image ||
     "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
 
-  document.getElementById("spot-name").textContent = spot.name || "Unnamed Spot";
+  setImage("spot-image", image, `${name} flying spot`);
 
-  document.getElementById("spot-flag").textContent = flag;
-  document.getElementById("spot-country").textContent = spot.country || "";
-  document.getElementById("spot-region").textContent = spot.region || "";
-  document.getElementById("spot-type").textContent = spot.flying_type || "Paragliding";
+  setText("spot-name", name);
+  setText("spot-flag", flag);
+  setText("spot-country", country);
+  setText("spot-region", region);
+  setText("spot-type", flyingType.toUpperCase());
 
-  document.getElementById("spot-description").textContent =
-    spot.description || "No description added yet.";
+  setText("spot-description", safe(spot.description, "No description added yet."));
+  setText("spot-difficulty", safe(spot.difficulty));
+  setText("spot-season", safe(spot.best_season));
+  setText("spot-wind", safe(spot.wind_directions));
+  setText("spot-van", spot.van_friendly ? "Yes" : "No");
 
-  document.getElementById("spot-difficulty").textContent =
-    spot.difficulty || "Not specified";
+  setText("side-flag", flag);
+  setText("side-country", country);
+  setText("side-region", region);
+  setText("side-type", flyingType);
+  setText("side-disciplines", safe(spot.other_disciplines, "Coming soon"));
 
-  document.getElementById("spot-season").textContent =
-    spot.best_season || "Not specified";
-
-  document.getElementById("spot-wind").textContent =
-    spot.wind_directions || "Not specified";
-
-  document.getElementById("spot-van").textContent =
-    spot.van_friendly ? "Yes" : "No";
-
-  document.getElementById("side-flag").textContent = flag;
-  document.getElementById("side-country").textContent = spot.country || "";
-  document.getElementById("side-region").textContent = spot.region || "";
-  document.getElementById("side-type").textContent = spot.flying_type || "Paragliding";
-
-  const community = [];
-
-  if (spot.whatsapp_group_url) {
-    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank" class="community-btn primary"><i data-lucide="message-circle"></i> Join WhatsApp Group</a>`);
-  }
-
-  if (spot.local_club_url) {
-    community.push(`<a href="${spot.local_club_url}" target="_blank" class="community-btn secondary"><i data-lucide="users"></i> Visit Local Club</a>`);
-  }
-
-  document.getElementById("spot-community").innerHTML =
-    community.length ? community.join("") : "<p>No local community links added yet.</p>";
+  document.getElementById("spot-community").innerHTML = renderCommunityLinks(spot);
 
   lucide.createIcons();
 }
