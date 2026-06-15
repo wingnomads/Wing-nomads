@@ -559,15 +559,15 @@ a {
 }
 
 .circle-icon {
-  width: 46px;
-  height: 46px;
+  width: 58px;
+  height: 58px;
   background: #f1e8dc;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 18px;
-  font-weight: 900;
+  color: #111;
 }
 
 .spot-mini-card small,
