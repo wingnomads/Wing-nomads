@@ -288,6 +288,22 @@ a {
 .pilot-card:hover {
   transform: translateY(-6px);
 }
+.pilot-card-body .pilot-meta {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  margin-bottom: 24px;
+}
+
+.pilot-card-body .pilot-next {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  margin-bottom: 24px;
+}
+
+.pilot-card-body .pilot-contact,
+.pilot-card-body .pilot-instagram {
+  padding-top: 4px;
+}
 
 .pilot-photo {
   width: 100%;
