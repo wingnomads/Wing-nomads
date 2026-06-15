@@ -254,24 +254,19 @@ a {
   text-decoration: none;
 }
 
-/* CARDS */
+/* PILOT CARDS */
 
-.pilot-card,
-.spot-card {
+.pilot-card {
   background: var(--paper);
   color: var(--charcoal);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 18px 45px rgba(0,0,0,.16);
   transition: .25s ease;
-}
-
-.pilot-card {
   cursor: pointer;
 }
 
-.pilot-card:hover,
-.spot-link:hover .spot-card {
+.pilot-card:hover {
   transform: translateY(-4px);
 }
 
@@ -295,8 +290,7 @@ a {
   margin-bottom: 10px;
 }
 
-.pilot-heading h3,
-.spot-card h3 {
+.pilot-heading h3 {
   font-size: 24px;
   line-height: 1.05;
   text-transform: uppercase;
@@ -318,15 +312,13 @@ a {
   letter-spacing: .9px;
   text-transform: uppercase;
   color: var(--soft-grey);
-  padding-bottom: 20px;
+  padding-bottom: 22px;
   border-bottom: 1px solid rgba(0,0,0,.12);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .pilot-detail {
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(0,0,0,.12);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .pilot-detail small {
@@ -345,16 +337,28 @@ a {
 }
 
 .instagram {
-  margin-top: 22px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(0,0,0,.12);
   font-size: 16px;
   color: #333;
   font-weight: 800;
 }
 
-/* SPOTS */
+/* SPOT CARDS */
 
 .spot-card {
   max-width: 340px;
+  background: var(--paper);
+  color: var(--charcoal);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0,0,0,.16);
+  transition: .25s ease;
+}
+
+.spot-link:hover .spot-card {
+  transform: translateY(-4px);
 }
 
 .spot-image {
@@ -366,6 +370,14 @@ a {
     url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80");
   background-size: cover;
   background-position: center;
+}
+
+.spot-card h3 {
+  font-size: 24px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--black);
+  font-weight: 900;
 }
 
 .spot-info-row {
@@ -444,7 +456,6 @@ a {
   font-size: 13px;
   text-transform: uppercase;
   cursor: pointer;
-  letter-spacing: .4px;
 }
 
 /* SPOT DETAIL PAGE */
@@ -855,7 +866,6 @@ footer p {
 
   .hero h1 {
     font-size: 52px;
-    line-height: .9;
   }
 
   .description {
@@ -876,7 +886,6 @@ footer p {
   .stats-section {
     grid-template-columns: 1fr;
     padding: 34px 24px;
-    gap: 0;
   }
 
   .stat {
@@ -886,7 +895,7 @@ footer p {
 
   .features {
     grid-template-columns: 1fr;
-    padding: 38px 24px;
+    padding: 42px 24px;
   }
 
   .feature {
