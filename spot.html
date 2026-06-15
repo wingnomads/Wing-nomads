@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wing Nomads Spot</title>
+  <link rel="stylesheet" href="style.css?v=28000" />
+</head>
+
+<body>
+
+<section class="pilot-page">
+  <div class="pilot-profile">
+
+    <div class="pilot-cover">
+      <img id="spot-image">
+    </div>
+
+    <div class="pilot-content">
+      <div id="spot-country" class="pilot-country"></div>
+      <h1 id="spot-name" class="pilot-name"></h1>
+      <p id="spot-meta" class="pilot-meta"></p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <small>Difficulty</small>
+          <p id="spot-difficulty"></p>
+        </div>
+
+        <div class="info-card">
+          <small>Best Season</small>
+          <p id="spot-season"></p>
+        </div>
+
+        <div class="info-card">
+          <small>Wind Directions</small>
+          <p id="spot-wind"></p>
+        </div>
+
+        <div class="info-card">
+          <small>Van Friendly</small>
+          <p id="spot-van"></p>
+        </div>
+      </div>
+
+      <div class="info-card" style="margin-top:24px;">
+        <small>Description</small>
+        <p id="spot-description"></p>
+      </div>
+
+      <div class="info-card" style="margin-top:24px;">
+        <small>Local Community</small>
+        <p id="spot-community"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
+const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
+
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("id");
+
+async function loadSpot() {
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/spots?slug=eq.${slug}&select=*`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`
+      }
+    }
+  );
+
+  const data = await response.json();
+  const spot = data[0];
+
+  if (!spot) {
+    document.body.innerHTML = "<h1 style='padding:40px;'>Spot not found</h1>";
+    return;
+  }
+
+  document.getElementById("spot-image").src =
+    spot.image_url ||
+    spot.image ||
+    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
+
+  document.getElementById("spot-country").textContent =
+    spot.country || "";
+
+  document.getElementById("spot-name").textContent =
+    spot.name || "Unnamed Spot";
+
+  document.getElementById("spot-meta").textContent =
+    `${spot.region || ""} · ${spot.flying_type || "Paragliding"}`;
+
+  document.getElementById("spot-difficulty").textContent =
+    spot.difficulty || "Not specified";
+
+  document.getElementById("spot-season").textContent =
+    spot.best_season || "Not specified";
+
+  document.getElementById("spot-wind").textContent =
+    spot.wind_directions || "Not specified";
+
+  document.getElementById("spot-van").textContent =
+    spot.van_friendly ? "Yes 🚐" : "No";
+
+  document.getElementById("spot-description").textContent =
+    spot.description || "No description added yet.";
+
+  const community = [];
+
+  if (spot.whatsapp_group_url) {
+    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank">Join local WhatsApp group</a>`);
+  }
+
+  if (spot.local_club_url) {
+    community.push(`<a href="${spot.local_club_url}" target="_blank">Visit local club</a>`);
+  }
+
+  document.getElementById("spot-community").innerHTML =
+    community.length ? community.join("<br>") : "No local community links added yet.";
+}
+
+loadSpot();
+</script>
+
+</body>
+</html>
