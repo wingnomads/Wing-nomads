@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
-  <link rel="stylesheet" href="style.css?v=31000" />
+  <link rel="stylesheet" href="style.css?v=32000" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -14,7 +15,7 @@
   <section class="spot-detail-hero">
     <a href="index.html#spots" class="spot-back">← Back to spots</a>
 
-    <img id="spot-image" alt="Flying spot image">
+    <img id="spot-image" alt="Flying spot image" />
 
     <div class="spot-hero-shade"></div>
 
@@ -29,7 +30,7 @@
       </div>
 
       <div class="spot-type-line">
-        <span class="type-icon">🪂</span>
+        <i data-lucide="umbrella"></i>
         <span id="spot-type"></span>
       </div>
     </div>
@@ -43,60 +44,41 @@
 
         <p id="spot-description" class="spot-description-large"></p>
 
-     <div class="spot-info-cards">
+        <div class="spot-info-cards">
 
-  <div class="spot-mini-card">
-    <span class="circle-icon">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M6 20V10"/>
-        <path d="M12 20V4"/>
-        <path d="M18 20V14"/>
-      </svg>
-    </span>
-    <small>Difficulty</small>
-    <p id="spot-difficulty"></p>
-  </div>
+          <div class="spot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="bar-chart-3"></i>
+            </span>
+            <small>Difficulty</small>
+            <p id="spot-difficulty"></p>
+          </div>
 
-  <div class="spot-mini-card">
-    <span class="circle-icon">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
-        <rect x="3" y="5" width="18" height="16" rx="2"/>
-        <line x1="8" y1="3" x2="8" y2="7"/>
-        <line x1="16" y1="3" x2="16" y2="7"/>
-        <line x1="3" y1="11" x2="21" y2="11"/>
-      </svg>
-    </span>
-    <small>Best Season</small>
-    <p id="spot-season"></p>
-  </div>
+          <div class="spot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="calendar-days"></i>
+            </span>
+            <small>Best Season</small>
+            <p id="spot-season"></p>
+          </div>
 
-  <div class="spot-mini-card">
-    <span class="circle-icon">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="M3 8H15"/>
-        <path d="M9 4L15 8L9 12"/>
-        <path d="M21 16H9"/>
-        <path d="M15 12L9 16L15 20"/>
-      </svg>
-    </span>
-    <small>Wind Directions</small>
-    <p id="spot-wind"></p>
-  </div>
+          <div class="spot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="wind"></i>
+            </span>
+            <small>Wind Directions</small>
+            <p id="spot-wind"></p>
+          </div>
 
-  <div class="spot-mini-card">
-    <span class="circle-icon">
-      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2">
-        <path d="M3 8H16L20 12V17H3Z"/>
-        <circle cx="7" cy="18" r="1.5"/>
-        <circle cx="17" cy="18" r="1.5"/>
-        <path d="M16 8V12H20"/>
-      </svg>
-    </span>
-    <small>Van Friendly</small>
-    <p id="spot-van"></p>
-  </div>
+          <div class="spot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="caravan"></i>
+            </span>
+            <small>Van Friendly</small>
+            <p id="spot-van"></p>
+          </div>
 
-</div>
+        </div>
       </div>
 
       <aside class="spot-side-card">
@@ -112,7 +94,7 @@
 
         <div class="side-item">
           <small>Flying Type</small>
-          <p>🪂 <span id="side-type"></span></p>
+          <p><i data-lucide="umbrella"></i> <span id="side-type"></span></p>
         </div>
 
         <div class="side-item">
@@ -136,7 +118,9 @@
     </section>
 
     <section class="spot-safety-note">
-      <div class="safety-icon">💡</div>
+      <div class="safety-icon">
+        <i data-lucide="lightbulb"></i>
+      </div>
       <p>
         Always check local conditions and regulations before flying.<br>
         Fly safe, respect nature and enjoy the adventure.
@@ -147,7 +131,7 @@
 
 </section>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+<script>
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 
@@ -217,7 +201,7 @@ async function loadSpot() {
     spot.wind_directions || "Not specified";
 
   document.getElementById("spot-van").textContent =
-    spot.van_friendly ? "Yes 🚐" : "No";
+    spot.van_friendly ? "Yes" : "No";
 
   document.getElementById("side-flag").textContent = flag;
   document.getElementById("side-country").textContent = spot.country || "";
@@ -227,15 +211,17 @@ async function loadSpot() {
   const community = [];
 
   if (spot.whatsapp_group_url) {
-    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank" class="community-btn primary">💬 Join WhatsApp Group</a>`);
+    community.push(`<a href="${spot.whatsapp_group_url}" target="_blank" class="community-btn primary"><i data-lucide="message-circle"></i> Join WhatsApp Group</a>`);
   }
 
   if (spot.local_club_url) {
-    community.push(`<a href="${spot.local_club_url}" target="_blank" class="community-btn secondary">👥 Visit Local Club</a>`);
+    community.push(`<a href="${spot.local_club_url}" target="_blank" class="community-btn secondary"><i data-lucide="users"></i> Visit Local Club</a>`);
   }
 
   document.getElementById("spot-community").innerHTML =
     community.length ? community.join("") : "<p>No local community links added yet.</p>";
+
+  lucide.createIcons();
 }
 
 loadSpot();
