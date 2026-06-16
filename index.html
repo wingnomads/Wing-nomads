@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-  <link rel="stylesheet" href="style.css?v=33012" />
+  <link rel="stylesheet" href="style.css?v=33014" />
 </head>
 
 <body>
@@ -12,10 +12,10 @@
 <header class="navbar">
   <div class="logo">WING NOMADS</div>
   <nav>
-    <a href="#spots">Spots</a>
     <a href="#pilots">Pilots</a>
+    <a href="#flying-now">Flying Now</a>
+    <a href="#spots">Spots</a>
     <a href="#join">Join</a>
-    <a href="#">Adventures</a>
   </nav>
 </header>
 
@@ -34,25 +34,10 @@
 </section>
 
 <section class="stats-section">
-  <div class="stat">
-    <strong id="countries-count">0</strong>
-    <span>Countries</span>
-  </div>
-
-  <div class="stat">
-    <strong id="pilots-count">0</strong>
-    <span>Founding Nomads</span>
-  </div>
-
-  <div class="stat">
-    <strong id="spots-count">0</strong>
-    <span>Flying Spots</span>
-  </div>
-
-  <div class="stat">
-    <strong id="van-count">0</strong>
-    <span>Van Friendly</span>
-  </div>
+  <div class="stat"><strong id="countries-count">0</strong><span>Countries</span></div>
+  <div class="stat"><strong id="pilots-count">0</strong><span>Founding Nomads</span></div>
+  <div class="stat"><strong id="spots-count">0</strong><span>Flying Spots</span></div>
+  <div class="stat"><strong id="van-count">0</strong><span>Van Friendly</span></div>
 </section>
 
 <section class="features">
@@ -82,7 +67,7 @@
   <div id="profiles-container" class="pilot-grid">Loading pilots...</div>
 </section>
 
-  <section id="flying-now" class="flying-now-section">
+<section id="flying-now" class="flying-now-section">
   <div class="section-intro">
     <p class="eyebrow">Live Community</p>
     <h2>Where People Are Flying</h2>
@@ -91,9 +76,9 @@
     </p>
   </div>
 
-  <div id="flying-now-grid" class="flying-now-grid"></div>
+  <div id="flying-now-grid" class="flying-now-grid">Loading flying plans...</div>
 </section>
-  
+
 <section id="spots" class="spots-section">
   <div class="section-intro">
     <p class="eyebrow">Explore</p>
@@ -122,7 +107,7 @@
     <div class="modal-intro">
       <p class="eyebrow">Founding Nomad</p>
       <h2>Join Wing Nomads</h2>
-      <p>Create your pilot card. You can update the design and details later.</p>
+      <p>Create your pilot card. You can update your profile later.</p>
     </div>
 
     <form id="founding-form" class="founding-form">
@@ -130,10 +115,14 @@
       <input type="text" id="country" placeholder="Country, e.g. Spain" required />
       <input type="text" id="flying_type" placeholder="Flying type, e.g. Paragliding" required />
       <input type="text" id="level" placeholder="Level, e.g. Intermediate" required />
+
       <input type="text" id="home_spot" placeholder="Favourite spot" />
-      <input type="text" id="next_destination" placeholder="Next destination" />
+      <input type="text" id="current_location" placeholder="Flying now, e.g. Targassonne" />
+      <input type="text" id="next_destination" placeholder="Next destination, e.g. Corsica" />
+      <input type="text" id="trip_dates" placeholder="Trip dates, e.g. 21 - 24 June" />
+
       <input type="text" id="instagram" placeholder="Instagram, e.g. @nadia.fly" />
-      <input type="url" id="profile_image" placeholder="Profile image URL" />
+      <input type="file" id="profile_image_file" accept="image/jpeg,image/png,image/webp" />
 
       <button type="submit">Create my profile</button>
       <p id="form-message"></p>
@@ -149,18 +138,34 @@
 <script>
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
+const PROFILE_IMAGES_BUCKET = "profile-images";
+
+function safe(value, fallback = "Not added") {
+  return value !== null && value !== undefined && String(value).trim() !== ""
+    ? String(value).trim()
+    : fallback;
+}
+
+function firstAvailable(...values) {
+  for (const value of values) {
+    if (value !== null && value !== undefined && String(value).trim() !== "") {
+      return String(value).trim();
+    }
+  }
+  return "";
+}
 
 function getFlag(country) {
   const flags = {
-    "Spain": "🇪🇸",
-    "France": "🇫🇷",
-    "Italy": "🇮🇹",
-    "Germany": "🇩🇪",
-    "Portugal": "🇵🇹",
+    Spain: "🇪🇸",
+    France: "🇫🇷",
+    Italy: "🇮🇹",
+    Germany: "🇩🇪",
+    Portugal: "🇵🇹",
     "United Kingdom": "🇬🇧",
     "United States": "🇺🇸",
-    "Canada": "🇨🇦",
-    "Australia": "🇦🇺",
+    Canada: "🇨🇦",
+    Australia: "🇦🇺",
     "South Africa": "🇿🇦"
   };
 
@@ -178,34 +183,54 @@ function makeUsername(name) {
 async function getTable(tableName) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}?select=*`, {
     headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`
     }
   });
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
-
+  if (!response.ok) throw new Error(await response.text());
   return response.json();
+}
+
+async function uploadProfileImage(file, username) {
+  if (!file) return "";
+
+  const extension = file.name.split(".").pop().toLowerCase();
+  const fileName = `${username}-${Date.now()}.${extension}`;
+  const path = `${fileName}`;
+
+  const response = await fetch(
+    `${SUPABASE_URL}/storage/v1/object/${PROFILE_IMAGES_BUCKET}/${path}`,
+    {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": file.type,
+        "x-upsert": "true"
+      },
+      body: file
+    }
+  );
+
+  if (!response.ok) throw new Error(await response.text());
+
+  return `${SUPABASE_URL}/storage/v1/object/public/${PROFILE_IMAGES_BUCKET}/${path}`;
 }
 
 async function insertProfile(profile) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/profiles`, {
     method: "POST",
     headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      apikey: SUPABASE_KEY,
+      Authorization: `Bearer ${SUPABASE_KEY}`,
       "Content-Type": "application/json",
-      "Prefer": "return=representation"
+      Prefer: "return=representation"
     },
     body: JSON.stringify(profile)
   });
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
-
+  if (!response.ok) throw new Error(await response.text());
   return response.json();
 }
 
@@ -221,49 +246,47 @@ function updateStats(profiles, spots) {
   document.getElementById("van-count").textContent = spots.filter(spot => spot.van_friendly).length;
 }
 
-async function loadProfiles() {
-  const container = document.getElementById("profiles-container");
+function renderPilotCard(profile) {
+  return `
+    <a href="pilot.html?user=${profile.username}" class="pilot-link">
+      <article class="pilot-card">
+        <img
+          class="pilot-photo"
+          src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
+          alt="${profile.full_name || "Wing Nomads pilot"}"
+        >
 
-  try {
-    const profiles = await getTable("profiles");
-
-    container.innerHTML = profiles.map(profile => `
-      <a href="pilot.html?user=${profile.username}" class="pilot-link">
-        <article class="pilot-card">
-          <img 
-            class="pilot-photo"
-            src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
-            alt="${profile.full_name || "Wing Nomads pilot"}"
-          >
-
-          <div class="pilot-body">
-            <div class="pilot-heading">
-              <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-              <span>${getFlag(profile.country)} ${profile.country || ""}</span>
-            </div>
-
-            <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
-
-            <div class="pilot-detail">
-              <small>Favourite spot</small>
-              <p>${profile.home_spot || "Not added yet"}</p>
-            </div>
-
-            <div class="pilot-detail">
-              <small>Next destination</small>
-              <p>${profile.next_destination || "Open to adventure"}</p>
-            </div>
-
-            <p class="instagram">📸 ${profile.instagram || ""}</p>
+        <div class="pilot-body">
+          <div class="pilot-heading">
+            <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+            <span>${getFlag(profile.country)} ${profile.country || ""}</span>
           </div>
-        </article>
-      </a>
-    `).join("");
 
-    const flyingNowContainer = document.getElementById("flying-now-grid");
+          <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
 
-if (flyingNowContainer) {
-  flyingNowContainer.innerHTML = profiles.slice(0, 3).map(profile => `
+          <div class="pilot-detail">
+            <small>Favourite spot</small>
+            <p>${profile.home_spot || "Not added yet"}</p>
+          </div>
+
+          <div class="pilot-detail">
+            <small>Next destination</small>
+            <p>${profile.next_destination || "Open to adventure"}</p>
+          </div>
+
+          <p class="instagram">📸 ${profile.instagram || ""}</p>
+        </div>
+      </article>
+    </a>
+  `;
+}
+
+function renderFlyingCard(profile) {
+  const currentLocation = firstAvailable(profile.current_location, profile.home_spot) || "Location not added";
+  const nextDestination = safe(profile.next_destination, "Open to adventure");
+  const tripDates = safe(profile.trip_dates, "Dates not added");
+
+  return `
     <a href="pilot.html?user=${profile.username}" class="flying-card">
       <img
         src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"}"
@@ -272,26 +295,103 @@ if (flyingNowContainer) {
 
       <div class="flying-card-body">
         <p class="flying-status">● Flying now</p>
-
         <h3>${profile.full_name || "Unnamed Pilot"}</h3>
 
         <p class="flying-location">
-          ${getFlag(profile.country)} ${profile.current_location || profile.home_spot || "Location not added"}
+          ${getFlag(profile.country)} ${currentLocation}
         </p>
 
         <div class="flying-next">
           <small>Next Destination</small>
-          <p>${profile.next_destination || "Open to adventure"}</p>
-          <span>${profile.trip_dates || "Dates not added"}</span>
+          <p>${nextDestination}</p>
+          <span>${tripDates}</span>
         </div>
       </div>
     </a>
-  `).join("");
+  `;
 }
+
+function renderSpotCard(spot) {
+  const bestSeason = firstAvailable(
+    spot.best_season,
+    spot.season,
+    spot.best_time,
+    spot.best_months
+  ) || "Not specified";
+
+  const windDirections = firstAvailable(
+    spot.wind_directions,
+    spot.wind_direction,
+    spot.wind,
+    spot.orientation,
+    spot.takeoff_orientation
+  ) || "Not specified";
+
+  const image = firstAvailable(spot.image_url, spot.image);
+
+  return `
+    <a href="spot.html?id=${spot.slug}" class="spot-link">
+      <article class="spot-card">
+        <div
+          class="spot-image"
+          ${image ? `style="background-image:url('${image}')"` : ""}
+        ></div>
+
+        <div class="pilot-body">
+          <div class="pilot-heading">
+            <h3>${spot.name || "Unnamed Spot"}</h3>
+            <span>${getFlag(spot.country)} ${spot.country || ""}</span>
+          </div>
+
+          <p class="pilot-meta spot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
+
+          <div class="pilot-detail">
+            <small>Best Season</small>
+            <p>${bestSeason}</p>
+          </div>
+
+          <div class="pilot-detail">
+            <small>Wind Directions</small>
+            <p>${windDirections}</p>
+          </div>
+
+          <div class="spot-info-row">
+            <div>
+              <small>Difficulty</small>
+              <p>${spot.difficulty || "Not specified"}</p>
+            </div>
+
+            <div>
+              <small>Van friendly</small>
+              <p>${spot.van_friendly ? "Yes" : "No"}</p>
+            </div>
+          </div>
+        </div>
+      </article>
+    </a>
+  `;
+}
+
+async function loadProfiles() {
+  const container = document.getElementById("profiles-container");
+  const flyingNowContainer = document.getElementById("flying-now-grid");
+
+  try {
+    const profiles = await getTable("profiles");
+
+    container.innerHTML = profiles.map(renderPilotCard).join("");
+
+    if (flyingNowContainer) {
+      flyingNowContainer.innerHTML = profiles
+        .slice(0, 3)
+        .map(renderFlyingCard)
+        .join("");
+    }
 
     return profiles;
   } catch (error) {
     container.innerHTML = "Could not load pilots.";
+    if (flyingNowContainer) flyingNowContainer.innerHTML = "Could not load flying plans.";
     console.error(error);
     return [];
   }
@@ -302,36 +402,7 @@ async function loadSpots() {
 
   try {
     const spots = await getTable("spots");
-
-    container.innerHTML = spots.map(spot => `
-      <a href="spot.html?id=${spot.slug}" class="spot-link">
-        <article class="spot-card">
-          <div class="spot-image"></div>
-
-          <div class="pilot-body">
-            <div class="pilot-heading">
-              <h3>${spot.name || "Unnamed Spot"}</h3>
-              <span>${getFlag(spot.country)} ${spot.country || ""}</span>
-            </div>
-
-            <p class="pilot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
-
-            <div class="spot-info-row">
-              <div>
-                <small>Difficulty</small>
-                <p>${spot.difficulty || "Not specified"}</p>
-              </div>
-
-              <div>
-                <small>Van friendly</small>
-                <p>${spot.van_friendly ? "Yes" : "No"}</p>
-              </div>
-            </div>
-          </div>
-        </article>
-      </a>
-    `).join("");
-
+    container.innerHTML = spots.map(renderSpotCard).join("");
     return spots;
   } catch (error) {
     container.innerHTML = "Could not load spots.";
@@ -358,10 +429,8 @@ closeBtn.addEventListener("click", () => {
   modal.classList.remove("open");
 });
 
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    modal.classList.remove("open");
-  }
+modal.addEventListener("click", event => {
+  if (event.target === modal) modal.classList.remove("open");
 });
 
 document.getElementById("founding-form").addEventListener("submit", async function(event) {
@@ -371,22 +440,29 @@ document.getElementById("founding-form").addEventListener("submit", async functi
   message.textContent = "Creating your profile...";
 
   const fullName = document.getElementById("full_name").value.trim();
-
-  const profile = {
-    id: crypto.randomUUID(),
-    full_name: fullName,
-    username: makeUsername(fullName),
-    country: document.getElementById("country").value.trim(),
-    flying_type: document.getElementById("flying_type").value.trim(),
-    level: document.getElementById("level").value.trim(),
-    home_spot: document.getElementById("home_spot").value.trim(),
-    next_destination: document.getElementById("next_destination").value.trim(),
-    instagram: document.getElementById("instagram").value.trim(),
-    profile_image: document.getElementById("profile_image").value.trim()
-  };
+  const username = makeUsername(fullName);
+  const imageFile = document.getElementById("profile_image_file").files[0];
 
   try {
+    const uploadedImageUrl = await uploadProfileImage(imageFile, username);
+
+    const profile = {
+      id: crypto.randomUUID(),
+      full_name: fullName,
+      username,
+      country: document.getElementById("country").value.trim(),
+      flying_type: document.getElementById("flying_type").value.trim(),
+      level: document.getElementById("level").value.trim(),
+      home_spot: document.getElementById("home_spot").value.trim(),
+      current_location: document.getElementById("current_location").value.trim(),
+      next_destination: document.getElementById("next_destination").value.trim(),
+      trip_dates: document.getElementById("trip_dates").value.trim(),
+      instagram: document.getElementById("instagram").value.trim(),
+      profile_image: uploadedImageUrl
+    };
+
     await insertProfile(profile);
+
     message.textContent = "Profile created. Welcome to Wing Nomads.";
     this.reset();
     await init();
@@ -398,7 +474,7 @@ document.getElementById("founding-form").addEventListener("submit", async functi
     }, 1200);
   } catch (error) {
     console.error(error);
-    message.textContent = "Could not create profile. Check Supabase settings.";
+    message.textContent = "Could not create profile. Check Supabase fields, bucket and policies.";
   }
 });
 
