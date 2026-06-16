@@ -1067,4 +1067,21 @@ footer p {
   .founding-form {
     grid-template-columns: 1fr;
   }
+  @media (max-width: 768px) {
+
+  ...
+
+  .founding-form {
+    grid-template-columns: 1fr;
+  }
+
+  .flying-now-section {
+    padding: 60px 28px;
+  }
+
+  .flying-now-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
 }
