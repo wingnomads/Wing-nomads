@@ -262,7 +262,12 @@ function renderPilotCard(profile) {
             <span>${getFlag(profile.country)} ${profile.country || ""}</span>
           </div>
 
-          <p class="pilot-meta">${profile.level || "Pilot"} · ${profile.flying_type || "Flying"}</p>
+     <p class="pilot-meta">
+  <span class="level-badge level-${String(profile.level || "pilot").toLowerCase()}">
+    ${profile.level || "Pilot"}
+  </span>
+  <span>· ${profile.flying_type || "Flying"}</span>
+</p>
 
           <div class="pilot-detail">
             <small>Favourite spot</small>
