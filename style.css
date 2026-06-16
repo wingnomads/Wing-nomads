@@ -74,30 +74,36 @@ a {
 }
 
 .level-badge {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 900;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  letter-spacing: .7px;
   line-height: 1;
 }
 
 .level-beginner {
-  background: var(--green-bg);
-  color: var(--green-text);
+  background: #e5f7ea;
+  color: #16823a;
 }
 
 .level-intermediate {
-  background: var(--yellow-bg);
-  color: var(--yellow-text);
+  background: #fff3d6;
+  color: #c58917;
 }
 
 .level-advanced,
 .level-pro {
-  background: var(--red-bg);
-  color: var(--red-text);
+  background: #ffe3e3;
+  color: #c43d3d;
+}
+
+.level-instructor {
+  background: #e7e7e7;
+  color: #111111;
 }
 
 /* NAVBAR */
