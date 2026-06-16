@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
 
-  <link rel="stylesheet" href="style.css?v=33012" />
+  <link rel="stylesheet" href="style.css?v=33013" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
@@ -29,10 +29,11 @@
         <span class="divider">|</span>
         <span id="spot-region" class="region-highlight"></span>
       </div>
-<div class="spot-type-line">
-  🪂
-  <span id="spot-type"></span>
-</div>
+
+      <div class="spot-type-line">
+        🪂
+        <span id="spot-type"></span>
+      </div>
     </div>
   </section>
 
@@ -94,16 +95,16 @@
         </div>
 
         <div class="side-item">
-  <small>Flying Type</small>
-  <p>
-    🪂
-    <span id="side-type"></span>
-  </p>
-</div>
+          <small>Flying Type</small>
+          <p>
+            🪂
+            <span id="side-type"></span>
+          </p>
+        </div>
 
         <div class="side-item">
           <small>Other Disciplines</small>
-          <p id="side-disciplines">Coming soon</p>
+          <p id="side-disciplines"></p>
         </div>
 
       </aside>
@@ -144,7 +145,18 @@ const params = new URLSearchParams(window.location.search);
 const slug = params.get("id");
 
 function safe(value, fallback = "Not specified") {
-  return value && String(value).trim() !== "" ? String(value).trim() : fallback;
+  return value !== null && value !== undefined && String(value).trim() !== ""
+    ? String(value).trim()
+    : fallback;
+}
+
+function firstAvailable(...values) {
+  for (const value of values) {
+    if (value !== null && value !== undefined && String(value).trim() !== "") {
+      return String(value).trim();
+    }
+  }
+  return "";
 }
 
 function getFlag(country) {
@@ -178,10 +190,10 @@ function setImage(id, src, alt) {
 }
 
 function renderCommunityLinks(spot) {
-  const community = [];
+  const links = [];
 
   if (spot.whatsapp_group_url) {
-    community.push(`
+    links.push(`
       <a href="${spot.whatsapp_group_url}" target="_blank" rel="noopener" class="community-btn primary">
         <i data-lucide="message-circle"></i>
         Join WhatsApp Group
@@ -190,7 +202,7 @@ function renderCommunityLinks(spot) {
   }
 
   if (spot.local_club_url) {
-    community.push(`
+    links.push(`
       <a href="${spot.local_club_url}" target="_blank" rel="noopener" class="community-btn secondary">
         <i data-lucide="users"></i>
         Visit Local Club
@@ -198,17 +210,17 @@ function renderCommunityLinks(spot) {
     `);
   }
 
-  return community.length
-    ? community.join("")
+  return links.length
+    ? links.join("")
     : "<p>No local community links added yet.</p>";
 }
 
 function showNotFound() {
   document.body.innerHTML = `
-    <section style="min-height:100vh;background:#f6f1e8;padding:120px 7%;font-family:inherit;">
+    <section style="min-height:100vh;background:#f6f1e8;padding:120px 7%;font-family:Arial,sans-serif;">
       <h1 style="font-size:48px;margin-bottom:16px;">Spot not found</h1>
       <p style="font-size:18px;color:#666;margin-bottom:24px;">This flying spot does not exist yet.</p>
-      <a href="index.html#spots" style="color:#111;font-weight:800;text-decoration:none;">← Back to spots</a>
+      <a href="index.html#spots" style="color:#111;font-weight:900;text-decoration:none;">← Back to spots</a>
     </section>
   `;
 }
@@ -219,58 +231,92 @@ async function loadSpot() {
     return;
   }
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/spots?slug=eq.${encodeURIComponent(slug)}&select=*`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/spots?slug=eq.${encodeURIComponent(slug)}&select=*`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`
+        }
       }
+    );
+
+    const data = await response.json();
+    const spot = data[0];
+
+    if (!spot) {
+      showNotFound();
+      return;
     }
-  );
 
-  const data = await response.json();
-  const spot = data[0];
+    const name = safe(spot.name, "Unnamed Spot");
+    const country = safe(spot.country, "");
+    const region = safe(spot.region, "");
+    const flag = getFlag(country);
+    const flyingType = safe(spot.flying_type, "Paragliding");
 
-  if (!spot) {
+    const image =
+      firstAvailable(spot.image_url, spot.image) ||
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
+
+    const difficulty = firstAvailable(
+      spot.difficulty,
+      spot.level
+    );
+
+    const bestSeason = firstAvailable(
+      spot.best_season,
+      spot.season,
+      spot.best_time,
+      spot.best_months
+    );
+
+    const windDirections = firstAvailable(
+      spot.wind_directions,
+      spot.wind_direction,
+      spot.wind,
+      spot.orientation,
+      spot.takeoff_orientation
+    );
+
+    const otherDisciplines = firstAvailable(
+      spot.other_disciplines,
+      spot.disciplines,
+      spot.other_flying_types
+    );
+
+    setImage("spot-image", image, `${name} flying spot`);
+
+    setText("spot-name", name);
+    setText("spot-flag", flag);
+    setText("spot-country", country);
+    setText("spot-region", region);
+    setText("spot-type", flyingType.toUpperCase());
+
+    setText("spot-description", safe(spot.description, "No description added yet."));
+    setText("spot-difficulty", safe(difficulty));
+    setText("spot-season", safe(bestSeason));
+    setText("spot-wind", safe(windDirections));
+    setText("spot-van", spot.van_friendly ? "Yes" : "No");
+
+    setText("side-flag", flag);
+    setText("side-country", country);
+    setText("side-region", region);
+    setText("side-type", flyingType);
+    setText("side-disciplines", safe(otherDisciplines, "Coming soon"));
+
+    const community = document.getElementById("spot-community");
+    if (community) {
+      community.innerHTML = renderCommunityLinks(spot);
+    }
+
+    lucide.createIcons();
+
+  } catch (error) {
+    console.error("Error loading spot:", error);
     showNotFound();
-    return;
   }
-
-  const flag = getFlag(spot.country);
-  const name = safe(spot.name, "Unnamed Spot");
-  const country = safe(spot.country, "");
-  const region = safe(spot.region, "");
-  const flyingType = safe(spot.flying_type, "Paragliding");
-
-  const image =
-    spot.image_url ||
-    spot.image ||
-    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
-
-  setImage("spot-image", image, `${name} flying spot`);
-
-  setText("spot-name", name);
-  setText("spot-flag", flag);
-  setText("spot-country", country);
-  setText("spot-region", region);
-  setText("spot-type", flyingType.toUpperCase());
-
-  setText("spot-description", safe(spot.description, "No description added yet."));
-  setText("spot-difficulty", safe(spot.difficulty));
-  setText("spot-season", safe(spot.best_season));
-  setText("spot-wind", safe(spot.wind_directions));
-  setText("spot-van", spot.van_friendly ? "Yes" : "No");
-
-  setText("side-flag", flag);
-  setText("side-country", country);
-  setText("side-region", region);
-  setText("side-type", flyingType);
-  setText("side-disciplines", safe(spot.other_disciplines, "Coming soon"));
-
-  document.getElementById("spot-community").innerHTML = renderCommunityLinks(spot);
-
-  lucide.createIcons();
 }
 
 loadSpot();
