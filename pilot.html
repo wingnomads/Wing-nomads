@@ -5,288 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Pilot</title>
 
-  <link rel="stylesheet" href="style.css?v=33010" />
+  <link rel="stylesheet" href="style.css?v=33012" />
   <script src="https://unpkg.com/lucide@latest"></script>
-
-  <style>
-    .pilot-page {
-      min-height: 100vh;
-      background: var(--cream);
-    }
-
-    .pilot-detail-hero {
-      position: relative;
-      min-height: 520px;
-      height: 58vh;
-      overflow: hidden;
-      color: white;
-    }
-
-    .pilot-detail-hero img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 22%;
-    }
-
-    .pilot-hero-shade {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,.18), rgba(0,0,0,.70)),
-        linear-gradient(to right, rgba(0,0,0,.58), rgba(0,0,0,.10));
-    }
-
-    .pilot-back {
-      position: absolute;
-      z-index: 3;
-      top: 32px;
-      left: 7%;
-      color: white;
-      font-weight: 900;
-      font-size: 17px;
-    }
-
-    .pilot-hero-content {
-      position: absolute;
-      z-index: 2;
-      left: 7%;
-      bottom: 65px;
-      max-width: 900px;
-    }
-
-    .pilot-country {
-      color: #e29a68;
-      font-size: 22px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 18px;
-    }
-
-    .pilot-name {
-      font-size: clamp(54px, 9vw, 106px);
-      line-height: .9;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      color: white;
-    }
-
-    .pilot-meta-line {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-size: 25px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    .pilot-detail-main {
-      padding: 70px 7% 90px;
-    }
-
-    .pilot-layout {
-      display: grid;
-      grid-template-columns: 1.3fr .85fr;
-      gap: 60px;
-      align-items: start;
-    }
-
-    .pilot-description-large {
-      font-size: 25px;
-      line-height: 1.65;
-      color: #333;
-      max-width: 760px;
-      margin-bottom: 44px;
-    }
-
-    .pilot-info-cards {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(220px, 1fr));
-      gap: 22px;
-    }
-
-    .pilot-mini-card {
-      background: white;
-      border-radius: 14px;
-      padding: 26px;
-      box-shadow: 0 14px 36px rgba(0,0,0,.08);
-    }
-
-    .pilot-mini-card small,
-    .pilot-side-card small {
-      display: block;
-      text-transform: uppercase;
-      color: var(--soft-grey);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .8px;
-      margin-bottom: 8px;
-    }
-
-    .pilot-mini-card p,
-    .pilot-side-card p {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--black);
-    }
-
-    .pilot-side-card {
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 18px;
-      padding: 34px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.1);
-    }
-
-    .pilot-side-item {
-      padding: 22px 0;
-      border-bottom: 1px solid rgba(0,0,0,.12);
-    }
-
-    .pilot-side-item:first-child {
-      padding-top: 0;
-    }
-
-    .pilot-side-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .pilot-instagram-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 900;
-    }
-
-    .pilot-instagram-link svg {
-      width: 24px;
-      height: 24px;
-      stroke-width: 2.2;
-    }
-
-    .pilot-community-panel {
-      margin-top: 60px;
-      background: #f6eee4;
-      border-radius: 18px;
-      padding: 38px;
-      display: grid;
-      grid-template-columns: 1fr .9fr;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .pilot-community-panel h2 {
-      font-size: 34px;
-      line-height: 1.05;
-      margin-bottom: 12px;
-    }
-
-    .pilot-community-panel p {
-      color: #555;
-      font-size: 17px;
-    }
-
-    .pilot-buttons {
-      display: grid;
-      gap: 14px;
-    }
-
-    .pilot-btn {
-      display: block;
-      padding: 18px 22px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: 13px;
-      letter-spacing: .04em;
-    }
-
-    .pilot-btn.primary {
-      background: var(--black);
-      color: white;
-    }
-
-    .pilot-btn.secondary {
-      border: 1px solid var(--black);
-      color: var(--black);
-      background: transparent;
-    }
-
-    .empty-state {
-      min-height: 100vh;
-      background: var(--cream);
-      padding: 120px 7%;
-    }
-
-    .empty-state h1 {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    .empty-state p {
-      font-size: 18px;
-      color: #666;
-      margin-bottom: 24px;
-    }
-
-    @media (max-width: 900px) {
-      .pilot-layout,
-      .pilot-community-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .pilot-detail-hero {
-        min-height: 500px;
-        height: 66vh;
-      }
-
-      .pilot-back,
-      .pilot-hero-content {
-        left: 28px;
-        right: 28px;
-      }
-
-      .pilot-hero-content {
-        bottom: 44px;
-      }
-
-      .pilot-country {
-        font-size: 17px;
-      }
-
-      .pilot-name {
-        font-size: 48px;
-      }
-
-      .pilot-meta-line {
-        font-size: 18px;
-        gap: 10px;
-      }
-
-      .pilot-detail-main {
-        padding: 50px 28px 70px;
-      }
-
-      .pilot-description-large {
-        font-size: 21px;
-      }
-
-      .pilot-info-cards {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 
 <body>
 
 <section class="pilot-page">
+
   <section class="pilot-detail-hero">
     <a href="profiles.html" class="pilot-back">← Back to pilots</a>
 
@@ -307,35 +33,51 @@
   </section>
 
   <main class="pilot-detail-main">
+
     <section class="pilot-layout">
 
       <div>
         <p id="pilot-bio" class="pilot-description-large"></p>
 
         <div class="pilot-info-cards">
+
           <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="mountain"></i>
+            </span>
             <small>Home Spot</small>
             <p id="pilot-home-spot"></p>
           </div>
 
           <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="compass"></i>
+            </span>
             <small>Next Destination</small>
             <p id="pilot-next-destination"></p>
           </div>
 
           <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="bar-chart-3"></i>
+            </span>
             <small>Level</small>
             <p id="pilot-level-card"></p>
           </div>
 
           <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="wind"></i>
+            </span>
             <small>Flying Type</small>
             <p id="pilot-type-card"></p>
           </div>
+
         </div>
       </div>
 
       <aside class="pilot-side-card">
+
         <div class="pilot-side-item">
           <small>Country</small>
           <p id="pilot-side-country"></p>
@@ -350,6 +92,7 @@
           <small>Status</small>
           <p>Open to flying plans</p>
         </div>
+
       </aside>
 
     </section>
@@ -364,11 +107,15 @@
       </div>
 
       <div class="pilot-buttons">
-        <a id="pilot-instagram-button" class="pilot-btn primary" target="_blank" rel="noopener">Instagram</a>
+        <a id="pilot-instagram-button" class="pilot-btn primary" target="_blank" rel="noopener">
+          Instagram
+        </a>
         <a href="profiles.html" class="pilot-btn secondary">Explore pilots</a>
       </div>
     </section>
+
   </main>
+
 </section>
 
 <script>
