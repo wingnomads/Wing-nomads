@@ -82,6 +82,18 @@
   <div id="profiles-container" class="pilot-grid">Loading pilots...</div>
 </section>
 
+  <section id="flying-now" class="flying-now-section">
+  <div class="section-intro">
+    <p class="eyebrow">Live Community</p>
+    <h2>Where People Are Flying</h2>
+    <p>
+      Follow pilots around the world and discover where the next adventures are happening.
+    </p>
+  </div>
+
+  <div id="flying-now-grid" class="flying-now-grid"></div>
+</section>
+  
 <section id="spots" class="spots-section">
   <div class="section-intro">
     <p class="eyebrow">Explore</p>
@@ -247,6 +259,35 @@ async function loadProfiles() {
         </article>
       </a>
     `).join("");
+
+    const flyingNowContainer = document.getElementById("flying-now-grid");
+
+if (flyingNowContainer) {
+  flyingNowContainer.innerHTML = profiles.slice(0, 3).map(profile => `
+    <a href="pilot.html?user=${profile.username}" class="flying-card">
+      <img
+        src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"}"
+        alt="${profile.full_name || "Wing Nomads pilot"}"
+      >
+
+      <div class="flying-card-body">
+        <p class="flying-status">● Flying now</p>
+
+        <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+
+        <p class="flying-location">
+          ${getFlag(profile.country)} ${profile.current_location || profile.home_spot || "Location not added"}
+        </p>
+
+        <div class="flying-next">
+          <small>Next Destination</small>
+          <p>${profile.next_destination || "Open to adventure"}</p>
+          <span>${profile.trip_dates || "Dates not added"}</span>
+        </div>
+      </div>
+    </a>
+  `).join("");
+}
 
     return profiles;
   } catch (error) {
