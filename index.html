@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads | Travel. Connect. Fly.</title>
-<link rel="stylesheet" href="style.css?v=33015" />
+  <link rel="stylesheet" href="style.css?v=33016" />
 </head>
 
 <body>
@@ -180,6 +180,25 @@ function makeUsername(name) {
     .slice(0, 20);
 }
 
+function levelClass(level) {
+  const cleanLevel = String(level || "pilot").toLowerCase().trim();
+
+  if (cleanLevel.includes("beginner")) return "level-beginner";
+  if (cleanLevel.includes("intermediate")) return "level-intermediate";
+  if (cleanLevel.includes("advanced")) return "level-advanced";
+  if (cleanLevel.includes("pro")) return "level-pro";
+
+  return "level-intermediate";
+}
+
+function defaultPilotImage() {
+  return "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80";
+}
+
+function defaultSpotImage() {
+  return "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80";
+}
+
 async function getTable(tableName) {
   const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}?select=*`, {
     headers: {
@@ -197,10 +216,9 @@ async function uploadProfileImage(file, username) {
 
   const extension = file.name.split(".").pop().toLowerCase();
   const fileName = `${username}-${Date.now()}.${extension}`;
-  const path = `${fileName}`;
 
   const response = await fetch(
-    `${SUPABASE_URL}/storage/v1/object/${PROFILE_IMAGES_BUCKET}/${path}`,
+    `${SUPABASE_URL}/storage/v1/object/${PROFILE_IMAGES_BUCKET}/${fileName}`,
     {
       method: "POST",
       headers: {
@@ -215,7 +233,7 @@ async function uploadProfileImage(file, username) {
 
   if (!response.ok) throw new Error(await response.text());
 
-  return `${SUPABASE_URL}/storage/v1/object/public/${PROFILE_IMAGES_BUCKET}/${path}`;
+  return `${SUPABASE_URL}/storage/v1/object/public/${PROFILE_IMAGES_BUCKET}/${fileName}`;
 }
 
 async function insertProfile(profile) {
@@ -247,39 +265,46 @@ function updateStats(profiles, spots) {
 }
 
 function renderPilotCard(profile) {
+  const image = profile.profile_image || defaultPilotImage();
+  const name = profile.full_name || "Unnamed Pilot";
+  const country = profile.country || "";
+  const level = profile.level || "Pilot";
+  const flyingType = profile.flying_type || "Flying";
+  const homeSpot = profile.home_spot || "Not added yet";
+  const nextDestination = profile.next_destination || "Open to adventure";
+  const instagram = profile.instagram || "Instagram not added";
+
   return `
     <a href="pilot.html?user=${profile.username}" class="pilot-link">
       <article class="pilot-card">
         <img
           class="pilot-photo"
-          src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80"}"
-          alt="${profile.full_name || "Wing Nomads pilot"}"
+          src="${image}"
+          alt="${name}"
         >
 
         <div class="pilot-body">
           <div class="pilot-heading">
-            <h3>${profile.full_name || "Unnamed Pilot"}</h3>
-            <span>${getFlag(profile.country)} ${profile.country || ""}</span>
+            <h3>${name}</h3>
+            <span>${getFlag(country)} ${country}</span>
           </div>
 
-     <p class="pilot-meta">
-  <span class="level-badge level-${String(profile.level || "pilot").toLowerCase()}">
-    ${profile.level || "Pilot"}
-  </span>
-  <span>· ${profile.flying_type || "Flying"}</span>
-</p>
+          <p class="pilot-meta">
+            <span class="level-badge ${levelClass(level)}">${level}</span>
+            <span>· ${flyingType}</span>
+          </p>
 
           <div class="pilot-detail">
-            <small>Favourite spot</small>
-            <p>${profile.home_spot || "Not added yet"}</p>
+            <small>📍 Favourite Spot</small>
+            <p>${homeSpot}</p>
           </div>
 
           <div class="pilot-detail">
-            <small>Next destination</small>
-            <p>${profile.next_destination || "Open to adventure"}</p>
+            <small>🧭 Next Destination</small>
+            <p>${nextDestination}</p>
           </div>
 
-          <p class="instagram">📸 ${profile.instagram || ""}</p>
+          <p class="instagram">📸 ${instagram}</p>
         </div>
       </article>
     </a>
@@ -287,6 +312,9 @@ function renderPilotCard(profile) {
 }
 
 function renderFlyingCard(profile) {
+  const image = profile.profile_image || defaultPilotImage();
+  const name = profile.full_name || "Unnamed Pilot";
+  const country = profile.country || "";
   const currentLocation = firstAvailable(profile.current_location, profile.home_spot) || "Location not added";
   const nextDestination = safe(profile.next_destination, "Open to adventure");
   const tripDates = safe(profile.trip_dates, "Dates not added");
@@ -294,20 +322,20 @@ function renderFlyingCard(profile) {
   return `
     <a href="pilot.html?user=${profile.username}" class="flying-card">
       <img
-        src="${profile.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"}"
-        alt="${profile.full_name || "Wing Nomads pilot"}"
+        src="${image}"
+        alt="${name}"
       >
 
       <div class="flying-card-body">
         <p class="flying-status">● Flying now</p>
-        <h3>${profile.full_name || "Unnamed Pilot"}</h3>
+        <h3>${name}</h3>
 
         <p class="flying-location">
-          ${getFlag(profile.country)} ${currentLocation}
+          ${getFlag(country)} ${currentLocation}
         </p>
 
         <div class="flying-next">
-          <small>Next Destination</small>
+          <small>🧭 Next Destination</small>
           <p>${nextDestination}</p>
           <span>${tripDates}</span>
         </div>
@@ -317,6 +345,13 @@ function renderFlyingCard(profile) {
 }
 
 function renderSpotCard(spot) {
+  const image = firstAvailable(spot.image_url, spot.image) || defaultSpotImage();
+
+  const name = spot.name || "Unnamed Spot";
+  const country = spot.country || "";
+  const region = spot.region || "Unknown region";
+  const flyingType = spot.flying_type || "Paragliding";
+
   const bestSeason = firstAvailable(
     spot.best_season,
     spot.season,
@@ -332,43 +367,46 @@ function renderSpotCard(spot) {
     spot.takeoff_orientation
   ) || "Not specified";
 
-  const image = firstAvailable(spot.image_url, spot.image);
+  const difficulty = spot.difficulty || "Not specified";
+  const vanFriendly = spot.van_friendly ? "Yes" : "No";
 
   return `
     <a href="spot.html?id=${spot.slug}" class="spot-link">
       <article class="spot-card">
         <div
           class="spot-image"
-          ${image ? `style="background-image:url('${image}')"` : ""}
+          style="background-image:linear-gradient(rgba(0,0,0,.06), rgba(0,0,0,.06)), url('${image}')"
         ></div>
 
         <div class="pilot-body">
           <div class="pilot-heading">
-            <h3>${spot.name || "Unnamed Spot"}</h3>
-            <span>${getFlag(spot.country)} ${spot.country || ""}</span>
+            <h3>${name}</h3>
+            <span>${getFlag(country)} ${country}</span>
           </div>
 
-          <p class="pilot-meta spot-meta">${spot.region || "Unknown region"} · ${spot.flying_type || "Paragliding"}</p>
+          <p class="pilot-meta spot-meta">${region} · ${flyingType}</p>
 
-          <div class="pilot-detail">
-            <small>Best Season</small>
-            <p>${bestSeason}</p>
-          </div>
+          <div class="spot-detail-list">
+            <div class="pilot-detail">
+              <small>☀️ Best Season</small>
+              <p>${bestSeason}</p>
+            </div>
 
-          <div class="pilot-detail">
-            <small>Wind Directions</small>
-            <p>${windDirections}</p>
+            <div class="pilot-detail">
+              <small>🌬️ Wind Directions</small>
+              <p>${windDirections}</p>
+            </div>
           </div>
 
           <div class="spot-info-row">
             <div>
-              <small>Difficulty</small>
-              <p>${spot.difficulty || "Not specified"}</p>
+              <small>📊 Difficulty</small>
+              <p>${difficulty}</p>
             </div>
 
             <div>
-              <small>Van friendly</small>
-              <p>${spot.van_friendly ? "Yes" : "No"}</p>
+              <small>🚐 Van Friendly</small>
+              <p>${vanFriendly}</p>
             </div>
           </div>
         </div>
@@ -435,7 +473,9 @@ closeBtn.addEventListener("click", () => {
 });
 
 modal.addEventListener("click", event => {
-  if (event.target === modal) modal.classList.remove("open");
+  if (event.target === modal) {
+    modal.classList.remove("open");
+  }
 });
 
 document.getElementById("founding-form").addEventListener("submit", async function(event) {
