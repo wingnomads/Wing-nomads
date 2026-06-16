@@ -251,7 +251,7 @@ a {
   display: block;
 }
 
-/* CARDS */
+/* HOME CARDS */
 
 .pilot-card,
 .spot-card {
@@ -311,6 +311,8 @@ a {
   letter-spacing: .9px;
   text-transform: uppercase;
   color: var(--soft-grey);
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
   margin-bottom: 22px;
 }
 
@@ -334,13 +336,15 @@ a {
 }
 
 .instagram {
-  margin-top: 20px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,.12);
   font-size: 16px;
   color: #333;
   font-weight: 800;
 }
 
-/* SPOTS */
+/* SPOT CARDS */
 
 .spot-card {
   max-width: 340px;
@@ -424,14 +428,16 @@ a {
   cursor: pointer;
 }
 
-/* SPOT DETAIL PAGE */
+/* SHARED DETAIL PAGES */
 
-.spot-page {
+.spot-page,
+.pilot-page {
   min-height: 100vh;
   background: var(--cream);
 }
 
-.spot-detail-hero {
+.spot-detail-hero,
+.pilot-detail-hero {
   position: relative;
   height: 60vh;
   min-height: 520px;
@@ -439,7 +445,8 @@ a {
   color: white;
 }
 
-.spot-detail-hero img {
+.spot-detail-hero img,
+.pilot-detail-hero img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -447,7 +454,12 @@ a {
   object-fit: cover;
 }
 
-.spot-hero-shade {
+.pilot-detail-hero img {
+  object-position: center 22%;
+}
+
+.spot-hero-shade,
+.pilot-hero-shade {
   position: absolute;
   inset: 0;
   background:
@@ -455,7 +467,8 @@ a {
     linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.08));
 }
 
-.spot-back {
+.spot-back,
+.pilot-back {
   position: absolute;
   z-index: 3;
   top: 32px;
@@ -465,7 +478,8 @@ a {
   font-size: 17px;
 }
 
-.spot-hero-content {
+.spot-hero-content,
+.pilot-hero-content {
   position: absolute;
   z-index: 2;
   left: 7%;
@@ -473,17 +487,30 @@ a {
   max-width: 900px;
 }
 
-.spot-hero-content h1 {
+.spot-hero-content h1,
+.pilot-name {
   font-size: clamp(54px, 9vw, 106px);
   line-height: .9;
   text-transform: uppercase;
   margin-bottom: 24px;
+  color: white;
+}
+
+.pilot-country {
+  color: #e29a68;
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 18px;
 }
 
 .spot-location-line,
-.spot-type-line {
+.spot-type-line,
+.pilot-meta-line {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
   font-size: 28px;
   font-weight: 900;
@@ -499,18 +526,21 @@ a {
   color: #e29a68;
 }
 
-.spot-detail-main {
+.spot-detail-main,
+.pilot-detail-main {
   padding: 70px 7% 90px;
 }
 
-.spot-layout {
+.spot-layout,
+.pilot-layout {
   display: grid;
   grid-template-columns: 1.3fr .85fr;
   gap: 60px;
   align-items: start;
 }
 
-.spot-description-large {
+.spot-description-large,
+.pilot-description-large {
   font-size: 25px;
   line-height: 1.65;
   color: #333;
@@ -518,24 +548,35 @@ a {
   margin-bottom: 44px;
 }
 
-.spot-info-cards {
+.spot-info-cards,
+.pilot-info-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 22px;
 }
 
-.spot-mini-card {
+.spot-mini-card,
+.pilot-mini-card {
   background: white;
   border-radius: 14px;
   padding: 26px;
   box-shadow: 0 14px 36px rgba(0,0,0,.08);
 }
 
+.circle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
 .circle-icon svg,
 .spot-type-line svg,
 .side-item svg,
+.pilot-side-item svg,
 .community-btn svg,
-.safety-icon svg {
+.safety-icon svg,
+.pilot-instagram-link svg {
   width: 26px;
   height: 26px;
   stroke: currentColor;
@@ -543,7 +584,9 @@ a {
 }
 
 .spot-mini-card small,
-.side-item small {
+.pilot-mini-card small,
+.side-item small,
+.pilot-side-item small {
   display: block;
   text-transform: uppercase;
   color: var(--soft-grey);
@@ -553,13 +596,15 @@ a {
   margin-bottom: 8px;
 }
 
-.spot-mini-card p {
+.spot-mini-card p,
+.pilot-mini-card p {
   font-size: 22px;
   font-weight: 900;
   color: var(--black);
 }
 
-.spot-side-card {
+.spot-side-card,
+.pilot-side-card {
   background: rgba(255,255,255,.72);
   border: 1px solid rgba(0,0,0,.08);
   border-radius: 18px;
@@ -567,27 +612,39 @@ a {
   box-shadow: 0 18px 45px rgba(0,0,0,.1);
 }
 
-.side-item {
+.side-item,
+.pilot-side-item {
   padding: 22px 0;
   border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
-.side-item:first-child {
+.side-item:first-child,
+.pilot-side-item:first-child {
   padding-top: 0;
 }
 
-.side-item:last-child {
+.side-item:last-child,
+.pilot-side-item:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
-.side-item p {
+.side-item p,
+.pilot-side-item p {
   font-size: 22px;
   font-weight: 800;
   color: var(--black);
 }
 
-.spot-community-panel {
+.pilot-instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+}
+
+.spot-community-panel,
+.pilot-community-panel {
   margin-top: 60px;
   background: #f6eee4;
   border-radius: 18px;
@@ -598,23 +655,27 @@ a {
   align-items: center;
 }
 
-.spot-community-panel h2 {
+.spot-community-panel h2,
+.pilot-community-panel h2 {
   font-size: 34px;
   line-height: 1.05;
   margin-bottom: 12px;
 }
 
-.spot-community-panel p {
+.spot-community-panel p,
+.pilot-community-panel p {
   color: #555;
   font-size: 17px;
 }
 
-.spot-community-buttons {
+.spot-community-buttons,
+.pilot-buttons {
   display: grid;
   gap: 14px;
 }
 
-.community-btn {
+.community-btn,
+.pilot-btn {
   display: block;
   padding: 18px 22px;
   border-radius: 10px;
@@ -622,12 +683,20 @@ a {
   font-weight: 900;
 }
 
-.community-btn.primary {
+.pilot-btn {
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: .04em;
+}
+
+.community-btn.primary,
+.pilot-btn.primary {
   background: var(--black);
   color: white;
 }
 
-.community-btn.secondary {
+.community-btn.secondary,
+.pilot-btn.secondary {
   border: 1px solid var(--black);
   color: var(--black);
   background: transparent;
@@ -756,6 +825,25 @@ a {
   color: var(--terracotta);
 }
 
+/* EMPTY STATE */
+
+.empty-state {
+  min-height: 100vh;
+  background: var(--cream);
+  padding: 120px 7%;
+}
+
+.empty-state h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
 /* FOOTER */
 
 footer {
@@ -776,7 +864,7 @@ footer p {
   font-size: 18px;
 }
 
-/* ORIGINAL BASIC MOBILE ONLY */
+/* MOBILE */
 
 @media (max-width: 768px) {
   .navbar {
@@ -839,34 +927,48 @@ footer p {
   }
 
   .spot-layout,
-  .spot-community-panel {
+  .pilot-layout,
+  .spot-community-panel,
+  .pilot-community-panel {
     grid-template-columns: 1fr;
   }
 
-  .spot-detail-hero {
+  .spot-detail-hero,
+  .pilot-detail-hero {
     min-height: 480px;
   }
 
   .spot-location-line,
-  .spot-type-line {
+  .spot-type-line,
+  .pilot-meta-line {
     font-size: 21px;
     gap: 12px;
   }
 
-  .spot-detail-main {
+  .pilot-country {
+    font-size: 17px;
+  }
+
+  .spot-detail-main,
+  .pilot-detail-main {
     padding: 50px 28px 70px;
   }
 
   .spot-back,
-  .spot-hero-content {
+  .pilot-back,
+  .spot-hero-content,
+  .pilot-hero-content {
     left: 28px;
+    right: 28px;
   }
 
-  .spot-info-cards {
+  .spot-info-cards,
+  .pilot-info-cards {
     grid-template-columns: 1fr;
   }
 
-  .spot-description-large {
+  .spot-description-large,
+  .pilot-description-large {
     font-size: 21px;
   }
 
