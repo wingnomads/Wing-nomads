@@ -7,6 +7,12 @@
   --terracotta: #c46a3c;
   --soft-grey: #666666;
   --white: #ffffff;
+  --green-bg: #dcefdc;
+  --green-text: #1f7a38;
+  --yellow-bg: #f4e3b1;
+  --yellow-text: #9a6a00;
+  --red-bg: #f1c7b8;
+  --red-text: #a13d22;
 }
 
 * {
@@ -35,6 +41,63 @@ img {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* GLOBAL LABELS */
+
+.label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.info-label,
+.pilot-detail small,
+.flying-next small,
+.spot-info-row small,
+.spot-mini-card small,
+.pilot-mini-card small,
+.side-item small,
+.pilot-side-item small {
+  display: block;
+  text-transform: uppercase;
+  color: var(--soft-grey);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  line-height: 1;
+}
+
+.level-beginner {
+  background: var(--green-bg);
+  color: var(--green-text);
+}
+
+.level-intermediate {
+  background: var(--yellow-bg);
+  color: var(--yellow-text);
+}
+
+.level-advanced,
+.level-pro {
+  background: var(--red-bg);
+  color: var(--red-text);
 }
 
 /* NAVBAR */
@@ -207,13 +270,18 @@ a {
   padding: 90px 7%;
 }
 
+.flying-now-section {
+  background: var(--paper);
+  padding: 90px 7%;
+}
+
 .spots-section {
   background: var(--sand);
   padding: 90px 7%;
 }
 
 .section-intro {
-  max-width: 620px;
+  max-width: 680px;
   margin-bottom: 42px;
 }
 
@@ -240,21 +308,28 @@ a {
 /* GRIDS */
 
 .pilot-grid,
-.spot-grid {
+.spot-grid,
+.flying-now-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 340px));
   gap: 28px;
 }
 
+.flying-now-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
 .pilot-link,
-.spot-link {
+.spot-link,
+.flying-card {
   display: block;
 }
 
 /* HOME CARDS */
 
 .pilot-card,
-.spot-card {
+.spot-card,
+.flying-card {
   background: var(--paper);
   color: var(--charcoal);
   border-radius: 14px;
@@ -263,12 +338,19 @@ a {
   transition: .25s ease;
 }
 
+.flying-card {
+  background: white;
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+}
+
 .pilot-card:hover,
-.spot-link:hover .spot-card {
+.spot-link:hover .spot-card,
+.flying-card:hover {
   transform: translateY(-4px);
 }
 
-.pilot-photo {
+.pilot-photo,
+.flying-card img {
   width: 100%;
   height: 215px;
   display: block;
@@ -276,78 +358,8 @@ a {
   object-position: center 25%;
 }
 
-.pilot-body {
-  padding: 26px;
-}
-
-.pilot-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 10px;
-}
-
-.pilot-heading h3,
-.spot-card h3 {
-  font-size: 24px;
-  line-height: 1.05;
-  text-transform: uppercase;
-  color: var(--black);
-  font-weight: 900;
-}
-
-.pilot-heading span {
-  font-size: 12px;
-  font-weight: 900;
-  text-transform: uppercase;
-  color: var(--terracotta);
-  white-space: nowrap;
-}
-
-.pilot-meta {
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: .9px;
-  text-transform: uppercase;
-  color: var(--soft-grey);
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(0,0,0,.12);
-  margin-bottom: 22px;
-}
-
-.pilot-detail {
-  margin-bottom: 16px;
-}
-
-.pilot-detail small {
-  display: block;
-  font-size: 11px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--soft-grey);
-  margin-bottom: 5px;
-}
-
-.pilot-detail p {
-  font-size: 16px;
-  color: #222;
-}
-
-.instagram {
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(0,0,0,.12);
-  font-size: 16px;
-  color: #333;
-  font-weight: 800;
-}
-
-/* SPOT CARDS */
-
-.spot-card {
-  max-width: 340px;
+.flying-card img {
+  height: 220px;
 }
 
 .spot-image {
@@ -361,29 +373,125 @@ a {
   background-position: center;
 }
 
+.pilot-body,
+.flying-card-body {
+  padding: 26px;
+}
+
+.pilot-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.pilot-heading h3,
+.spot-card h3,
+.flying-card h3 {
+  font-size: 24px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--black);
+  font-weight: 900;
+}
+
+.flying-card h3 {
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.pilot-heading span {
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  white-space: nowrap;
+}
+
+.pilot-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+  color: var(--soft-grey);
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  margin-bottom: 22px;
+}
+
+.spot-meta {
+  display: block;
+}
+
+.pilot-detail {
+  margin-bottom: 16px;
+}
+
+.pilot-detail p,
+.flying-location,
+.spot-info-row p {
+  font-size: 16px;
+  color: #222;
+}
+
+.flying-location {
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.instagram {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,.12);
+  font-size: 16px;
+  color: #333;
+  font-weight: 800;
+}
+
+.flying-status {
+  color: var(--green-text);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 10px;
+}
+
+.flying-next {
+  padding-top: 18px;
+  border-top: 1px solid rgba(0,0,0,.12);
+}
+
+.flying-next p {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.flying-next span {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--terracotta);
+}
+
+/* SPOT CARDS */
+
+.spot-card {
+  max-width: 340px;
+}
+
 .spot-info-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
   padding-top: 20px;
   border-top: 1px solid rgba(0,0,0,.1);
-}
-
-.spot-info-row small {
-  display: block;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  color: var(--soft-grey);
-  margin-bottom: 6px;
-}
-
-.spot-info-row p {
-  font-size: 17px;
-  font-weight: 800;
-  color: #222;
-  line-height: 1.2;
 }
 
 /* JOIN CTA */
@@ -581,19 +689,6 @@ a {
   height: 26px;
   stroke: currentColor;
   stroke-width: 2.2;
-}
-
-.spot-mini-card small,
-.pilot-mini-card small,
-.side-item small,
-.pilot-side-item small {
-  display: block;
-  text-transform: uppercase;
-  color: var(--soft-grey);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: .8px;
-  margin-bottom: 8px;
 }
 
 .spot-mini-card p,
@@ -805,6 +900,11 @@ a {
   background: white;
 }
 
+.founding-form input[type="file"] {
+  padding: 14px 18px;
+  cursor: pointer;
+}
+
 .founding-form button {
   grid-column: 1 / -1;
   margin-top: 8px;
@@ -863,94 +963,6 @@ footer p {
   opacity: .75;
   font-size: 18px;
 }
-/* FLYING NOW SECTION */
-
-.flying-now-section {
-  background: var(--paper);
-  padding: 90px 7%;
-}
-
-.flying-now-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-}
-
-.flying-card {
-  display: block;
-  background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 18px 45px rgba(0,0,0,.12);
-  transition: .25s ease;
-}
-
-.flying-card:hover {
-  transform: translateY(-4px);
-}
-
-.flying-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-}
-
-.flying-card-body {
-  padding: 26px;
-}
-
-.flying-status {
-  color: #16823a;
-  font-size: 12px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 10px;
-}
-
-.flying-card h3 {
-  font-size: 26px;
-  line-height: 1.05;
-  text-transform: uppercase;
-  color: var(--black);
-  margin-bottom: 12px;
-}
-
-.flying-location {
-  font-size: 16px;
-  font-weight: 800;
-  color: #222;
-  margin-bottom: 20px;
-}
-
-.flying-next {
-  padding-top: 18px;
-  border-top: 1px solid rgba(0,0,0,.12);
-}
-
-.flying-next small {
-  display: block;
-  font-size: 11px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .8px;
-  color: var(--soft-grey);
-  margin-bottom: 5px;
-}
-
-.flying-next p {
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--black);
-  margin-bottom: 4px;
-}
-
-.flying-next span {
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--terracotta);
-}
 
 /* MOBILE */
 
@@ -1001,12 +1013,14 @@ footer p {
 
   .nomads-section,
   .spots-section,
+  .flying-now-section,
   .join-cta {
     padding: 60px 28px;
   }
 
   .pilot-grid,
-  .spot-grid {
+  .spot-grid,
+  .flying-now-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1067,21 +1081,4 @@ footer p {
   .founding-form {
     grid-template-columns: 1fr;
   }
-  @media (max-width: 768px) {
-
-  ...
-
-  .founding-form {
-    grid-template-columns: 1fr;
-  }
-
-  .flying-now-section {
-    padding: 60px 28px;
-  }
-
-  .flying-now-grid {
-    grid-template-columns: 1fr;
-  }
-
-}
 }
