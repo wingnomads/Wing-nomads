@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Spot</title>
-  <link rel="stylesheet" href="style.css?v=33020" />
+  <link rel="stylesheet" href="style.css?v=33022" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -19,88 +19,44 @@
       <div class="spot-type-line">🪂 <span id="spot-type"></span></div>
     </div>
   </section>
-
   <main class="spot-detail-main">
     <section class="spot-layout">
       <div class="spot-left">
         <p id="spot-description" class="spot-description-large"></p>
         <div class="spot-info-cards">
-          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="bar-chart-3"></i></span><small>📊 Difficulty</small><p id="spot-difficulty"></p></div>
-          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="calendar-days"></i></span><small>☀️ Best Season</small><p id="spot-season"></p></div>
-          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="wind"></i></span><small>🌬️ Wind Directions</small><p id="spot-wind"></p></div>
-          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="caravan"></i></span><small>🚐 Van Friendly</small><p id="spot-van"></p></div>
+          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="bar-chart-3"></i></span><small>Difficulty</small><p id="spot-difficulty"></p></div>
+          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="calendar-days"></i></span><small>Best Season</small><p id="spot-season"></p></div>
+          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="wind"></i></span><small>Wind Directions</small><p id="spot-wind"></p></div>
+          <div class="spot-mini-card"><span class="circle-icon"><i data-lucide="caravan"></i></span><small>Van Friendly</small><p id="spot-van"></p></div>
         </div>
       </div>
-
       <aside class="spot-side-card">
-        <div class="side-item"><small>🌍 Country</small><p><span id="side-flag"></span> <span id="side-country"></span></p></div>
-        <div class="side-item"><small>📍 Region</small><p id="side-region"></p></div>
-        <div class="side-item"><small>🪂 Flying Type</small><p>🪂 <span id="side-type"></span></p></div>
-        <div class="side-item"><small>➕ Other Disciplines</small><p id="side-disciplines"></p></div>
+        <div class="side-item"><small>Country</small><p><span id="side-flag"></span> <span id="side-country"></span></p></div>
+        <div class="side-item"><small>Region</small><p id="side-region"></p></div>
+        <div class="side-item"><small>Flying Type</small><p>🪂 <span id="side-type"></span></p></div>
+        <div class="side-item"><small>Other Disciplines</small><p id="side-disciplines"></p></div>
       </aside>
     </section>
-
     <section class="spot-community-panel">
       <div><p class="eyebrow">Local Community</p><h2>Connect with local pilots</h2><p>Find the local flying community, ask about conditions and connect with pilots already flying here.</p></div>
       <div id="spot-community" class="spot-community-buttons"></div>
     </section>
-
     <section class="spot-safety-note"><div class="safety-icon"><i data-lucide="lightbulb"></i></div><p>Always check local conditions and regulations before flying.<br>Fly safe, respect nature and enjoy the adventure.</p></section>
   </main>
 </section>
-
 <script>
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("id");
-
 function safe(value, fallback = "Not specified") { return value !== null && value !== undefined && String(value).trim() !== "" ? String(value).trim() : fallback; }
 function firstAvailable(...values) { for (const value of values) { if (value !== null && value !== undefined && String(value).trim() !== "") return String(value).trim(); } return ""; }
-function getFlag(country) { const flags = { Spain:"🇪🇸", France:"🇫🇷", Italy:"🇮🇹", Germany:"🇩🇪", Portugal:"🇵🇹", "United Kingdom":"🇬🇧", "United States":"🇺🇸", Canada:"🇨🇦", Australia:"🇦🇺", "South Africa":"🇿🇦" }; return flags[country] || "🌍"; }
-function setText(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
-function setImage(id, src, alt) { const el = document.getElementById(id); if (!el) return; el.src = src; el.alt = alt; }
-
-function renderCommunityLinks(spot) {
-  const links = [];
-  if (spot.whatsapp_group_url) links.push(`<a href="${spot.whatsapp_group_url}" target="_blank" rel="noopener" class="community-btn primary"><i data-lucide="message-circle"></i> Join WhatsApp Group</a>`);
-  if (spot.local_club_url) links.push(`<a href="${spot.local_club_url}" target="_blank" rel="noopener" class="community-btn secondary"><i data-lucide="users"></i> Visit Local Club</a>`);
-  links.push(`<a href="index.html#join" class="community-btn secondary">Suggest Local Contact</a>`);
-  return links.join("");
-}
-
-function showNotFound() { document.body.innerHTML = `<section class="empty-state"><h1>Spot not found</h1><p>This flying spot does not exist yet.</p><a href="index.html#spots" style="color:#111;font-weight:900;text-decoration:none;">← Back to spots</a></section>`; }
-
-async function loadSpot() {
-  if (!slug) return showNotFound();
-  try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/spots?slug=eq.${encodeURIComponent(slug)}&select=*`, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
-    const data = await response.json();
-    const spot = data[0];
-    if (!spot) return showNotFound();
-
-    const name = safe(spot.name, "Unnamed Spot");
-    const country = safe(spot.country, "");
-    const region = safe(spot.region, "");
-    const flag = getFlag(country);
-    const flyingType = safe(spot.flying_type, "Paragliding");
-    const image = firstAvailable(spot.image_url, spot.image) || "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80";
-    const difficulty = firstAvailable(spot.difficulty, spot.level);
-    const bestSeason = firstAvailable(spot.best_season, spot.season, spot.best_time, spot.best_months);
-    const windDirections = firstAvailable(spot.wind_directions, spot.wind_direction, spot.wind, spot.orientation, spot.takeoff_orientation);
-    const otherDisciplines = firstAvailable(spot.other_disciplines, spot.disciplines, spot.other_flying_types);
-
-    setImage("spot-image", image, `${name} flying spot`);
-    setText("spot-name", name); setText("spot-flag", flag); setText("spot-country", country); setText("spot-region", region); setText("spot-type", flyingType.toUpperCase());
-    setText("spot-description", safe(spot.description, "No description added yet."));
-    setText("spot-difficulty", safe(difficulty)); setText("spot-season", safe(bestSeason)); setText("spot-wind", safe(windDirections)); setText("spot-van", spot.van_friendly ? "Yes" : "No");
-    setText("side-flag", flag); setText("side-country", country); setText("side-region", region); setText("side-type", flyingType); setText("side-disciplines", safe(otherDisciplines, "None specified"));
-
-    const community = document.getElementById("spot-community");
-    if (community) community.innerHTML = renderCommunityLinks(spot);
-    lucide.createIcons();
-  } catch (error) { console.error("Error loading spot:", error); showNotFound(); }
-}
+function getFlag(country){ const flags={"Spain":"🇪🇸","France":"🇫🇷","Italy":"🇮🇹","Germany":"🇩🇪","Portugal":"🇵🇹","United Kingdom":"🇬🇧","United States":"🇺🇸","Canada":"🇨🇦","Australia":"🇦🇺","South Africa":"🇿🇦"}; return flags[country] || "🌍"; }
+function setText(id,value){ const el=document.getElementById(id); if(el) el.textContent=value; }
+function setImage(id,src,alt){ const el=document.getElementById(id); if(!el) return; el.src=src; el.alt=alt; }
+function renderCommunityLinks(spot){ const links=[]; if(spot.whatsapp_group_url){ links.push(`<a href="${spot.whatsapp_group_url}" target="_blank" rel="noopener" class="community-btn primary"><i data-lucide="message-circle"></i> Join WhatsApp Group</a>`); } if(spot.local_club_url){ links.push(`<a href="${spot.local_club_url}" target="_blank" rel="noopener" class="community-btn secondary"><i data-lucide="users"></i> Visit Local Club</a>`); } links.push(`<a href="mailto:?subject=Suggest local contact for ${encodeURIComponent(spot.name || 'Wing Nomads spot')}" class="community-btn secondary"><i data-lucide="plus-circle"></i> Suggest Local Contact</a>`); return links.join(""); }
+function showNotFound(){ document.body.innerHTML=`<section style="min-height:100vh;background:#f6f1e8;padding:120px 7%;font-family:Arial,sans-serif;"><h1 style="font-size:48px;margin-bottom:16px;">Spot not found</h1><p style="font-size:18px;color:#666;margin-bottom:24px;">This flying spot does not exist yet.</p><a href="index.html#spots" style="color:#111;font-weight:900;text-decoration:none;">← Back to spots</a></section>`; }
+async function loadSpot(){ if(!slug){ showNotFound(); return; } try { const response = await fetch(`${SUPABASE_URL}/rest/v1/spots?slug=eq.${encodeURIComponent(slug)}&select=*`, { headers:{ apikey:SUPABASE_KEY, Authorization:`Bearer ${SUPABASE_KEY}` }}); const data = await response.json(); const spot = data[0]; if(!spot){ showNotFound(); return; } const name=safe(spot.name,"Unnamed Spot"); const country=safe(spot.country,""); const region=safe(spot.region,""); const flag=getFlag(country); const flyingType=safe(spot.flying_type,"Paragliding"); const image=firstAvailable(spot.image_url,spot.image)||"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1600&q=80"; const difficulty=firstAvailable(spot.difficulty,spot.level); const bestSeason=firstAvailable(spot.best_season,spot.season,spot.best_time,spot.best_months); const windDirections=firstAvailable(spot.wind_directions,spot.wind_direction,spot.wind,spot.orientation,spot.takeoff_orientation); const otherDisciplines=firstAvailable(spot.other_disciplines,spot.disciplines,spot.other_flying_types); setImage("spot-image", image, `${name} flying spot`); setText("spot-name", name); setText("spot-flag", flag); setText("spot-country", country); setText("spot-region", region); setText("spot-type", flyingType.toUpperCase()); setText("spot-description", safe(spot.description,"No description added yet.")); setText("spot-difficulty", safe(difficulty)); setText("spot-season", safe(bestSeason)); setText("spot-wind", safe(windDirections)); setText("spot-van", spot.van_friendly ? "Yes" : "No"); setText("side-flag", flag); setText("side-country", country); setText("side-region", region); setText("side-type", flyingType); setText("side-disciplines", safe(otherDisciplines,"None specified")); const community=document.getElementById("spot-community"); if(community) community.innerHTML=renderCommunityLinks(spot); lucide.createIcons(); } catch(error){ console.error("Error loading spot:", error); showNotFound(); } }
 loadSpot();
 </script>
 </body>
