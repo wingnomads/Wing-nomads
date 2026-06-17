@@ -249,7 +249,7 @@ if (levelElement) {
 
   if (instaUrl) {
     instagramButton.href = instaUrl;
-    instagramButton.textContent = `Contact ${instaLabel}`;
+    instagramButton.innerHTML = `<i data-lucide="instagram"></i><span>Contact ${instaLabel}</span>`;
   } else {
     instagramButton.removeAttribute("href");
     instagramButton.textContent = "Instagram not added";
