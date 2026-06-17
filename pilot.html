@@ -252,7 +252,7 @@ if (levelElement) {
     instagramButton.innerHTML = `<i data-lucide="instagram"></i><span>Contact ${instaLabel}</span>`;
   } else {
     instagramButton.removeAttribute("href");
-    instagramButton.textContent = "Instagram not added";
+    instagramButton.innerHTML = `<span>Contact not added</span>`;
     instagramButton.classList.add("secondary");
     instagramButton.classList.remove("primary");
   }
