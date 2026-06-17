@@ -4,58 +4,253 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wing Nomads Pilot</title>
-  <link rel="stylesheet" href="style.css?v=33022" />
+
+<link rel="stylesheet" href="style.css?v=33016" />
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
+
 <section class="pilot-page">
+
   <section class="pilot-detail-hero">
     <a href="profiles.html" class="pilot-back">← Back to pilots</a>
+
     <img id="pilot-image" alt="Pilot image" />
+
     <div class="pilot-hero-shade"></div>
+
     <div class="pilot-hero-content">
       <div id="pilot-country" class="pilot-country"></div>
       <h1 id="pilot-name" class="pilot-name"></h1>
-      <div class="pilot-meta-line"><span id="pilot-level"></span><span>·</span><span id="pilot-type"></span></div>
+
+      <div class="pilot-meta-line">
+        <span id="pilot-level"></span>
+        <span>·</span>
+        <span id="pilot-type"></span>
+      </div>
     </div>
   </section>
+
   <main class="pilot-detail-main">
+
     <section class="pilot-layout">
+
       <div>
         <p id="pilot-bio" class="pilot-description-large"></p>
+
         <div class="pilot-info-cards">
-          <div class="pilot-mini-card"><span class="circle-icon"><i data-lucide="map-pin"></i></span><small>Favourite Spot</small><p id="pilot-home-spot"></p></div>
-          <div class="pilot-mini-card"><span class="circle-icon"><i data-lucide="compass"></i></span><small>Next Destination</small><p id="pilot-next-destination"></p></div>
-          <div class="pilot-mini-card"><span class="circle-icon"><i data-lucide="bar-chart-3"></i></span><small>Level</small><p id="pilot-level-card"></p></div>
-          <div class="pilot-mini-card"><span class="circle-icon"><i data-lucide="wind"></i></span><small>Flying Type</small><p id="pilot-type-card"></p></div>
+
+          <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="mountain"></i>
+            </span>
+            <small>Home Spot</small>
+            <p id="pilot-home-spot"></p>
+          </div>
+
+          <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="compass"></i>
+            </span>
+            <small>Next Destination</small>
+            <p id="pilot-next-destination"></p>
+          </div>
+
+          <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="bar-chart-3"></i>
+            </span>
+            <small>Level</small>
+            <p id="pilot-level-card"></p>
+          </div>
+
+          <div class="pilot-mini-card">
+            <span class="circle-icon">
+              <i data-lucide="wind"></i>
+            </span>
+            <small>Flying Type</small>
+            <p id="pilot-type-card"></p>
+          </div>
+
         </div>
       </div>
+
       <aside class="pilot-side-card">
-        <div class="pilot-side-item"><small>Country</small><p id="pilot-side-country"></p></div>
-        <div class="pilot-side-item"><small>Instagram</small><p id="pilot-instagram"></p></div>
-        <div class="pilot-side-item"><small>Status</small><p>Open to flying plans</p></div>
+
+        <div class="pilot-side-item">
+          <small>Country</small>
+          <p id="pilot-side-country"></p>
+        </div>
+
+        <div class="pilot-side-item">
+          <small>Instagram</small>
+          <p id="pilot-instagram"></p>
+        </div>
+
+        <div class="pilot-side-item">
+          <small>Status</small>
+          <p>Open to flying plans</p>
+        </div>
+
       </aside>
+
     </section>
+
     <section class="pilot-community-panel">
-      <div><p class="eyebrow">Wing Nomads</p><h2>Connect before your next flight</h2><p>Find pilots nearby, discover flying places and connect with people already exploring the area.</p></div>
-      <div class="pilot-buttons"><a id="pilot-instagram-button" class="pilot-btn primary" target="_blank" rel="noopener"><i data-lucide="instagram"></i> Instagram</a><a href="profiles.html" class="pilot-btn secondary">Explore pilots</a></div>
+      <div>
+        <p class="eyebrow">Wing Nomads</p>
+        <h2>Connect before your next flight</h2>
+        <p>
+          Find pilots nearby, discover flying places and connect with people already exploring the area.
+        </p>
+      </div>
+
+      <div class="pilot-buttons">
+        <a id="pilot-instagram-button" class="pilot-btn primary" target="_blank" rel="noopener">
+          Instagram
+        </a>
+        <a href="profiles.html" class="pilot-btn secondary">Explore pilots</a>
+      </div>
     </section>
+
   </main>
+
 </section>
+
 <script>
 const SUPABASE_URL = "https://fdpyqsqflwqmyubugitn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_CHWsP3y0fChbq4Pcjq5pvQ_dngXSe69";
+
 const params = new URLSearchParams(window.location.search);
 const username = params.get("user");
-function safe(value, fallback = "Not added") { return value && String(value).trim() !== "" ? String(value).trim() : fallback; }
-function setText(id, value) { const el = document.getElementById(id); if(el) el.textContent = value; }
-function setHTML(id, value) { const el = document.getElementById(id); if(el) el.innerHTML = value; }
-function instagramUrl(value) { if(!value) return null; let handle = String(value).trim(); if(handle.startsWith("http")) return handle; handle = handle.replace("@", ""); return `https://instagram.com/${handle}`; }
-function instagramLabel(value) { if(!value) return "Instagram not added"; let handle = String(value).trim(); if(handle.startsWith("http")){ handle = handle.split("instagram.com/")[1] || handle; handle = handle.replaceAll("/", ""); } handle = handle.replace("@", ""); return `@${handle}`; }
-function levelClass(level) { const clean = String(level || "").toLowerCase(); if(clean.includes("beginner")) return "level-beginner"; if(clean.includes("intermediate")) return "level-intermediate"; if(clean.includes("advanced")) return "level-advanced"; if(clean.includes("pro")) return "level-pro"; if(clean.includes("instructor")) return "level-instructor"; return "level-intermediate"; }
-function showEmptyState(title, text) { document.body.innerHTML = `<section class="empty-state"><h1>${title}</h1><p>${text}</p><a href="profiles.html" style="color:#111;font-weight:900;text-decoration:none;">← Back to pilots</a></section>`; }
-async function loadPilot(){ if(!username){ showEmptyState("Pilot not found", "No pilot username was provided."); return; } const response = await fetch(`${SUPABASE_URL}/rest/v1/profiles?username=eq.${encodeURIComponent(username)}&select=*`, { headers:{ apikey:SUPABASE_KEY, Authorization:`Bearer ${SUPABASE_KEY}` }}); const data = await response.json(); const pilot = data[0]; if(!pilot){ showEmptyState("Pilot not found", "This pilot profile does not exist yet."); return; } const image = pilot.profile_image || "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"; const name = safe(pilot.full_name, "Unnamed Pilot"); const country = safe(pilot.country, "Unknown location"); const level = safe(pilot.level, "Level not added"); const flyingType = safe(pilot.flying_type, "Flying type not added"); const bio = safe(pilot.bio, "This pilot has not added a bio yet."); const homeSpot = safe(pilot.home_spot); const nextDestination = safe(pilot.next_destination, "Open to adventure"); const instaUrl = instagramUrl(pilot.instagram); const instaLabel = instagramLabel(pilot.instagram); document.getElementById("pilot-image").src = image; document.getElementById("pilot-image").alt = `${name} pilot profile`; setText("pilot-country", `📍 ${country}`); setText("pilot-name", name); setHTML("pilot-level", `<span class="level-badge ${levelClass(level)}">${level}</span>`); setText("pilot-type", flyingType); setText("pilot-bio", bio); setText("pilot-home-spot", homeSpot); setText("pilot-next-destination", nextDestination); setHTML("pilot-level-card", `<span class="level-badge ${levelClass(level)}">${level}</span>`); setText("pilot-type-card", flyingType); setText("pilot-side-country", country); setHTML("pilot-instagram", `<a href="${instaUrl || '#'}" ${instaUrl ? 'target="_blank" rel="noopener"' : ''} class="pilot-instagram-link"><i data-lucide="instagram"></i><span>${instaLabel}</span></a>`); const btn = document.getElementById("pilot-instagram-button"); if(instaUrl){ btn.href = instaUrl; btn.innerHTML = `<i data-lucide="instagram"></i> Contact ${instaLabel}`; } else { btn.removeAttribute("href"); btn.textContent = "Instagram not added"; btn.classList.add("secondary"); btn.classList.remove("primary"); } lucide.createIcons(); }
+
+function safe(value, fallback = "Not added") {
+  return value && String(value).trim() !== "" ? String(value).trim() : fallback;
+}
+
+function setText(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = value;
+}
+
+function setHTML(id, value) {
+  const element = document.getElementById(id);
+  if (element) element.innerHTML = value;
+}
+
+function instagramUrl(value) {
+  if (!value) return null;
+
+  let handle = String(value).trim();
+
+  if (handle.startsWith("http")) return handle;
+
+  handle = handle.replace("@", "");
+  return `https://instagram.com/${handle}`;
+}
+
+function instagramLabel(value) {
+  if (!value) return "Instagram not added";
+
+  let handle = String(value).trim();
+
+  if (handle.startsWith("http")) {
+    handle = handle.split("instagram.com/")[1] || handle;
+    handle = handle.replaceAll("/", "");
+  }
+
+  handle = handle.replace("@", "");
+  return `@${handle}`;
+}
+
+function showEmptyState(title, text) {
+  document.body.innerHTML = `
+    <section class="empty-state">
+      <h1>${title}</h1>
+      <p>${text}</p>
+      <a href="profiles.html" style="color:#111;font-weight:900;text-decoration:none;">← Back to pilots</a>
+    </section>
+  `;
+}
+
+async function loadPilot() {
+  if (!username) {
+    showEmptyState("Pilot not found", "No pilot username was provided.");
+    return;
+  }
+
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/profiles?username=eq.${encodeURIComponent(username)}&select=*`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`
+      }
+    }
+  );
+
+  const data = await response.json();
+  const pilot = data[0];
+
+  if (!pilot) {
+    showEmptyState("Pilot not found", "This pilot profile does not exist yet.");
+    return;
+  }
+
+  const image =
+    pilot.profile_image ||
+    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80";
+
+  const name = safe(pilot.full_name, "Unnamed Pilot");
+  const country = safe(pilot.country, "Unknown location");
+  const level = safe(pilot.level, "Level not added");
+  const flyingType = safe(pilot.flying_type, "Flying type not added");
+  const bio = safe(pilot.bio, "This pilot has not added a bio yet.");
+  const homeSpot = safe(pilot.home_spot);
+  const nextDestination = safe(pilot.next_destination, "Open to adventure");
+
+  const instaUrl = instagramUrl(pilot.instagram);
+  const instaLabel = instagramLabel(pilot.instagram);
+
+  document.getElementById("pilot-image").src = image;
+  document.getElementById("pilot-image").alt = `${name} pilot profile`;
+
+  setText("pilot-country", `📍 ${country}`);
+  setText("pilot-name", name);
+  setText("pilot-level", level);
+  setText("pilot-type", flyingType);
+  setText("pilot-bio", bio);
+  setText("pilot-home-spot", homeSpot);
+  setText("pilot-next-destination", nextDestination);
+  setText("pilot-level-card", level);
+  setText("pilot-type-card", flyingType);
+  setText("pilot-side-country", country);
+
+  setHTML("pilot-instagram", `
+    <a href="${instaUrl || "#"}" ${instaUrl ? 'target="_blank" rel="noopener"' : ""} class="pilot-instagram-link">
+      <i data-lucide="instagram"></i>
+      <span>${instaLabel}</span>
+    </a>
+  `);
+
+  const instagramButton = document.getElementById("pilot-instagram-button");
+
+  if (instaUrl) {
+    instagramButton.href = instaUrl;
+    instagramButton.textContent = `Contact ${instaLabel}`;
+  } else {
+    instagramButton.removeAttribute("href");
+    instagramButton.textContent = "Instagram not added";
+    instagramButton.classList.add("secondary");
+    instagramButton.classList.remove("primary");
+  }
+
+  lucide.createIcons();
+}
+
 loadPilot();
 </script>
+
 </body>
 </html>
