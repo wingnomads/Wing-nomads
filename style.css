@@ -1087,4 +1087,102 @@ footer p {
   .founding-form {
     grid-template-columns: 1fr;
   }
+  .pilot-meta-line .level-badge {
+  font-size: 14px;
+  padding: 8px 14px;
+}
+
+.pilot-dot {
+  opacity: .8;
+}
+
+.pilot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pilot-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .pilot-detail-hero {
+    height: 54vh;
+    min-height: 420px;
+  }
+
+  .pilot-hero-content {
+    bottom: 34px;
+  }
+
+  .pilot-name {
+    font-size: 44px;
+    margin-bottom: 18px;
+  }
+
+  .pilot-meta-line {
+    font-size: 17px;
+    gap: 10px;
+  }
+
+  .pilot-meta-line .level-badge {
+    font-size: 12px;
+    padding: 7px 12px;
+  }
+
+  .pilot-detail-main {
+    padding: 36px 24px 64px;
+  }
+
+  .pilot-description-large {
+    font-size: 19px;
+    line-height: 1.45;
+    margin-bottom: 28px;
+  }
+
+  .pilot-info-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .pilot-mini-card {
+    padding: 20px;
+    min-height: 145px;
+  }
+
+  .pilot-mini-card p {
+    font-size: 18px;
+  }
+
+  .pilot-side-card {
+    padding: 24px;
+  }
+
+  .pilot-community-panel {
+    margin-top: 34px;
+    padding: 28px 24px;
+    gap: 22px;
+  }
+
+  .pilot-community-panel h2 {
+    font-size: 30px;
+  }
+
+  .pilot-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .pilot-info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .pilot-mini-card {
+    min-height: auto;
+  }
+}
 }
