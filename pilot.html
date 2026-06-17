@@ -138,7 +138,17 @@ function setHTML(id, value) {
   const element = document.getElementById(id);
   if (element) element.innerHTML = value;
 }
+function getLevelClass(level) {
+  const clean = String(level || "").toLowerCase();
 
+  if (clean.includes("beginner")) return "level-beginner";
+  if (clean.includes("intermediate")) return "level-intermediate";
+  if (clean.includes("advanced")) return "level-advanced";
+  if (clean.includes("pro")) return "level-pro";
+  if (clean.includes("instructor")) return "level-instructor";
+
+  return "level-intermediate";
+}
 function instagramUrl(value) {
   if (!value) return null;
 
