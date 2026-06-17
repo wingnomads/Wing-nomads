@@ -972,8 +972,10 @@ footer p {
 /* MOBILE */
 
 @media (max-width: 768px) {
-  .navbar {
-    padding: 24px;
+
+  .spot-info-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .navbar nav {
