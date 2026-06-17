@@ -45,7 +45,7 @@
             <span class="circle-icon">
               <i data-lucide="mountain"></i>
             </span>
-            <small>Home Spot</small>
+            <small>Flying Now</small>
             <p id="pilot-home-spot"></p>
           </div>
 
@@ -207,7 +207,7 @@ async function loadPilot() {
   const level = safe(pilot.level, "Level not added");
   const flyingType = safe(pilot.flying_type, "Flying type not added");
   const bio = safe(pilot.bio, "This pilot has not added a bio yet.");
-  const homeSpot = safe(pilot.home_spot);
+  const currentLocation = safe(pilot.current_location, "Not added");
   const nextDestination = safe(pilot.next_destination, "Open to adventure");
 
   const instaUrl = instagramUrl(pilot.instagram);
@@ -221,7 +221,7 @@ async function loadPilot() {
   setText("pilot-level", level);
   setText("pilot-type", flyingType);
   setText("pilot-bio", bio);
-  setText("pilot-home-spot", homeSpot);
+  setText("pilot-current-location", homeSpot);
   setText("pilot-next-destination", nextDestination);
   setText("pilot-level-card", level);
   setText("pilot-type-card", flyingType);
