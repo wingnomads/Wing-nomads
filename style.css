@@ -1181,8 +1181,22 @@ footer p {
     grid-template-columns: 1fr;
   }
 
-  .pilot-mini-card {
-    min-height: auto;
-  }
+.pilot-mini-card {
+  padding: 20px;
+  min-height: auto;
+}
+
+.pilot-mini-card .circle-icon {
+  margin-bottom: 12px;
+}
+
+.pilot-mini-card small {
+  margin-bottom: 8px;
+}
+
+.pilot-mini-card p {
+  font-size: 20px;
+  line-height: 1.2;
+}
 }
 }
