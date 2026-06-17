@@ -113,9 +113,23 @@
     <form id="founding-form" class="founding-form">
       <input type="text" id="full_name" placeholder="Full name" required />
       <input type="text" id="country" placeholder="Country, e.g. Spain" required />
-      <input type="text" id="flying_type" placeholder="Flying type, e.g. Paragliding" required />
-      <input type="text" id="level" placeholder="Level, e.g. Intermediate" required />
+    <select id="flying_type">
+  <option value="">Main discipline</option>
+  <option value="Paragliding">Paragliding</option>
+  <option value="Hike & Fly">Hike & Fly</option>
+  <option value="XC">XC</option>
+  <option value="Paramotor">Paramotor</option>
+  <option value="Speed Flying">Speed Flying</option>
+  <option value="Acro">Acro</option>
+</select>
 
+<select id="level">
+  <option value="">Flying level</option>
+  <option value="Beginner">Beginner</option>
+  <option value="Intermediate">Intermediate</option>
+  <option value="Advanced">Advanced</option>
+  <option value="Instructor">Instructor</option>
+</select>
       <input type="text" id="home_spot" placeholder="Favourite spot" />
       <input type="text" id="current_location" placeholder="Flying now, e.g. Targassonne" />
     <input 
