@@ -561,7 +561,11 @@ document.getElementById("founding-form").addEventListener("submit", async functi
     message.textContent = error.message || "Could not create profile. Check Supabase.";
   }
 });
-
+if (new URLSearchParams(window.location.search).get("open") === "form") {
+  window.addEventListener("load", () => {
+    modal.classList.add("open");
+  });
+}
 init();
 </script>
 
