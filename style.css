@@ -1205,5 +1205,30 @@ footer p {
   font-size: 16px;
   font-weight: 900;
 }
+/* JOIN BANNER */
+
+.join-banner{
+  background:#111111;
+  color:white;
+  text-align:center;
+  padding:90px 20px;
+}
+
+.join-banner h2{
+  font-size:42px;
+  font-weight:900;
+  margin-bottom:16px;
+}
+
+.join-banner p{
+  max-width:600px;
+  margin:0 auto 30px;
+  opacity:.8;
+  font-size:18px;
+}
+
+.join-banner .btn-primary{
+  display:inline-block;
+}
 }
 }
