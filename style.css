@@ -1207,48 +1207,50 @@ footer p {
 }
 /* JOIN BANNER */
 
-.join-banner{
-  background:#111111;
-  color:white;
-  text-align:center;
-  padding:90px 20px;
+.join-banner {
+  background: #111111;
+  color: white;
+  text-align: center;
+  padding: 90px 24px;
 }
 
-.join-banner h2{
-  font-size:42px;
-  font-weight:900;
-  margin-bottom:16px;
+.join-banner h2 {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 18px;
 }
 
-.join-banner p{
-  max-width:600px;
-  margin:0 auto 30px;
-  opacity:.8;
-  font-size:18px;
+.join-banner p {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  opacity: .8;
+  font-size: 18px;
 }
 
-.join-banner .btn-primary{
-  display:inline-block;
+.join-banner .btn-primary {
+  display: inline-block;
 }
-/* FOUNDING FORM FINAL POLISH */
+
+/* FORM FINAL */
 
 .founding-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .founding-form input,
 .founding-form select {
   width: 100%;
-  height: 68px;
-  min-height: 68px;
-  padding: 0 22px;
+  height: 64px;
+  min-height: 64px;
+  padding: 0 20px;
   border-radius: 14px;
   border: 1px solid #d9d9d9;
-  background-color: #ffffff;
-  color: #111111;
-  font-size: 18px;
+  background: white;
+  color: #111;
+  font-size: 17px;
   font-weight: 500;
   box-sizing: border-box;
 }
@@ -1273,13 +1275,13 @@ footer p {
 .date-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 12px;
 }
 
 .date-field label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 12px;
+  margin-bottom: 6px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: .08em;
   color: #999;
@@ -1287,19 +1289,20 @@ footer p {
 }
 
 .date-field input {
-  height: 68px;
-  min-height: 68px;
-  padding: 0 18px;
-  font-size: 17px;
+  height: 58px;
+  min-height: 58px;
+  padding: 0 10px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .founding-form button[type="submit"] {
   width: 100%;
-  height: 72px;
+  height: 70px;
   border: none;
   border-radius: 14px;
   background: #111111;
-  color: #ffffff;
+  color: white;
   font-size: 15px;
   font-weight: 900;
   text-transform: uppercase;
@@ -1313,32 +1316,43 @@ footer p {
   margin-top: 6px;
 }
 
-.date-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
+/* SPOT DETAIL MOBILE FIX */
 
-.date-field input {
-  height: 58px;
-  min-height: 58px;
-  font-size: 15px;
-  padding: 0 12px;
-  text-align: center;
-}
-
-.date-field label {
-  font-size: 11px;
-  margin-bottom: 6px;
-}
-
-  .founding-form input,
-  .founding-form select,
-  .date-field input {
-    height: 64px;
-    min-height: 64px;
-    font-size: 17px;
+@media (max-width: 768px) {
+  .spot-description-large {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-bottom: 28px;
   }
-}
-}
+
+  .spot-info-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .spot-mini-card {
+    padding: 22px;
+    min-height: auto;
+  }
+
+  .spot-mini-card .circle-icon {
+    margin-bottom: 10px;
+  }
+
+  .spot-mini-card p {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .spot-side-card {
+    padding: 24px;
+  }
+
+  .side-item {
+    padding: 18px 0;
+  }
+
+  .side-item p {
+    font-size: 19px;
+  }
 }
