@@ -14,7 +14,7 @@
 <section class="pilot-page">
 
   <section class="pilot-detail-hero">
-    <a href="index.html#pilots" class="pilot-back">
+   <a href="index.html#pilots" class="pilot-back">← Back to pilots</a>
 
     <img id="pilot-image" alt="Pilot image" />
 
@@ -110,7 +110,7 @@
         <a id="pilot-instagram-button" class="pilot-btn primary" target="_blank" rel="noopener">
           Instagram
         </a>
-        <a href="profiles.html" class="pilot-btn secondary">Explore pilots</a>
+      <a href="index.html#pilots" class="pilot-btn secondary">Explore pilots</a>
       </div>
     </section>
 
@@ -221,7 +221,7 @@ async function loadPilot() {
   setText("pilot-level", level);
   setText("pilot-type", flyingType);
   setText("pilot-bio", bio);
-  setText("pilot-current-location", homeSpot);
+  setText("pilot-home-spot", currentLocation);
   setText("pilot-next-destination", nextDestination);
   setText("pilot-level-card", level);
   setText("pilot-type-card", flyingType);
