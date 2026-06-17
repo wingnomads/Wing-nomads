@@ -529,7 +529,7 @@ document.getElementById("founding-form").addEventListener("submit", async functi
       home_spot: document.getElementById("home_spot").value.trim(),
       current_location: document.getElementById("current_location").value.trim(),
       next_destination: document.getElementById("next_destination").value.trim(),
-      trip_dates: document.getElementById("trip_dates").value.trim(),
+      trip_dates: `${document.getElementById("trip_start_date").value} to ${document.getElementById("trip_end_date").value}`,
       instagram: document.getElementById("instagram").value.trim(),
       profile_image: uploadedImageUrl
     };
