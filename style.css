@@ -1198,5 +1198,12 @@ footer p {
   font-size: 20px;
   line-height: 1.2;
 }
+.pilot-card-date {
+  display: block;
+  margin-top: 8px;
+  color: var(--terracotta);
+  font-size: 16px;
+  font-weight: 900;
+}
 }
 }
