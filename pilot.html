@@ -198,7 +198,7 @@ async function loadPilot() {
   const bio = safe(pilot.bio, "This pilot has not added a bio yet.");
   const currentLocation = safe(pilot.current_location, "Not added");
   const nextDestination = safe(pilot.next_destination, "Open to adventure");
-
+const tripDates = safe(pilot.trip_dates, "");
   const instaUrl = instagramUrl(pilot.instagram);
   const instaLabel = instagramLabel(pilot.instagram);
 
