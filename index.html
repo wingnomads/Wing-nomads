@@ -98,7 +98,9 @@
     <p>
       Add your pilot profile and become one of the first Wing Nomads building this global flying community.
     </p>
-    <button id="open-form-btn" class="join-btn">Become a Founding Nomad</button>
+   <button id="open-form-btn-2" class="join-btn">
+  Become a Founding Nomad
+</button>
   </div>
 </section>
 
@@ -499,7 +501,18 @@ async function init() {
 }
 
 const modal = document.getElementById("form-modal");
-const openBtn = document.getElementById("open-form-btn");
+const openBtns = [
+  document.getElementById("open-form-btn"),
+  document.getElementById("open-form-btn-2")
+];
+
+openBtns.forEach(btn => {
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    modal.classList.add("open");
+  });
+});
 const closeBtn = document.getElementById("close-form-btn");
 
 openBtn.addEventListener("click", () => {
