@@ -522,7 +522,7 @@ document.getElementById("founding-form").addEventListener("submit", async functi
     const profile = {
       id: crypto.randomUUID(),
       full_name: fullName,
-      username,
+      username: username,
       country: document.getElementById("country").value.trim(),
       flying_type: document.getElementById("flying_type").value.trim(),
       level: document.getElementById("level").value.trim(),
@@ -545,9 +545,10 @@ document.getElementById("founding-form").addEventListener("submit", async functi
       message.textContent = "";
       window.location.href = "#pilots";
     }, 1200);
+
   } catch (error) {
-    console.error(error);
-    message.textContent = "Could not create profile. Check Supabase fields, bucket and policies.";
+    console.error("PROFILE ERROR:", error);
+    message.textContent = error.message || "Could not create profile. Check Supabase.";
   }
 });
 
