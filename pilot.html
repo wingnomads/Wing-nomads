@@ -239,12 +239,7 @@ if (levelElement) {
   setText("pilot-type-card", flyingType);
   setText("pilot-side-country", country);
 
-  setHTML("pilot-instagram", `
-    <a href="${instaUrl || "#"}" ${instaUrl ? 'target="_blank" rel="noopener"' : ""} class="pilot-instagram-link">
-      <i data-lucide="instagram"></i>
-      <span>${instaLabel}</span>
-    </a>
-  `);
+  
 
   const instagramButton = document.getElementById("pilot-instagram-button");
 
