@@ -218,7 +218,12 @@ async function loadPilot() {
 
   setText("pilot-country", `📍 ${country}`);
   setText("pilot-name", name);
-  setText("pilot-level", level);
+  const levelElement = document.getElementById("pilot-level");
+
+if (levelElement) {
+  levelElement.textContent = level;
+  levelElement.className = `level-badge ${getLevelClass(level)}`;
+}
   setText("pilot-type", flyingType);
   setText("pilot-bio", bio);
   setText("pilot-home-spot", currentLocation);
