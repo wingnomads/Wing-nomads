@@ -543,7 +543,19 @@ if (modal) {
     }
   });
 }
+document.querySelectorAll(".date-input").forEach(input => {
+  input.addEventListener("change", () => {
+    const text = input.parentElement.querySelector(".date-text");
 
+    if (!input.value) {
+      text.textContent = "dd/mm/yyyy";
+      return;
+    }
+
+    const [year, month, day] = input.value.split("-");
+    text.textContent = `${day}/${month}/${year.slice(-2)}`;
+  });
+});
 document.getElementById("founding-form").addEventListener("submit", async function(event) {
   event.preventDefault();
 
