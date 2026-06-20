@@ -1257,11 +1257,10 @@ footer p {
 /* COMPACT DATE FIELDS */
 
 .date-row {
-  width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px;
-  box-sizing: border-box;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 6px;
 }
 
 .date-field {
@@ -1281,15 +1280,13 @@ footer p {
 
 .date-field input[type="date"] {
   width: 100%;
-  max-width: 100%;
-  height: 52px !important;
-  min-height: 52px !important;
-  padding: 0 34px 0 12px !important;
-  font-size: 12px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 0 28px 0 10px !important;
+  font-size: 11px !important;
   text-align: center;
   box-sizing: border-box;
 }
-
 .date-field::after {
   content: "📅";
   position: absolute;
@@ -1297,6 +1294,10 @@ footer p {
   bottom: 14px;
   font-size: 13px;
   pointer-events: none;
+}.date-field::after {
+  right: 8px;
+  bottom: 13px;
+  font-size: 12px;
 }
 
 @media (max-width: 430px) {
