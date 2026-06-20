@@ -531,17 +531,25 @@ a {
 
 .join-btn {
   display: inline-block;
-  padding: 18px 28px;
-  background: var(--black);
-  color: white;
+  padding: 18px 30px;
+  background: #111111;
+  color: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: 900;
   font-size: 13px;
   text-transform: uppercase;
+  letter-spacing: .04em;
   cursor: pointer;
+  transition: .2s ease;
 }
-
+.join-btn {
+  box-shadow: 0 12px 30px rgba(0,0,0,.18);
+}
+.join-btn:hover {
+  opacity: .9;
+  transform: translateY(-2px);
+}
 /* SHARED DETAIL PAGES */
 
 .spot-page,
