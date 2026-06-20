@@ -1335,4 +1335,42 @@ footer p {
     bottom: 14px;
     font-size: 11px;
   }
+/* PHONE DATE WIDTH FIX */
+
+@media (max-width: 430px) {
+  .modal-card {
+    overflow-x: hidden;
+  }
+
+  .date-row {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .date-field {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .date-field input[type="date"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    padding: 0 28px 0 6px !important;
+    font-size: 10px !important;
+  }
+
+  .date-field::after {
+    right: 8px;
+    bottom: 14px;
+    font-size: 11px;
+  }
+}
+  
 }
