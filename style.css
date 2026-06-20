@@ -1254,21 +1254,17 @@ footer p {
   font-weight: 900;
 }
 
-/* COMPACT DATE FIELDS - FINAL */
+/* COMPACT DATE FIELDS - FINAL CLEAN */
 
 .date-row {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 14px;
-  align-items: end;
-  overflow: hidden;
 }
 
 .date-field {
-  position: relative;
   min-width: 0;
-  max-width: 100%;
 }
 
 .date-field label {
@@ -1281,115 +1277,79 @@ footer p {
   font-weight: 800;
 }
 
-.date-field input[type="date"] {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  height: 52px !important;
-  min-height: 52px !important;
-  padding: 0 30px 0 10px !important;
+.date-input-wrap {
+  position: relative;
+  height: 52px;
+  border: 1px solid #d9d9d9;
   border-radius: 14px;
-  font-size: 11px !important;
-  text-align: center;
-  box-sizing: border-box;
+  background: #ffffff;
   overflow: hidden;
-  white-space: nowrap;
-  appearance: none;
-  -webkit-appearance: none;
 }
 
-.date-field input[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
+.date-input {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
   cursor: pointer;
+  z-index: 2;
 }
 
-.date-field::after {
+.date-text {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.date-input-wrap::after {
   content: "";
   position: absolute;
   right: 14px;
   top: 50%;
-  transform: translateY(4px);
-  width: 18px;
-  height: 18px;
-  border: 2px solid #b5b5b5;
+  width: 17px;
+  height: 17px;
+  transform: translateY(-50%);
+  border: 2px solid #aaa;
   border-radius: 3px;
   pointer-events: none;
 }
 
-.date-field::before {
+.date-input-wrap::before {
   content: "";
   position: absolute;
   right: 14px;
-  top: calc(50% - 7px);
-  width: 18px;
+  top: calc(50% - 8px);
+  width: 17px;
   height: 5px;
-  border-top: 2px solid #b5b5b5;
+  border-top: 2px solid #aaa;
   pointer-events: none;
+  z-index: 1;
 }
 
-.date-field input[type="date"] {
-  color: #999;
-}
-
-/* PHONE */
 @media (max-width: 430px) {
   .date-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 10px;
-  }
-
-  .date-field input[type="date"] {
-    height: 50px !important;
-    min-height: 50px !important;
-    font-size: 10px !important;
-    padding: 0 26px 0 8px !important;
-  }
-
-  .date-field::after {
-    right: 8px;
-    bottom: 14px;
-    font-size: 11px;
-  }
-/* PHONE DATE WIDTH FIX */
-
-@media (max-width: 430px) {
-  .modal-card {
-    overflow-x: hidden;
-  }
-
-  .date-row {
-    width: 100%;
-    max-width: 100%;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
 
-  .date-field {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow: hidden;
+  .date-text {
+    font-size: 12px;
+    left: 12px;
   }
 
-  .date-field input[type="date"] {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    height: 50px !important;
-    min-height: 50px !important;
-    padding: 0 28px 0 6px !important;
-    font-size: 10px !important;
+  .date-input-wrap::after {
+    right: 10px;
+    width: 16px;
+    height: 16px;
   }
 
-  .date-field::after {
-    right: 8px;
-    bottom: 14px;
-    font-size: 11px;
+  .date-input-wrap::before {
+    right: 10px;
+    width: 16px;
   }
-}
-  
 }
