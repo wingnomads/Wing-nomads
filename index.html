@@ -187,7 +187,16 @@
   id="instagram" 
   placeholder="Instagram or email, e.g. @nadia.fly" 
 />
-      <input type="file" id="profile_image_file" accept="image/jpeg,image/png,image/webp" />
+    <label for="profile_image_file" class="upload-box">
+  Upload profile photo
+</label>
+
+<input
+  type="file"
+  id="profile_image_file"
+  accept="image/jpeg,image/png,image/webp"
+  hidden
+/>
 
       <button type="submit">Create my profile</button>
       <p id="form-message"></p>
