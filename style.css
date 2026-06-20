@@ -1308,12 +1308,31 @@ footer p {
 }
 
 .date-field::after {
-  content: "📅";
+  content: "";
   position: absolute;
-  right: 10px;
-  bottom: 15px;
-  font-size: 12px;
+  right: 14px;
+  top: 50%;
+  transform: translateY(4px);
+  width: 18px;
+  height: 18px;
+  border: 2px solid #b5b5b5;
+  border-radius: 3px;
   pointer-events: none;
+}
+
+.date-field::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: calc(50% - 7px);
+  width: 18px;
+  height: 5px;
+  border-top: 2px solid #b5b5b5;
+  pointer-events: none;
+}
+
+.date-field input[type="date"] {
+  color: #999;
 }
 
 /* PHONE */
