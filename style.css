@@ -1269,3 +1269,37 @@ footer p {
   font-size: 16px;
   font-weight: 900;
 }
+
+/* COMPACT DATE FIELDS */
+
+.date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.date-field {
+  position: relative;
+}
+
+.date-field label {
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+
+.date-field input {
+  height: 50px !important;
+  min-height: 50px !important;
+  font-size: 13px !important;
+  padding: 0 32px 0 10px !important;
+  text-align: center;
+}
+
+.date-field::after {
+  content: "📅";
+  position: absolute;
+  right: 9px;
+  bottom: 13px;
+  font-size: 13px;
+  pointer-events: none;
+}
