@@ -1292,11 +1292,11 @@ footer p {
 .date-field::after {
   content: "📅";
   position: absolute;
-  right: 8px;
-  bottom: 13px;
-  font-size: 12px;
+  right: 12px;
+  top: 34px;
+  font-size: 13px;
   pointer-events: none;
-
+}
 
 @media (max-width: 430px) {
   .date-row {
@@ -1306,6 +1306,6 @@ footer p {
   .date-field input[type="date"] {
     font-size: 11px !important;
     padding-left: 8px !important;
-    padding-right: 28px !important;
+    padding-right: 34px !important;
   }
 }
