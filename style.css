@@ -544,9 +544,7 @@ a {
   transition: .2s ease;
   box-shadow: 0 12px 30px rgba(0,0,0,.18);
 }
-.join-btn {
-  box-shadow: 0 12px 30px rgba(0,0,0,.18);
-}
+
 .join-btn:hover {
   opacity: .9;
   transform: translateY(-2px);
